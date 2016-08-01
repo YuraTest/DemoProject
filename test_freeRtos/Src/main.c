@@ -35,6 +35,7 @@
 #include "cmsis_os.h"
 #include "portmacro.h"
 #include "uart.h"
+#include "fatfs.h"
 
 /* USER CODE BEGIN Includes */
 
@@ -42,8 +43,9 @@
 
 /* Private variables ---------------------------------------------------------*/
 TIM_HandleTypeDef htim6;
-
 UART_HandleTypeDef huart1;
+SD_HandleTypeDef hsd;
+HAL_SD_CardInfoTypedef SDCardInfo;
 
 osThreadId defaultTaskHandle;
 
@@ -61,7 +63,11 @@ void Error_Handler(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM6_Init(void);
 static void MX_USART1_UART_Init(void);
+static void MX_SDIO_SD_Init(void);
 void StartDefaultTask(void const * argument);
+
+void TaskSdio(void const * argument);
+
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
@@ -111,6 +117,7 @@ void vTaskBlueLed(void *pvParameters) {
 
 static portBASE_TYPE xHigherPriorityTaskWoken;
 static portBASE_TYPE xCount;
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	HAL_GPIO_TogglePin(GPIOD, OrangeLed_Pin);
 	xCount++;
@@ -156,6 +163,20 @@ int main(void) {
 	MX_GPIO_Init();
 	MX_TIM6_Init();
 	MX_USART1_UART_Init();
+	MX_SDIO_SD_Init();
+	MX_FATFS_Init();
+	if(BSP_SD_Init() != pdPASS){
+		Error_Handler();
+	} else {
+		HAL_GPIO_WritePin(GPIOD, GreenLed_Pin, 1);
+	}
+	//HAL_SD_ErrorTypedef HAL_SD_Get_CardInfo(SD_HandleTypeDef *hsd, HAL_SD_CardInfoTypedef *pCardInfo)
+	//HAL_SD_Get_CardInfo(&hsd, SDCardInfo);
+	/*FATFS fs;
+	FRESULT res;
+	FILINFO fno;
+	DIR dir;
+	f_readdir(NULL, *fno);*/
 
 	if (sizeof(portBASE_TYPE) > 4) {
 		HAL_GPIO_TogglePin(GPIOD, RedLed_Pin);
@@ -274,6 +295,21 @@ void SystemClock_Config(void) {
 	HAL_NVIC_SetPriority(SysTick_IRQn, 15, 0);
 }
 
+/* SDIO init function */
+static void MX_SDIO_SD_Init(void)
+{
+
+  hsd.Instance = SDIO;
+  hsd.Init.ClockEdge = SDIO_CLOCK_EDGE_RISING;
+  hsd.Init.ClockBypass = SDIO_CLOCK_BYPASS_DISABLE;
+  hsd.Init.ClockPowerSave = SDIO_CLOCK_POWER_SAVE_DISABLE;
+  hsd.Init.BusWide = SDIO_BUS_WIDE_4B;
+  hsd.Init.HardwareFlowControl = SDIO_HARDWARE_FLOW_CONTROL_DISABLE;
+  hsd.Init.ClockDiv = 7;
+
+
+}
+
 /* TIM6 init function */
 static void MX_TIM6_Init(void) {
 
@@ -364,6 +400,15 @@ void StartDefaultTask(void const * argument) {
 	}
 	/* USER CODE END 5 */
 }
+
+void TaskSdio(void const * argument) {
+	HAL_SD_MspInit(&hsd);
+
+	for (;;) {
+
+	}
+}
+
 
 /**
  * @brief  This function is executed in case of error occurrence.

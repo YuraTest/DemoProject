@@ -4,8 +4,9 @@
  *  Created on: 26 июл. 2016 г.
  *      Author: yurock
  */
-
+#include "stm32f4xx_hal.h"
 #include "uart.h"
+#include "fatfs.h"
 
 static void UsartTx(uart_t *u);
 
@@ -34,7 +35,8 @@ static void UsartTx(uart_t *u) {
 }
 
 /* ---------------------------------------------------------- */
-
+/* Обработчик прерывания для UART
+ * Параметры: указатель на структуру uart_t */
 void uart_interrupt(void *arg) {
 	uart_t *u = arg;
 	/* Приём. */
@@ -73,6 +75,9 @@ void uart_interrupt(void *arg) {
 	}
 }
 
+/* Инициализация драйвера UART
+ * Параметры: указатель на структуру uart, указатель на структуру UART_HAL
+ * возвращаемое значение: В случае успешной инициализации pdPASS, иначк pdFAIL */
 BaseType_t uart_init(uart_t *u, UART_HandleTypeDef *port) {
 	BaseType_t result = pdPASS;
 	u->port = port;
@@ -95,7 +100,11 @@ BaseType_t uart_init(uart_t *u, UART_HandleTypeDef *port) {
 	return result;
 }
 
-char GetChar(uart_t *u) {
+/* Чтение байта из буфера UART
+ * Параметр: указатель на структуру uart_t
+ * Возвращаемое значение: прочитанный байт */
+char GetCharUart(uart_t *u) {
+	osSemaphoreWait(u->xSemaHandl, osWaitForever);// ожидаем появление байта в буфере
 	char data;
 	data = *u->inTail;
 	unsigned char *newlast = u->inTail + 1;
@@ -105,18 +114,31 @@ char GetChar(uart_t *u) {
 	return data;
 }
 
-void PutChar(uart_t *u, char c) {
+/* Запись байта в буфер UART
+ * Параметр: указатель на структуру uart_t, записываемый байт
+ * Возвращаемое значение: - */
+void PutCharUart(uart_t *u, char c) {
 	unsigned char *newlast = u->outHead + 1;
 	if (newlast >= u->outBuf + UART_INBUFSZ)// Если временный указатель больше или равен очереди,
 		newlast = u->outBuf;				// то приравниваем его началу буфера
 	/* Если нет места в буфере - теряем данные. */
-	if (u->outTail != newlast) {	// Если новый указатель не равен хвосту, от куда читаются данные
+	if (u->outTail != newlast) {// Если новый указатель не равен хвосту, от куда читаются данные
 		*u->outHead = c;			// Добавляем символ
 		u->outHead = newlast;	// Устанавливаем новый указатель головы
+		/* Если передатчик свободный, то посылаем байт */
 		if (u->port->Instance->SR & USART_SR_TXE) {
 			UsartTx(u);
 		}
 	}
+}
+
+/* Запись строки, заканчивающейся нулём в буфера UART
+ * Параметр: указатель на структуру uart_t, строка, заканчивающаяся нулевым байтом
+ * Возвращаемое значение: - */
+void PutStringUart(uart_t *u, const char *str) {
+	char *buf = (char *) str;
+	while (*buf != 0x00)
+		PutCharUart(u, *buf++);
 }
 
 /* ---------------------------------------------------------- */
@@ -139,16 +161,50 @@ BaseType_t initUartTask(uart_t *u) {
 	return result;
 }
 
+FATFS fs;
+FRESULT res;
+FILINFO fno;
+DIR dir;
+const char * helloStr = "Test uart\n";
 /* Usart1Rx function */
 void Usart1Rx(void const * argument) {
 	/* USER CODE BEGIN Usart1Rx */
 	uart_t *u = (uart_t *) argument;
 	uint8_t data;
 	/* Infinite loop */
+	/*static uint32_t sizeHal = sizeof(UART_HandleTypeDef);
+	 static uint32_t sizeRtos = sizeof(uart_t);
+	 if (sizeHal > 100) {
+	 HAL_GPIO_WritePin(GPIOD, BlueLed_Pin, 1);
+	 }
+	 if (sizeRtos > 200) {
+	 HAL_GPIO_WritePin(GPIOD, BlueLed_Pin, 1);
+	 }*/
+	PutStringUart(u, helloStr);
+
+	//монтируем диск без проверки
+	if (f_mount(&fs, "0", 1) == FR_OK) {
+		//монтируем диск без проверки
+
+		//открываем директорию
+		if (f_opendir(&dir, "\\") == FR_OK) {
+
+			//чи таем содержимое директории
+			for (;;) {
+				res = f_readdir(&dir, &fno);
+				if ((res != FR_OK) || (fno.fname[0] == 0)) {
+					break;
+				}
+				PutStringUart(u, fno.fname);
+				PutStringUart(u, " \r");
+			}
+		}
+	}
+	f_mount(&fs, "0", 0);
 	for (;;) {
-		osSemaphoreWait(u->xSemaHandl, osWaitForever);
-		data = GetChar(u);
-		PutChar(u, data);
+
+		data = GetCharUart(u);
+		PutCharUart(u, data);
 		/**TxData1.head++ = data;
 		 if (TxData1.head >= TxData1.buf + LEN_BUF)
 		 TxData1.head = TxData1.buf;

@@ -353,7 +353,7 @@ HAL_SD_ErrorTypedef HAL_SD_Init(SD_HandleTypeDef *hsd, HAL_SD_CardInfoTypedef *S
   tmpinit.ClockEdge           = SDIO_CLOCK_EDGE_RISING;
   tmpinit.ClockBypass         = SDIO_CLOCK_BYPASS_DISABLE;
   tmpinit.ClockPowerSave      = SDIO_CLOCK_POWER_SAVE_DISABLE;
-  tmpinit.BusWide             = SDIO_BUS_WIDE_1B;
+  tmpinit.BusWide             = SDIO_BUS_WIDE_4B;
   tmpinit.HardwareFlowControl = SDIO_HARDWARE_FLOW_CONTROL_DISABLE;
   tmpinit.ClockDiv            = SDIO_INIT_CLK_DIV;
   
