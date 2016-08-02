@@ -75,13 +75,13 @@
 // Init-SD-Clock (max 400kHz)
 // f = 48MHz/(Vorteiler+2) = 400 kHz
 //--------------------------------------------------------------
-#define SDIO_INIT_CLK_DIV                ((uint8_t)0x76)
+#define SDIO_INIT_CLK_DIV                ((uint8_t)0x76)//da)//76)
 
 //--------------------------------------------------------------
 // SD-Clock
 // f = 48MHz/(Vorteiler+2) = 24MHz
 //--------------------------------------------------------------
-#define SDIO_TRANSFER_CLK_DIV            ((uint8_t)0x0) 
+#define SDIO_TRANSFER_CLK_DIV            ((uint8_t)0x0)
 
 
 //--------------------------------------------------------------

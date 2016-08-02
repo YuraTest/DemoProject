@@ -49,7 +49,10 @@ void Usart1Rx(void * argument) {
 	 if (sizeRtos > 200) {
 	 HAL_GPIO_WritePin(GPIOD, BlueLed_Pin, 1);
 	 }*/
-	sprintf(TxData, helloStr, 0);
+	//sprintf(TxData, helloStr, 0);
+	//PutStringUart(u, TxData);
+
+	sprintf(TxData, "Start Task for uart1\n");
 	PutStringUart(u, TxData);
 
 	//монтируем диск без проверки

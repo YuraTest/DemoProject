@@ -19,6 +19,10 @@ C_DEPS :=
 SUBDIRS := \
 Drivers/CMSIS/src \
 Drivers/SLP/src \
+FATFS_SDIO/fatfs \
+FATFS_SDIO/fatfs/lo_level_ub \
+FATFS_SDIO/fatfs/option \
+FATFS_SDIO \
 FreeRTOS/src \
 Src \
 

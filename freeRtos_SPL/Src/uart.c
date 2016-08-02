@@ -7,7 +7,6 @@
 
 #include "uart.h"
 
-
 static void UsartTx(uart_t *u);
 static uart_t *uarts[10];
 
@@ -46,14 +45,16 @@ void USART6_IRQHandler() {
 /* ---------------------------------------------------------- */
 
 static void UsartTx(uart_t *u) {
-	char tmp;
-	if (u->outHead != u->outTail) {
-		tmp = *u->outTail;
-		//u->port->Instance->DR = *u->outTail;
-		if (++u->outTail >= u->outBuf + UART_OUTBUFSZ)
-			u->outTail = u->outBuf;
-		u->port->DR = (uint16_t) tmp;
-	}
+	//char tmp;
+	//if (u->outHead != u->outTail) {
+	//tmp = *u->outTail;
+	//xSemaphoreTake(u->xReciever, portMAX_DELAY);
+	u->port->DR = *u->outTail++;
+	if (u->outTail >= u->outBuf + UART_OUTBUFSZ)
+		u->outTail = u->outBuf;
+	//xSemaphoreGive(u->xReciever);
+	//u->port->DR = (uint16_t) tmp;
+	//}
 }
 
 /* ---------------------------------------------------------- */
@@ -67,34 +68,42 @@ void uart_interrupt(void *arg) {
 		/* В буфере FIFO приемника есть данные. */
 		unsigned c = u->port->DR;
 
-		unsigned char *newlast = u->inHead + 1;	// временный указатель инкрементируем относительно старой головы
-		if (newlast >= u->inBuf + UART_INBUFSZ)	// Если временный указатель больше или равен очереди,
-			newlast = u->inBuf;				// то приравниваем его началу буфера
+		unsigned char *newHead = u->inHead + 1;	// временный указатель инкрементируем относительно старой головы
+		if (newHead >= u->inBuf + UART_INBUFSZ)	// Если временный указатель больше или равен очереди,
+			newHead = u->inBuf;				// то приравниваем его началу буфера
 
 		/* Если нет места в буфере - теряем данные. */
-		if (u->inTail != newlast) {	// Если новый указатель не равен хвосту, от куда читаются данные
+		if (u->inTail != newHead) {	// Если новый указатель не равен хвосту, от куда читаются данные
 			*u->inHead = c;			// Добавляем символ
-			u->inHead = newlast;	// Устанавливаем новый указатель головы
+			u->inHead = newHead;	// Устанавливаем новый указатель головы
 			// Посылаем семофор
 			xPrio = pdFALSE;
-			xPrio = xSemaphoreGiveFromISR(u->xSemaHandl, &xPrio);
+			xPrio = xSemaphoreGiveFromISR(u->xReciever, &xPrio);
 			if (xPrio == pdTRUE)
 				portEND_SWITCHING_ISR(&xPrio);
 		}
 	}
 	/* Передача. */
 	if (READ_REG(u->port->SR) & USART_SR_TC) {
-
+		//xSemaphoreTakeFromISR(u->xReciever, &xPrio);
 		if (u->outHead != u->outTail) {
 			/* Шлём очередной байт. */
 			u->port->DR = *u->outTail;
 			if (++u->outTail >= u->outBuf + UART_OUTBUFSZ)
 				u->outTail = u->outBuf;
+
 		} else {
 			/* Нет данных для передачи - сброс прерывания. */
 			CLEAR_BIT(u->port->SR, USART_SR_TC);
 			//passive = 0;
 		}
+		if (u->whaitTransmit == pdTRUE) {
+			u->whaitTransmit = pdFALSE;
+			xSemaphoreGiveFromISR(u->xTransniter, &xPrio);
+			if (xPrio == pdTRUE)
+				portEND_SWITCHING_ISR(&xPrio);
+		}
+		//xSemaphoreGiveFromISR(u->xReciever, &xPrio);
 	}
 }
 
@@ -231,12 +240,24 @@ BaseType_t uart_init(uart_t *u, USART_TypeDef *port, uint32_t baud) {
 	NVIC_SetPriority(irq, 5);
 	NVIC_EnableIRQ(irq);
 	//osSemaphoreDef(myCountSem);
-	u->xSemaHandl = xSemaphoreCreateCounting(32, 0);
+	u->xTransniter = xSemaphoreCreateBinary();
 	//osSemaphoreCreate(osSemaphore(myCountSem), 32);
 
-	if (u->xSemaHandl == NULL) {
+	if (u->xTransniter == NULL) {
 		result = pdFAIL;
 	}
+
+	u->xReciever = xSemaphoreCreateBinary();
+	if (u->xReciever == NULL) {
+		result = pdFAIL;
+	}
+	u->xTrensmM = xSemaphoreCreateMutex();
+	if (u->xTrensmM == NULL) {
+		result = pdFAIL;
+	}
+	u->whaitTransmit = pdFALSE;
+	//xSemaphoreTake(u->xReciever, portMAX_DELAY);
+	//xSemaphoreGive(u->xReciever);
 	return result;
 }
 
@@ -244,13 +265,13 @@ BaseType_t uart_init(uart_t *u, USART_TypeDef *port, uint32_t baud) {
  * Параметр: указатель на структуру uart_t
  * Возвращаемое значение: прочитанный байт */
 char GetCharUart(uart_t *u) {
-	xSemaphoreTake(u->xSemaHandl, portMAX_DELAY);// ожидаем появление байта в буфере
+	xSemaphoreTake(u->xReciever, portMAX_DELAY);// ожидаем появление байта в буфере
 	char data;
 	data = *u->inTail;
-	unsigned char *newlast = u->inTail + 1;
-	if (newlast >= u->inBuf + UART_INBUFSZ)	// Если временный указатель больше или равен очереди,
-		newlast = u->inBuf;				// то приравниваем его началу буфера
-	u->inTail = newlast;
+	unsigned char *newTail = u->inTail + 1;
+	if (newTail >= u->inBuf + UART_INBUFSZ)	// Если временный указатель больше или равен очереди,
+		newTail = u->inBuf;				// то приравниваем его началу буфера
+	u->inTail = newTail;
 	return data;
 }
 
@@ -258,18 +279,25 @@ char GetCharUart(uart_t *u) {
  * Параметр: указатель на структуру uart_t, записываемый байт
  * Возвращаемое значение: - */
 void PutCharUart(uart_t *u, char c) {
-	unsigned char *newlast = u->outHead + 1;
-	if (newlast >= u->outBuf + UART_INBUFSZ)// Если временный указатель больше или равен очереди,
-		newlast = u->outBuf;			// то приравниваем его началу буфера
+	//xSemaphoreTake(u->xTrensmM, portMAX_DELAY);
+	unsigned char *newPos = u->outHead + 1;
+	if (newPos >= u->outBuf + UART_INBUFSZ)	// Если временный указатель больше или равен очереди,
+		newPos = u->outBuf;			// то приравниваем его началу буфера
 	/* Если нет места в буфере - теряем данные. */
-	if (u->outTail != newlast) {// Если новый указатель не равен хвосту, от куда читаются данные
-		*u->outHead = c;			// Добавляем символ
-		u->outHead = newlast;	// Устанавливаем новый указатель головы
-		/* Если передатчик свободный, то посылаем байт */
-		if (u->port->SR & USART_SR_TXE) {
-			UsartTx(u);
-		}
+	if (u->outTail == newPos) {
+		u->whaitTransmit = pdTRUE;
+		xSemaphoreTake(u->xTransniter, portMAX_DELAY);
 	}
+	//vTaskDelay(1);
+	//if (u->outTail != newPos) {// Если новый указатель не равен хвосту, от куда читаются данные
+	*u->outHead = c;			// Добавляем символ
+	u->outHead = newPos;	// Устанавливаем новый указатель головы
+	/* Если передатчик свободный, то посылаем байт */
+	if (u->port->SR & USART_SR_TXE) {
+		UsartTx(u);
+	}
+	//}
+	//xSemaphoreGive(u->xTrensmM);
 }
 
 /* Запись строки, заканчивающейся нулём в буфера UART
@@ -277,7 +305,9 @@ void PutCharUart(uart_t *u, char c) {
  * Возвращаемое значение: - */
 void PutStringUart(uart_t *u, const char *str) {
 	char *buf = (char *) str;
+	xSemaphoreTake(u->xTrensmM, portMAX_DELAY);
 	while (*buf != 0x00)
 		PutCharUart(u, *buf++);
+	xSemaphoreGive(u->xTrensmM);
 }
 

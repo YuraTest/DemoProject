@@ -10,6 +10,8 @@ Archive member included to satisfy reference by file (symbol)
                               ./FreeRTOS/src/queue.o (memcpy)
 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-memset.o)
                               /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/crt0.o (memset)
+/opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-strcpy.o)
+                              ./Src/main.o (strcpy)
 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-__call_atexit.o)
                               /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-exit.o) (__call_exitprocs)
 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-atexit.o)
@@ -22,8 +24,16 @@ Archive member included to satisfy reference by file (symbol)
 Allocating common symbols
 Common symbol       size              file
 
-uart1               0x68              ./Src/main.o
+SDIO_CmdInitStructure
+                    0x14              ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+uart1               0xb4              ./Src/main.o
 xQueueRegistry      0x40              ./FreeRTOS/src/queue.o
+SDCardInfo          0x58              ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+SDIO_InitStructure  0x18              ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+textBuf             0x40              ./Src/main.o
+SDIO_DataInitStructure
+                    0x18              ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+SDIO_files          0x1040            ./Src/sd.o
 TxData              0x20              ./Src/uart1Task.o
 timetLed            0x4               ./Src/main.o
 RCC_Clocks          0x10              ./Src/main.o
@@ -66,6 +76,9 @@ Discarded input sections
  .text.printf   0x00000000       0x1a ./Src/printf.o
  .text.fprintf  0x00000000       0x1a ./Src/printf.o
  .text.puts     0x00000000       0x10 ./Src/printf.o
+ .text          0x00000000        0x0 ./Src/sd.o
+ .data          0x00000000        0x0 ./Src/sd.o
+ .bss           0x00000000        0x0 ./Src/sd.o
  .text          0x00000000        0x0 ./Src/stm32f4xx_it.o
  .data          0x00000000        0x0 ./Src/stm32f4xx_it.o
  .bss           0x00000000        0x0 ./Src/stm32f4xx_it.o
@@ -78,6 +91,8 @@ Discarded input sections
  .text          0x00000000        0x0 ./Src/uart1Task.o
  .data          0x00000000        0x0 ./Src/uart1Task.o
  .bss           0x00000000        0x0 ./Src/uart1Task.o
+ .data.helloStr
+                0x00000000        0x4 ./Src/uart1Task.o
  .text          0x00000000        0x0 ./FreeRTOS/src/croutine.o
  .data          0x00000000        0x0 ./FreeRTOS/src/croutine.o
  .bss           0x00000000        0x0 ./FreeRTOS/src/croutine.o
@@ -86,7 +101,7 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x18 ./FreeRTOS/src/croutine.o
  .debug_line    0x00000000       0x1d ./FreeRTOS/src/croutine.o
- .debug_str     0x00000000      0x1c6 ./FreeRTOS/src/croutine.o
+ .debug_str     0x00000000      0x1ca ./FreeRTOS/src/croutine.o
  .comment       0x00000000       0x6f ./FreeRTOS/src/croutine.o
  .ARM.attributes
                 0x00000000       0x39 ./FreeRTOS/src/croutine.o
@@ -119,8 +134,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x68 ./FreeRTOS/src/event_groups.o
  .debug_ranges  0x00000000       0x88 ./FreeRTOS/src/event_groups.o
- .debug_line    0x00000000      0x2f9 ./FreeRTOS/src/event_groups.o
- .debug_str     0x00000000      0x690 ./FreeRTOS/src/event_groups.o
+ .debug_line    0x00000000      0x2fd ./FreeRTOS/src/event_groups.o
+ .debug_str     0x00000000      0x694 ./FreeRTOS/src/event_groups.o
  .comment       0x00000000       0x6f ./FreeRTOS/src/event_groups.o
  .debug_frame   0x00000000      0x110 ./FreeRTOS/src/event_groups.o
  .ARM.attributes
@@ -145,12 +160,8 @@ Discarded input sections
  .text          0x00000000        0x0 ./FreeRTOS/src/queue.o
  .data          0x00000000        0x0 ./FreeRTOS/src/queue.o
  .bss           0x00000000        0x0 ./FreeRTOS/src/queue.o
- .text.unlikely.prvCopyDataToQueue
-                0x00000000       0x6a ./FreeRTOS/src/queue.o
- .text.xQueueGenericSend
-                0x00000000      0x148 ./FreeRTOS/src/queue.o
- .text.xQueueCreateMutex
-                0x00000000       0x4a ./FreeRTOS/src/queue.o
+ .text.xQueueCreateCountingSemaphore
+                0x00000000       0x4e ./FreeRTOS/src/queue.o
  .text.xQueueGenericSendFromISR
                 0x00000000       0xb8 ./FreeRTOS/src/queue.o
  .text.xQueueReceiveFromISR
@@ -223,8 +234,6 @@ Discarded input sections
                 0x00000000        0x6 ./FreeRTOS/src/tasks.o
  .text.xTaskGetCurrentTaskHandle
                 0x00000000        0xc ./FreeRTOS/src/tasks.o
- .text.xTaskPriorityDisinherit
-                0x00000000       0xa0 ./FreeRTOS/src/tasks.o
  .text.uxTaskResetEventItemValue
                 0x00000000       0x18 ./FreeRTOS/src/tasks.o
  .text.ulTaskNotifyTake
@@ -247,10 +256,155 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x18 ./FreeRTOS/src/timers.o
  .debug_line    0x00000000       0x1d ./FreeRTOS/src/timers.o
- .debug_str     0x00000000      0x1c4 ./FreeRTOS/src/timers.o
+ .debug_str     0x00000000      0x1c8 ./FreeRTOS/src/timers.o
  .comment       0x00000000       0x6f ./FreeRTOS/src/timers.o
  .ARM.attributes
                 0x00000000       0x39 ./FreeRTOS/src/timers.o
+ .text          0x00000000        0x0 ./FATFS_SDIO/fatfs/option/ccsbcs.o
+ .data          0x00000000        0x0 ./FATFS_SDIO/fatfs/option/ccsbcs.o
+ .bss           0x00000000        0x0 ./FATFS_SDIO/fatfs/option/ccsbcs.o
+ .text          0x00000000        0x0 ./FATFS_SDIO/fatfs/option/syscall.o
+ .data          0x00000000        0x0 ./FATFS_SDIO/fatfs/option/syscall.o
+ .bss           0x00000000        0x0 ./FATFS_SDIO/fatfs/option/syscall.o
+ .debug_info    0x00000000       0x79 ./FATFS_SDIO/fatfs/option/syscall.o
+ .debug_abbrev  0x00000000       0x26 ./FATFS_SDIO/fatfs/option/syscall.o
+ .debug_aranges
+                0x00000000       0x18 ./FATFS_SDIO/fatfs/option/syscall.o
+ .debug_line    0x00000000       0x1d ./FATFS_SDIO/fatfs/option/syscall.o
+ .debug_str     0x00000000      0x1d4 ./FATFS_SDIO/fatfs/option/syscall.o
+ .comment       0x00000000       0x6f ./FATFS_SDIO/fatfs/option/syscall.o
+ .ARM.attributes
+                0x00000000       0x39 ./FATFS_SDIO/fatfs/option/syscall.o
+ .text          0x00000000        0x0 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_atadrive.o
+ .data          0x00000000        0x0 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_atadrive.o
+ .bss           0x00000000        0x0 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_atadrive.o
+ .text.UB_ATADrive_Init
+                0x00000000        0x2 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_atadrive.o
+ .text.UB_ATADrive_CheckMedia
+                0x00000000        0x4 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_atadrive.o
+ .text.ATA_disk_ioctl
+                0x00000000        0x6 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_atadrive.o
+ .text          0x00000000        0x0 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .data          0x00000000        0x0 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .bss           0x00000000        0x0 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .text.IsCardProgramming
+                0x00000000      0x15c ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .text.MMC_disk_ioctl
+                0x00000000       0x22 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .text.SD_Detect
+                0x00000000       0x10 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .text.SD_PowerOFF
+                0x00000000        0xc ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .text.SD_GetTransferState
+                0x00000000       0x14 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .text.SD_Erase
+                0x00000000      0x110 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .text.SD_SendStatus
+                0x00000000        0xa ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .text.SD_SendSDStatus
+                0x00000000      0x168 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .text.SD_GetCardStatus
+                0x00000000       0x80 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .text.convert_from_bytes_to_power_of_two
+                0x00000000       0x14 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .text.SD_HighSpeed
+                0x00000000      0x174 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .text.SD_LowLevel_DeInit
+                0x00000000       0x9c ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .text.SD_DeInit
+                0x00000000        0x4 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .text.SD_WriteBlock
+                0x00000000       0xd4 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .text.SD_ReadBlock
+                0x00000000       0xd8 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .bss.SDSTATUS_Tab
+                0x00000000       0x10 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .text          0x00000000        0x0 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_usbdisk.o
+ .data          0x00000000        0x0 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_usbdisk.o
+ .bss           0x00000000        0x0 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_usbdisk.o
+ .text.UB_USBDisk_Init
+                0x00000000        0x2 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_usbdisk.o
+ .text.UB_USBDrive_CheckMedia
+                0x00000000        0x4 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_usbdisk.o
+ .text.USB_disk_ioctl
+                0x00000000        0x6 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_usbdisk.o
+ .text          0x00000000        0x0 ./FATFS_SDIO/fatfs/diskio.o
+ .data          0x00000000        0x0 ./FATFS_SDIO/fatfs/diskio.o
+ .bss           0x00000000        0x0 ./FATFS_SDIO/fatfs/diskio.o
+ .text.get_fattime
+                0x00000000        0x8 ./FATFS_SDIO/fatfs/diskio.o
+ .text.disk_ioctl
+                0x00000000       0x2e ./FATFS_SDIO/fatfs/diskio.o
+ .text          0x00000000        0x0 ./FATFS_SDIO/fatfs/fatfs_syscall.o
+ .data          0x00000000        0x0 ./FATFS_SDIO/fatfs/fatfs_syscall.o
+ .bss           0x00000000        0x0 ./FATFS_SDIO/fatfs/fatfs_syscall.o
+ .debug_info    0x00000000       0x79 ./FATFS_SDIO/fatfs/fatfs_syscall.o
+ .debug_abbrev  0x00000000       0x26 ./FATFS_SDIO/fatfs/fatfs_syscall.o
+ .debug_aranges
+                0x00000000       0x18 ./FATFS_SDIO/fatfs/fatfs_syscall.o
+ .debug_line    0x00000000       0x1d ./FATFS_SDIO/fatfs/fatfs_syscall.o
+ .debug_str     0x00000000      0x1d3 ./FATFS_SDIO/fatfs/fatfs_syscall.o
+ .comment       0x00000000       0x6f ./FATFS_SDIO/fatfs/fatfs_syscall.o
+ .ARM.attributes
+                0x00000000       0x39 ./FATFS_SDIO/fatfs/fatfs_syscall.o
+ .text          0x00000000        0x0 ./FATFS_SDIO/fatfs/ff.o
+ .data          0x00000000        0x0 ./FATFS_SDIO/fatfs/ff.o
+ .bss           0x00000000        0x0 ./FATFS_SDIO/fatfs/ff.o
+ .text.mem_cpy  0x00000000       0x14 ./FATFS_SDIO/fatfs/ff.o
+ .text.sync_fs  0x00000000       0xb4 ./FATFS_SDIO/fatfs/ff.o
+ .text.dir_remove
+                0x00000000       0x48 ./FATFS_SDIO/fatfs/ff.o
+ .text.remove_chain
+                0x00000000       0x54 ./FATFS_SDIO/fatfs/ff.o
+ .text.gen_numname
+                0x00000000       0x86 ./FATFS_SDIO/fatfs/ff.o
+ .text.dir_register
+                0x00000000      0x1c4 ./FATFS_SDIO/fatfs/ff.o
+ .text.f_open   0x00000000      0x124 ./FATFS_SDIO/fatfs/ff.o
+ .text.f_read   0x00000000      0x156 ./FATFS_SDIO/fatfs/ff.o
+ .text.f_write  0x00000000      0x184 ./FATFS_SDIO/fatfs/ff.o
+ .text.f_sync   0x00000000       0xa6 ./FATFS_SDIO/fatfs/ff.o
+ .text.f_close  0x00000000        0xe ./FATFS_SDIO/fatfs/ff.o
+ .text.f_chdrive
+                0x00000000       0x10 ./FATFS_SDIO/fatfs/ff.o
+ .text.f_chdir  0x00000000       0x5a ./FATFS_SDIO/fatfs/ff.o
+ .text.f_lseek  0x00000000      0x138 ./FATFS_SDIO/fatfs/ff.o
+ .text.f_stat   0x00000000       0x44 ./FATFS_SDIO/fatfs/ff.o
+ .text.f_truncate
+                0x00000000       0x86 ./FATFS_SDIO/fatfs/ff.o
+ .text.f_unlink
+                0x00000000       0xcc ./FATFS_SDIO/fatfs/ff.o
+ .text.f_mkdir  0x00000000      0x1e4 ./FATFS_SDIO/fatfs/ff.o
+ .text.f_chmod  0x00000000       0x5c ./FATFS_SDIO/fatfs/ff.o
+ .text.f_utime  0x00000000       0x5c ./FATFS_SDIO/fatfs/ff.o
+ .text.f_rename
+                0x00000000      0x110 ./FATFS_SDIO/fatfs/ff.o
+ .text.f_gets   0x00000000       0x46 ./FATFS_SDIO/fatfs/ff.o
+ .text.f_putc   0x00000000       0x24 ./FATFS_SDIO/fatfs/ff.o
+ .text.f_puts   0x00000000       0x1e ./FATFS_SDIO/fatfs/ff.o
+ .text.f_printf
+                0x00000000      0x240 ./FATFS_SDIO/fatfs/ff.o
+ .text          0x00000000        0x0 ./FATFS_SDIO/stm32_ub_fatfs.o
+ .data          0x00000000        0x0 ./FATFS_SDIO/stm32_ub_fatfs.o
+ .bss           0x00000000        0x0 ./FATFS_SDIO/stm32_ub_fatfs.o
+ .text.UB_Fatfs_UnMount
+                0x00000000       0x10 ./FATFS_SDIO/stm32_ub_fatfs.o
+ .text.UB_Fatfs_DelFile
+                0x00000000       0x10 ./FATFS_SDIO/stm32_ub_fatfs.o
+ .text.UB_Fatfs_OpenFile
+                0x00000000       0x44 ./FATFS_SDIO/stm32_ub_fatfs.o
+ .text.UB_Fatfs_CloseFile
+                0x00000000       0x10 ./FATFS_SDIO/stm32_ub_fatfs.o
+ .text.UB_Fatfs_WriteString
+                0x00000000       0x20 ./FATFS_SDIO/stm32_ub_fatfs.o
+ .text.UB_Fatfs_ReadString
+                0x00000000       0x28 ./FATFS_SDIO/stm32_ub_fatfs.o
+ .text.UB_Fatfs_FileSize
+                0x00000000        0x8 ./FATFS_SDIO/stm32_ub_fatfs.o
+ .text.UB_Fatfs_ReadBlock
+                0x00000000       0x2e ./FATFS_SDIO/stm32_ub_fatfs.o
+ .text.UB_Fatfs_WriteBlock
+                0x00000000       0x2e ./FATFS_SDIO/stm32_ub_fatfs.o
  .text          0x00000000        0x0 ./Drivers/SLP/src/misc.o
  .data          0x00000000        0x0 ./Drivers/SLP/src/misc.o
  .bss           0x00000000        0x0 ./Drivers/SLP/src/misc.o
@@ -270,8 +424,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x40 ./Drivers/SLP/src/misc.o
  .debug_ranges  0x00000000       0x30 ./Drivers/SLP/src/misc.o
- .debug_line    0x00000000      0x1bd ./Drivers/SLP/src/misc.o
- .debug_str     0x00000000      0x439 ./Drivers/SLP/src/misc.o
+ .debug_line    0x00000000      0x1c5 ./Drivers/SLP/src/misc.o
+ .debug_str     0x00000000      0x43d ./Drivers/SLP/src/misc.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/misc.o
  .debug_frame   0x00000000       0x6c ./Drivers/SLP/src/misc.o
  .ARM.attributes
@@ -360,8 +514,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000      0x148 ./Drivers/SLP/src/stm32f4xx_adc.o
  .debug_ranges  0x00000000      0x138 ./Drivers/SLP/src/stm32f4xx_adc.o
- .debug_line    0x00000000      0x4ba ./Drivers/SLP/src/stm32f4xx_adc.o
- .debug_str     0x00000000      0x886 ./Drivers/SLP/src/stm32f4xx_adc.o
+ .debug_line    0x00000000      0x4c2 ./Drivers/SLP/src/stm32f4xx_adc.o
+ .debug_str     0x00000000      0x88a ./Drivers/SLP/src/stm32f4xx_adc.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_adc.o
  .debug_frame   0x00000000      0x2b4 ./Drivers/SLP/src/stm32f4xx_adc.o
  .ARM.attributes
@@ -423,8 +577,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0xd8 ./Drivers/SLP/src/stm32f4xx_can.o
  .debug_ranges  0x00000000      0x100 ./Drivers/SLP/src/stm32f4xx_can.o
- .debug_line    0x00000000      0x4b0 ./Drivers/SLP/src/stm32f4xx_can.o
- .debug_str     0x00000000      0x7c0 ./Drivers/SLP/src/stm32f4xx_can.o
+ .debug_line    0x00000000      0x4b8 ./Drivers/SLP/src/stm32f4xx_can.o
+ .debug_str     0x00000000      0x7c4 ./Drivers/SLP/src/stm32f4xx_can.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_can.o
  .debug_frame   0x00000000      0x1c0 ./Drivers/SLP/src/stm32f4xx_can.o
  .ARM.attributes
@@ -436,8 +590,8 @@ Discarded input sections
  .debug_abbrev  0x00000000       0x4b ./Drivers/SLP/src/stm32f4xx_cec.o
  .debug_aranges
                 0x00000000       0x18 ./Drivers/SLP/src/stm32f4xx_cec.o
- .debug_line    0x00000000       0xdc ./Drivers/SLP/src/stm32f4xx_cec.o
- .debug_str     0x00000000      0x1dc ./Drivers/SLP/src/stm32f4xx_cec.o
+ .debug_line    0x00000000       0xe0 ./Drivers/SLP/src/stm32f4xx_cec.o
+ .debug_str     0x00000000      0x1e0 ./Drivers/SLP/src/stm32f4xx_cec.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_cec.o
  .ARM.attributes
                 0x00000000       0x39 ./Drivers/SLP/src/stm32f4xx_cec.o
@@ -462,8 +616,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x48 ./Drivers/SLP/src/stm32f4xx_crc.o
  .debug_ranges  0x00000000       0x38 ./Drivers/SLP/src/stm32f4xx_crc.o
- .debug_line    0x00000000      0x185 ./Drivers/SLP/src/stm32f4xx_crc.o
- .debug_str     0x00000000      0x2b6 ./Drivers/SLP/src/stm32f4xx_crc.o
+ .debug_line    0x00000000      0x189 ./Drivers/SLP/src/stm32f4xx_crc.o
+ .debug_str     0x00000000      0x2ba ./Drivers/SLP/src/stm32f4xx_crc.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_crc.o
  .debug_frame   0x00000000       0x70 ./Drivers/SLP/src/stm32f4xx_crc.o
  .ARM.attributes
@@ -515,8 +669,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0xb0 ./Drivers/SLP/src/stm32f4xx_cryp.o
  .debug_ranges  0x00000000       0xa0 ./Drivers/SLP/src/stm32f4xx_cryp.o
- .debug_line    0x00000000      0x364 ./Drivers/SLP/src/stm32f4xx_cryp.o
- .debug_str     0x00000000      0x732 ./Drivers/SLP/src/stm32f4xx_cryp.o
+ .debug_line    0x00000000      0x36c ./Drivers/SLP/src/stm32f4xx_cryp.o
+ .debug_str     0x00000000      0x736 ./Drivers/SLP/src/stm32f4xx_cryp.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_cryp.o
  .debug_frame   0x00000000      0x164 ./Drivers/SLP/src/stm32f4xx_cryp.o
  .ARM.attributes
@@ -540,8 +694,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x40 ./Drivers/SLP/src/stm32f4xx_cryp_aes.o
  .debug_ranges  0x00000000       0xc0 ./Drivers/SLP/src/stm32f4xx_cryp_aes.o
- .debug_line    0x00000000      0xbe1 ./Drivers/SLP/src/stm32f4xx_cryp_aes.o
- .debug_str     0x00000000      0x5c8 ./Drivers/SLP/src/stm32f4xx_cryp_aes.o
+ .debug_line    0x00000000      0xbe9 ./Drivers/SLP/src/stm32f4xx_cryp_aes.o
+ .debug_str     0x00000000      0x5cc ./Drivers/SLP/src/stm32f4xx_cryp_aes.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_cryp_aes.o
  .debug_frame   0x00000000       0xe8 ./Drivers/SLP/src/stm32f4xx_cryp_aes.o
  .ARM.attributes
@@ -559,8 +713,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x28 ./Drivers/SLP/src/stm32f4xx_cryp_des.o
  .debug_ranges  0x00000000       0x60 ./Drivers/SLP/src/stm32f4xx_cryp_des.o
- .debug_line    0x00000000      0x2bd ./Drivers/SLP/src/stm32f4xx_cryp_des.o
- .debug_str     0x00000000      0x4c2 ./Drivers/SLP/src/stm32f4xx_cryp_des.o
+ .debug_line    0x00000000      0x2c5 ./Drivers/SLP/src/stm32f4xx_cryp_des.o
+ .debug_str     0x00000000      0x4c6 ./Drivers/SLP/src/stm32f4xx_cryp_des.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_cryp_des.o
  .debug_frame   0x00000000       0x60 ./Drivers/SLP/src/stm32f4xx_cryp_des.o
  .ARM.attributes
@@ -578,8 +732,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x28 ./Drivers/SLP/src/stm32f4xx_cryp_tdes.o
  .debug_ranges  0x00000000       0x60 ./Drivers/SLP/src/stm32f4xx_cryp_tdes.o
- .debug_line    0x00000000      0x31e ./Drivers/SLP/src/stm32f4xx_cryp_tdes.o
- .debug_str     0x00000000      0x4c8 ./Drivers/SLP/src/stm32f4xx_cryp_tdes.o
+ .debug_line    0x00000000      0x326 ./Drivers/SLP/src/stm32f4xx_cryp_tdes.o
+ .debug_str     0x00000000      0x4cc ./Drivers/SLP/src/stm32f4xx_cryp_tdes.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_cryp_tdes.o
  .debug_frame   0x00000000       0x60 ./Drivers/SLP/src/stm32f4xx_cryp_tdes.o
  .ARM.attributes
@@ -626,8 +780,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x90 ./Drivers/SLP/src/stm32f4xx_dac.o
  .debug_ranges  0x00000000       0x80 ./Drivers/SLP/src/stm32f4xx_dac.o
- .debug_line    0x00000000      0x2b3 ./Drivers/SLP/src/stm32f4xx_dac.o
- .debug_str     0x00000000      0x4a8 ./Drivers/SLP/src/stm32f4xx_dac.o
+ .debug_line    0x00000000      0x2bb ./Drivers/SLP/src/stm32f4xx_dac.o
+ .debug_str     0x00000000      0x4ac ./Drivers/SLP/src/stm32f4xx_dac.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_dac.o
  .debug_frame   0x00000000      0x150 ./Drivers/SLP/src/stm32f4xx_dac.o
  .ARM.attributes
@@ -651,8 +805,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x40 ./Drivers/SLP/src/stm32f4xx_dbgmcu.o
  .debug_ranges  0x00000000       0x30 ./Drivers/SLP/src/stm32f4xx_dbgmcu.o
- .debug_line    0x00000000      0x173 ./Drivers/SLP/src/stm32f4xx_dbgmcu.o
- .debug_str     0x00000000      0x2ab ./Drivers/SLP/src/stm32f4xx_dbgmcu.o
+ .debug_line    0x00000000      0x177 ./Drivers/SLP/src/stm32f4xx_dbgmcu.o
+ .debug_str     0x00000000      0x2af ./Drivers/SLP/src/stm32f4xx_dbgmcu.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_dbgmcu.o
  .debug_frame   0x00000000       0x60 ./Drivers/SLP/src/stm32f4xx_dbgmcu.o
  .ARM.attributes
@@ -696,8 +850,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x88 ./Drivers/SLP/src/stm32f4xx_dcmi.o
  .debug_ranges  0x00000000       0x78 ./Drivers/SLP/src/stm32f4xx_dcmi.o
- .debug_line    0x00000000      0x2a0 ./Drivers/SLP/src/stm32f4xx_dcmi.o
- .debug_str     0x00000000      0x535 ./Drivers/SLP/src/stm32f4xx_dcmi.o
+ .debug_line    0x00000000      0x2a8 ./Drivers/SLP/src/stm32f4xx_dcmi.o
+ .debug_str     0x00000000      0x539 ./Drivers/SLP/src/stm32f4xx_dcmi.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_dcmi.o
  .debug_frame   0x00000000      0x108 ./Drivers/SLP/src/stm32f4xx_dcmi.o
  .ARM.attributes
@@ -709,24 +863,17 @@ Discarded input sections
  .debug_abbrev  0x00000000       0x4b ./Drivers/SLP/src/stm32f4xx_dfsdm.o
  .debug_aranges
                 0x00000000       0x18 ./Drivers/SLP/src/stm32f4xx_dfsdm.o
- .debug_line    0x00000000       0xdc ./Drivers/SLP/src/stm32f4xx_dfsdm.o
- .debug_str     0x00000000      0x1de ./Drivers/SLP/src/stm32f4xx_dfsdm.o
+ .debug_line    0x00000000       0xe0 ./Drivers/SLP/src/stm32f4xx_dfsdm.o
+ .debug_str     0x00000000      0x1e2 ./Drivers/SLP/src/stm32f4xx_dfsdm.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_dfsdm.o
  .ARM.attributes
                 0x00000000       0x39 ./Drivers/SLP/src/stm32f4xx_dfsdm.o
  .text          0x00000000        0x0 ./Drivers/SLP/src/stm32f4xx_dma.o
  .data          0x00000000        0x0 ./Drivers/SLP/src/stm32f4xx_dma.o
  .bss           0x00000000        0x0 ./Drivers/SLP/src/stm32f4xx_dma.o
- .text.DMA_DeInit
-                0x00000000      0x10c ./Drivers/SLP/src/stm32f4xx_dma.o
- .text.DMA_Init
-                0x00000000       0x54 ./Drivers/SLP/src/stm32f4xx_dma.o
  .text.DMA_StructInit
                 0x00000000       0x22 ./Drivers/SLP/src/stm32f4xx_dma.o
- .text.DMA_Cmd  0x00000000       0x12 ./Drivers/SLP/src/stm32f4xx_dma.o
  .text.DMA_PeriphIncOffsetSizeConfig
-                0x00000000       0x12 ./Drivers/SLP/src/stm32f4xx_dma.o
- .text.DMA_FlowControllerConfig
                 0x00000000       0x12 ./Drivers/SLP/src/stm32f4xx_dma.o
  .text.DMA_SetCurrDataCounter
                 0x00000000        0x4 ./Drivers/SLP/src/stm32f4xx_dma.o
@@ -746,26 +893,8 @@ Discarded input sections
                 0x00000000        0x8 ./Drivers/SLP/src/stm32f4xx_dma.o
  .text.DMA_GetFlagStatus
                 0x00000000       0x38 ./Drivers/SLP/src/stm32f4xx_dma.o
- .text.DMA_ITConfig
-                0x00000000       0x3e ./Drivers/SLP/src/stm32f4xx_dma.o
  .text.DMA_GetITStatus
                 0x00000000       0x50 ./Drivers/SLP/src/stm32f4xx_dma.o
- .text.DMA_ClearITPendingBit
-                0x00000000       0x30 ./Drivers/SLP/src/stm32f4xx_dma.o
- .text.DMA_ClearFlag
-                0x00000000        0x4 ./Drivers/SLP/src/stm32f4xx_dma.o
- .debug_info    0x00000000      0x700 ./Drivers/SLP/src/stm32f4xx_dma.o
- .debug_abbrev  0x00000000      0x177 ./Drivers/SLP/src/stm32f4xx_dma.o
- .debug_loc     0x00000000      0x43b ./Drivers/SLP/src/stm32f4xx_dma.o
- .debug_aranges
-                0x00000000       0xa8 ./Drivers/SLP/src/stm32f4xx_dma.o
- .debug_ranges  0x00000000       0x98 ./Drivers/SLP/src/stm32f4xx_dma.o
- .debug_line    0x00000000      0x334 ./Drivers/SLP/src/stm32f4xx_dma.o
- .debug_str     0x00000000      0x59f ./Drivers/SLP/src/stm32f4xx_dma.o
- .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_dma.o
- .debug_frame   0x00000000      0x160 ./Drivers/SLP/src/stm32f4xx_dma.o
- .ARM.attributes
-                0x00000000       0x39 ./Drivers/SLP/src/stm32f4xx_dma.o
  .text          0x00000000        0x0 ./Drivers/SLP/src/stm32f4xx_dma2d.o
  .data          0x00000000        0x0 ./Drivers/SLP/src/stm32f4xx_dma2d.o
  .bss           0x00000000        0x0 ./Drivers/SLP/src/stm32f4xx_dma2d.o
@@ -813,8 +942,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0xb0 ./Drivers/SLP/src/stm32f4xx_dma2d.o
  .debug_ranges  0x00000000       0xa0 ./Drivers/SLP/src/stm32f4xx_dma2d.o
- .debug_line    0x00000000      0x340 ./Drivers/SLP/src/stm32f4xx_dma2d.o
- .debug_str     0x00000000      0x7b8 ./Drivers/SLP/src/stm32f4xx_dma2d.o
+ .debug_line    0x00000000      0x348 ./Drivers/SLP/src/stm32f4xx_dma2d.o
+ .debug_str     0x00000000      0x7bc ./Drivers/SLP/src/stm32f4xx_dma2d.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_dma2d.o
  .debug_frame   0x00000000      0x168 ./Drivers/SLP/src/stm32f4xx_dma2d.o
  .ARM.attributes
@@ -826,8 +955,8 @@ Discarded input sections
  .debug_abbrev  0x00000000       0x4b ./Drivers/SLP/src/stm32f4xx_dsi.o
  .debug_aranges
                 0x00000000       0x18 ./Drivers/SLP/src/stm32f4xx_dsi.o
- .debug_line    0x00000000       0xdc ./Drivers/SLP/src/stm32f4xx_dsi.o
- .debug_str     0x00000000      0x1dc ./Drivers/SLP/src/stm32f4xx_dsi.o
+ .debug_line    0x00000000       0xe0 ./Drivers/SLP/src/stm32f4xx_dsi.o
+ .debug_str     0x00000000      0x1e0 ./Drivers/SLP/src/stm32f4xx_dsi.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_dsi.o
  .ARM.attributes
                 0x00000000       0x39 ./Drivers/SLP/src/stm32f4xx_dsi.o
@@ -856,8 +985,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x48 ./Drivers/SLP/src/stm32f4xx_exti.o
  .debug_ranges  0x00000000       0x38 ./Drivers/SLP/src/stm32f4xx_exti.o
- .debug_line    0x00000000      0x1e7 ./Drivers/SLP/src/stm32f4xx_exti.o
- .debug_str     0x00000000      0x395 ./Drivers/SLP/src/stm32f4xx_exti.o
+ .debug_line    0x00000000      0x1ef ./Drivers/SLP/src/stm32f4xx_exti.o
+ .debug_str     0x00000000      0x399 ./Drivers/SLP/src/stm32f4xx_exti.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_exti.o
  .debug_frame   0x00000000       0x9c ./Drivers/SLP/src/stm32f4xx_exti.o
  .ARM.attributes
@@ -951,8 +1080,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000      0x140 ./Drivers/SLP/src/stm32f4xx_flash.o
  .debug_ranges  0x00000000      0x130 ./Drivers/SLP/src/stm32f4xx_flash.o
- .debug_line    0x00000000      0x48f ./Drivers/SLP/src/stm32f4xx_flash.o
- .debug_str     0x00000000      0x6d3 ./Drivers/SLP/src/stm32f4xx_flash.o
+ .debug_line    0x00000000      0x497 ./Drivers/SLP/src/stm32f4xx_flash.o
+ .debug_str     0x00000000      0x6d7 ./Drivers/SLP/src/stm32f4xx_flash.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_flash.o
  .debug_frame   0x00000000      0x32c ./Drivers/SLP/src/stm32f4xx_flash.o
  .ARM.attributes
@@ -966,8 +1095,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x28 ./Drivers/SLP/src/stm32f4xx_flash_ramfunc.o
  .debug_ranges  0x00000000       0x18 ./Drivers/SLP/src/stm32f4xx_flash_ramfunc.o
- .debug_line    0x00000000      0x136 ./Drivers/SLP/src/stm32f4xx_flash_ramfunc.o
- .debug_str     0x00000000      0x25e ./Drivers/SLP/src/stm32f4xx_flash_ramfunc.o
+ .debug_line    0x00000000      0x13a ./Drivers/SLP/src/stm32f4xx_flash_ramfunc.o
+ .debug_str     0x00000000      0x262 ./Drivers/SLP/src/stm32f4xx_flash_ramfunc.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_flash_ramfunc.o
  .debug_frame   0x00000000       0x30 ./Drivers/SLP/src/stm32f4xx_flash_ramfunc.o
  .ARM.attributes
@@ -979,8 +1108,8 @@ Discarded input sections
  .debug_abbrev  0x00000000       0x4b ./Drivers/SLP/src/stm32f4xx_fmpi2c.o
  .debug_aranges
                 0x00000000       0x18 ./Drivers/SLP/src/stm32f4xx_fmpi2c.o
- .debug_line    0x00000000       0xdc ./Drivers/SLP/src/stm32f4xx_fmpi2c.o
- .debug_str     0x00000000      0x1df ./Drivers/SLP/src/stm32f4xx_fmpi2c.o
+ .debug_line    0x00000000       0xe0 ./Drivers/SLP/src/stm32f4xx_fmpi2c.o
+ .debug_str     0x00000000      0x1e3 ./Drivers/SLP/src/stm32f4xx_fmpi2c.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_fmpi2c.o
  .ARM.attributes
                 0x00000000       0x39 ./Drivers/SLP/src/stm32f4xx_fmpi2c.o
@@ -1033,8 +1162,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0xb0 ./Drivers/SLP/src/stm32f4xx_fsmc.o
  .debug_ranges  0x00000000       0xa0 ./Drivers/SLP/src/stm32f4xx_fsmc.o
- .debug_line    0x00000000      0x3bb ./Drivers/SLP/src/stm32f4xx_fsmc.o
- .debug_str     0x00000000      0x845 ./Drivers/SLP/src/stm32f4xx_fsmc.o
+ .debug_line    0x00000000      0x3c3 ./Drivers/SLP/src/stm32f4xx_fsmc.o
+ .debug_str     0x00000000      0x849 ./Drivers/SLP/src/stm32f4xx_fsmc.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_fsmc.o
  .debug_frame   0x00000000      0x160 ./Drivers/SLP/src/stm32f4xx_fsmc.o
  .ARM.attributes
@@ -1107,8 +1236,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0xa0 ./Drivers/SLP/src/stm32f4xx_hash.o
  .debug_ranges  0x00000000       0x90 ./Drivers/SLP/src/stm32f4xx_hash.o
- .debug_line    0x00000000      0x2e3 ./Drivers/SLP/src/stm32f4xx_hash.o
- .debug_str     0x00000000      0x4ce ./Drivers/SLP/src/stm32f4xx_hash.o
+ .debug_line    0x00000000      0x2eb ./Drivers/SLP/src/stm32f4xx_hash.o
+ .debug_str     0x00000000      0x4d2 ./Drivers/SLP/src/stm32f4xx_hash.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_hash.o
  .debug_frame   0x00000000      0x14c ./Drivers/SLP/src/stm32f4xx_hash.o
  .ARM.attributes
@@ -1126,8 +1255,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x28 ./Drivers/SLP/src/stm32f4xx_hash_md5.o
  .debug_ranges  0x00000000       0x18 ./Drivers/SLP/src/stm32f4xx_hash_md5.o
- .debug_line    0x00000000      0x2eb ./Drivers/SLP/src/stm32f4xx_hash_md5.o
- .debug_str     0x00000000      0x3c8 ./Drivers/SLP/src/stm32f4xx_hash_md5.o
+ .debug_line    0x00000000      0x2f3 ./Drivers/SLP/src/stm32f4xx_hash_md5.o
+ .debug_str     0x00000000      0x3cc ./Drivers/SLP/src/stm32f4xx_hash_md5.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_hash_md5.o
  .debug_frame   0x00000000       0x5c ./Drivers/SLP/src/stm32f4xx_hash_md5.o
  .ARM.attributes
@@ -1145,8 +1274,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x28 ./Drivers/SLP/src/stm32f4xx_hash_sha1.o
  .debug_ranges  0x00000000       0x18 ./Drivers/SLP/src/stm32f4xx_hash_sha1.o
- .debug_line    0x00000000      0x306 ./Drivers/SLP/src/stm32f4xx_hash_sha1.o
- .debug_str     0x00000000      0x3cd ./Drivers/SLP/src/stm32f4xx_hash_sha1.o
+ .debug_line    0x00000000      0x30e ./Drivers/SLP/src/stm32f4xx_hash_sha1.o
+ .debug_str     0x00000000      0x3d1 ./Drivers/SLP/src/stm32f4xx_hash_sha1.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_hash_sha1.o
  .debug_frame   0x00000000       0x5c ./Drivers/SLP/src/stm32f4xx_hash_sha1.o
  .ARM.attributes
@@ -1229,8 +1358,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000      0x120 ./Drivers/SLP/src/stm32f4xx_i2c.o
  .debug_ranges  0x00000000      0x110 ./Drivers/SLP/src/stm32f4xx_i2c.o
- .debug_line    0x00000000      0x478 ./Drivers/SLP/src/stm32f4xx_i2c.o
- .debug_str     0x00000000      0x710 ./Drivers/SLP/src/stm32f4xx_i2c.o
+ .debug_line    0x00000000      0x480 ./Drivers/SLP/src/stm32f4xx_i2c.o
+ .debug_str     0x00000000      0x714 ./Drivers/SLP/src/stm32f4xx_i2c.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_i2c.o
  .debug_frame   0x00000000      0x270 ./Drivers/SLP/src/stm32f4xx_i2c.o
  .ARM.attributes
@@ -1256,8 +1385,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x48 ./Drivers/SLP/src/stm32f4xx_iwdg.o
  .debug_ranges  0x00000000       0x38 ./Drivers/SLP/src/stm32f4xx_iwdg.o
- .debug_line    0x00000000      0x17c ./Drivers/SLP/src/stm32f4xx_iwdg.o
- .debug_str     0x00000000      0x2d7 ./Drivers/SLP/src/stm32f4xx_iwdg.o
+ .debug_line    0x00000000      0x180 ./Drivers/SLP/src/stm32f4xx_iwdg.o
+ .debug_str     0x00000000      0x2db ./Drivers/SLP/src/stm32f4xx_iwdg.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_iwdg.o
  .debug_frame   0x00000000       0x70 ./Drivers/SLP/src/stm32f4xx_iwdg.o
  .ARM.attributes
@@ -1269,8 +1398,8 @@ Discarded input sections
  .debug_abbrev  0x00000000       0x4b ./Drivers/SLP/src/stm32f4xx_lptim.o
  .debug_aranges
                 0x00000000       0x18 ./Drivers/SLP/src/stm32f4xx_lptim.o
- .debug_line    0x00000000       0xdc ./Drivers/SLP/src/stm32f4xx_lptim.o
- .debug_str     0x00000000      0x1de ./Drivers/SLP/src/stm32f4xx_lptim.o
+ .debug_line    0x00000000       0xe0 ./Drivers/SLP/src/stm32f4xx_lptim.o
+ .debug_str     0x00000000      0x1e2 ./Drivers/SLP/src/stm32f4xx_lptim.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_lptim.o
  .ARM.attributes
                 0x00000000       0x39 ./Drivers/SLP/src/stm32f4xx_lptim.o
@@ -1343,8 +1472,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000      0x100 ./Drivers/SLP/src/stm32f4xx_ltdc.o
  .debug_ranges  0x00000000       0xf0 ./Drivers/SLP/src/stm32f4xx_ltdc.o
- .debug_line    0x00000000      0x47e ./Drivers/SLP/src/stm32f4xx_ltdc.o
- .debug_str     0x00000000      0xa9b ./Drivers/SLP/src/stm32f4xx_ltdc.o
+ .debug_line    0x00000000      0x486 ./Drivers/SLP/src/stm32f4xx_ltdc.o
+ .debug_str     0x00000000      0xa9f ./Drivers/SLP/src/stm32f4xx_ltdc.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_ltdc.o
  .debug_frame   0x00000000      0x240 ./Drivers/SLP/src/stm32f4xx_ltdc.o
  .ARM.attributes
@@ -1390,8 +1519,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x90 ./Drivers/SLP/src/stm32f4xx_pwr.o
  .debug_ranges  0x00000000       0x80 ./Drivers/SLP/src/stm32f4xx_pwr.o
- .debug_line    0x00000000      0x2a1 ./Drivers/SLP/src/stm32f4xx_pwr.o
- .debug_str     0x00000000      0x43f ./Drivers/SLP/src/stm32f4xx_pwr.o
+ .debug_line    0x00000000      0x2a9 ./Drivers/SLP/src/stm32f4xx_pwr.o
+ .debug_str     0x00000000      0x443 ./Drivers/SLP/src/stm32f4xx_pwr.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_pwr.o
  .debug_frame   0x00000000      0x11c ./Drivers/SLP/src/stm32f4xx_pwr.o
  .ARM.attributes
@@ -1403,8 +1532,8 @@ Discarded input sections
  .debug_abbrev  0x00000000       0x4b ./Drivers/SLP/src/stm32f4xx_qspi.o
  .debug_aranges
                 0x00000000       0x18 ./Drivers/SLP/src/stm32f4xx_qspi.o
- .debug_line    0x00000000       0xdc ./Drivers/SLP/src/stm32f4xx_qspi.o
- .debug_str     0x00000000      0x1dd ./Drivers/SLP/src/stm32f4xx_qspi.o
+ .debug_line    0x00000000       0xe0 ./Drivers/SLP/src/stm32f4xx_qspi.o
+ .debug_str     0x00000000      0x1e1 ./Drivers/SLP/src/stm32f4xx_qspi.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_qspi.o
  .ARM.attributes
                 0x00000000       0x39 ./Drivers/SLP/src/stm32f4xx_qspi.o
@@ -1529,8 +1658,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x50 ./Drivers/SLP/src/stm32f4xx_rng.o
  .debug_ranges  0x00000000       0x40 ./Drivers/SLP/src/stm32f4xx_rng.o
- .debug_line    0x00000000      0x1e9 ./Drivers/SLP/src/stm32f4xx_rng.o
- .debug_str     0x00000000      0x2de ./Drivers/SLP/src/stm32f4xx_rng.o
+ .debug_line    0x00000000      0x1f1 ./Drivers/SLP/src/stm32f4xx_rng.o
+ .debug_str     0x00000000      0x2e2 ./Drivers/SLP/src/stm32f4xx_rng.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_rng.o
  .debug_frame   0x00000000       0x9c ./Drivers/SLP/src/stm32f4xx_rng.o
  .ARM.attributes
@@ -1658,8 +1787,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000      0x1e0 ./Drivers/SLP/src/stm32f4xx_rtc.o
  .debug_ranges  0x00000000      0x1d0 ./Drivers/SLP/src/stm32f4xx_rtc.o
- .debug_line    0x00000000      0x7e3 ./Drivers/SLP/src/stm32f4xx_rtc.o
- .debug_str     0x00000000      0xbb3 ./Drivers/SLP/src/stm32f4xx_rtc.o
+ .debug_line    0x00000000      0x7eb ./Drivers/SLP/src/stm32f4xx_rtc.o
+ .debug_str     0x00000000      0xbb7 ./Drivers/SLP/src/stm32f4xx_rtc.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_rtc.o
  .debug_frame   0x00000000      0x4a4 ./Drivers/SLP/src/stm32f4xx_rtc.o
  .ARM.attributes
@@ -1722,8 +1851,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0xd0 ./Drivers/SLP/src/stm32f4xx_sai.o
  .debug_ranges  0x00000000       0xc0 ./Drivers/SLP/src/stm32f4xx_sai.o
- .debug_line    0x00000000      0x354 ./Drivers/SLP/src/stm32f4xx_sai.o
- .debug_str     0x00000000      0x607 ./Drivers/SLP/src/stm32f4xx_sai.o
+ .debug_line    0x00000000      0x35c ./Drivers/SLP/src/stm32f4xx_sai.o
+ .debug_str     0x00000000      0x60b ./Drivers/SLP/src/stm32f4xx_sai.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_sai.o
  .debug_frame   0x00000000      0x1c8 ./Drivers/SLP/src/stm32f4xx_sai.o
  .ARM.attributes
@@ -1731,33 +1860,13 @@ Discarded input sections
  .text          0x00000000        0x0 ./Drivers/SLP/src/stm32f4xx_sdio.o
  .data          0x00000000        0x0 ./Drivers/SLP/src/stm32f4xx_sdio.o
  .bss           0x00000000        0x0 ./Drivers/SLP/src/stm32f4xx_sdio.o
- .text.SDIO_DeInit
-                0x00000000       0x1a ./Drivers/SLP/src/stm32f4xx_sdio.o
- .text.SDIO_Init
-                0x00000000       0x30 ./Drivers/SLP/src/stm32f4xx_sdio.o
  .text.SDIO_StructInit
                 0x00000000       0x10 ./Drivers/SLP/src/stm32f4xx_sdio.o
- .text.SDIO_ClockCmd
-                0x00000000        0xc ./Drivers/SLP/src/stm32f4xx_sdio.o
- .text.SDIO_SetPowerState
-                0x00000000        0xc ./Drivers/SLP/src/stm32f4xx_sdio.o
- .text.SDIO_GetPowerState
-                0x00000000       0x10 ./Drivers/SLP/src/stm32f4xx_sdio.o
- .text.SDIO_SendCommand
-                0x00000000       0x2c ./Drivers/SLP/src/stm32f4xx_sdio.o
  .text.SDIO_CmdStructInit
                 0x00000000        0xe ./Drivers/SLP/src/stm32f4xx_sdio.o
- .text.SDIO_GetCommandResponse
-                0x00000000        0xc ./Drivers/SLP/src/stm32f4xx_sdio.o
- .text.SDIO_GetResponse
-                0x00000000       0x18 ./Drivers/SLP/src/stm32f4xx_sdio.o
- .text.SDIO_DataConfig
-                0x00000000       0x2c ./Drivers/SLP/src/stm32f4xx_sdio.o
  .text.SDIO_DataStructInit
                 0x00000000       0x14 ./Drivers/SLP/src/stm32f4xx_sdio.o
  .text.SDIO_GetDataCounter
-                0x00000000        0xc ./Drivers/SLP/src/stm32f4xx_sdio.o
- .text.SDIO_ReadData
                 0x00000000        0xc ./Drivers/SLP/src/stm32f4xx_sdio.o
  .text.SDIO_WriteData
                 0x00000000        0xc ./Drivers/SLP/src/stm32f4xx_sdio.o
@@ -1779,30 +1888,6 @@ Discarded input sections
                 0x00000000       0x14 ./Drivers/SLP/src/stm32f4xx_sdio.o
  .text.SDIO_SendCEATACmd
                 0x00000000        0xc ./Drivers/SLP/src/stm32f4xx_sdio.o
- .text.SDIO_DMACmd
-                0x00000000        0xc ./Drivers/SLP/src/stm32f4xx_sdio.o
- .text.SDIO_ITConfig
-                0x00000000       0x18 ./Drivers/SLP/src/stm32f4xx_sdio.o
- .text.SDIO_ClearFlag
-                0x00000000        0xc ./Drivers/SLP/src/stm32f4xx_sdio.o
- .text.SDIO_GetITStatus
-                0x00000000       0x14 ./Drivers/SLP/src/stm32f4xx_sdio.o
- .text.SDIO_GetFlagStatus
-                0x00000000        0x4 ./Drivers/SLP/src/stm32f4xx_sdio.o
- .text.SDIO_ClearITPendingBit
-                0x00000000        0xc ./Drivers/SLP/src/stm32f4xx_sdio.o
- .debug_info    0x00000000      0x7de ./Drivers/SLP/src/stm32f4xx_sdio.o
- .debug_abbrev  0x00000000      0x1e5 ./Drivers/SLP/src/stm32f4xx_sdio.o
- .debug_loc     0x00000000      0x186 ./Drivers/SLP/src/stm32f4xx_sdio.o
- .debug_aranges
-                0x00000000       0xf8 ./Drivers/SLP/src/stm32f4xx_sdio.o
- .debug_ranges  0x00000000       0xe8 ./Drivers/SLP/src/stm32f4xx_sdio.o
- .debug_line    0x00000000      0x395 ./Drivers/SLP/src/stm32f4xx_sdio.o
- .debug_str     0x00000000      0x68b ./Drivers/SLP/src/stm32f4xx_sdio.o
- .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_sdio.o
- .debug_frame   0x00000000      0x21c ./Drivers/SLP/src/stm32f4xx_sdio.o
- .ARM.attributes
-                0x00000000       0x39 ./Drivers/SLP/src/stm32f4xx_sdio.o
  .text          0x00000000        0x0 ./Drivers/SLP/src/stm32f4xx_spdifrx.o
  .data          0x00000000        0x0 ./Drivers/SLP/src/stm32f4xx_spdifrx.o
  .bss           0x00000000        0x0 ./Drivers/SLP/src/stm32f4xx_spdifrx.o
@@ -1810,8 +1895,8 @@ Discarded input sections
  .debug_abbrev  0x00000000       0x4b ./Drivers/SLP/src/stm32f4xx_spdifrx.o
  .debug_aranges
                 0x00000000       0x18 ./Drivers/SLP/src/stm32f4xx_spdifrx.o
- .debug_line    0x00000000       0xdc ./Drivers/SLP/src/stm32f4xx_spdifrx.o
- .debug_str     0x00000000      0x1e0 ./Drivers/SLP/src/stm32f4xx_spdifrx.o
+ .debug_line    0x00000000       0xe0 ./Drivers/SLP/src/stm32f4xx_spdifrx.o
+ .debug_str     0x00000000      0x1e4 ./Drivers/SLP/src/stm32f4xx_spdifrx.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_spdifrx.o
  .ARM.attributes
                 0x00000000       0x39 ./Drivers/SLP/src/stm32f4xx_spdifrx.o
@@ -1872,8 +1957,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0xe0 ./Drivers/SLP/src/stm32f4xx_spi.o
  .debug_ranges  0x00000000       0xd0 ./Drivers/SLP/src/stm32f4xx_spi.o
- .debug_line    0x00000000      0x3f6 ./Drivers/SLP/src/stm32f4xx_spi.o
- .debug_str     0x00000000      0x748 ./Drivers/SLP/src/stm32f4xx_spi.o
+ .debug_line    0x00000000      0x3fe ./Drivers/SLP/src/stm32f4xx_spi.o
+ .debug_str     0x00000000      0x74c ./Drivers/SLP/src/stm32f4xx_spi.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_spi.o
  .debug_frame   0x00000000      0x1e4 ./Drivers/SLP/src/stm32f4xx_spi.o
  .ARM.attributes
@@ -1901,8 +1986,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x50 ./Drivers/SLP/src/stm32f4xx_syscfg.o
  .debug_ranges  0x00000000       0x40 ./Drivers/SLP/src/stm32f4xx_syscfg.o
- .debug_line    0x00000000      0x1e6 ./Drivers/SLP/src/stm32f4xx_syscfg.o
- .debug_str     0x00000000      0x390 ./Drivers/SLP/src/stm32f4xx_syscfg.o
+ .debug_line    0x00000000      0x1ee ./Drivers/SLP/src/stm32f4xx_syscfg.o
+ .debug_str     0x00000000      0x394 ./Drivers/SLP/src/stm32f4xx_syscfg.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_syscfg.o
  .debug_frame   0x00000000       0x94 ./Drivers/SLP/src/stm32f4xx_syscfg.o
  .ARM.attributes
@@ -2150,8 +2235,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x58 ./Drivers/SLP/src/stm32f4xx_wwdg.o
  .debug_ranges  0x00000000       0x48 ./Drivers/SLP/src/stm32f4xx_wwdg.o
- .debug_line    0x00000000      0x1f8 ./Drivers/SLP/src/stm32f4xx_wwdg.o
- .debug_str     0x00000000      0x2f9 ./Drivers/SLP/src/stm32f4xx_wwdg.o
+ .debug_line    0x00000000      0x200 ./Drivers/SLP/src/stm32f4xx_wwdg.o
+ .debug_str     0x00000000      0x2fd ./Drivers/SLP/src/stm32f4xx_wwdg.o
  .comment       0x00000000       0x6f ./Drivers/SLP/src/stm32f4xx_wwdg.o
  .debug_frame   0x00000000       0xa4 ./Drivers/SLP/src/stm32f4xx_wwdg.o
  .ARM.attributes
@@ -2188,6 +2273,9 @@ Discarded input sections
  .text          0x00000000        0x0 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-memset.o)
  .data          0x00000000        0x0 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-memset.o)
  .bss           0x00000000        0x0 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-memset.o)
+ .text          0x00000000        0x0 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-strcpy.o)
+ .data          0x00000000        0x0 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-strcpy.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-strcpy.o)
  .text          0x00000000        0x0 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-__call_atexit.o)
  .data          0x00000000        0x0 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-__call_atexit.o)
  .bss           0x00000000        0x0 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-__call_atexit.o)
@@ -2230,6 +2318,7 @@ LOAD ./Src/freertos.o
 LOAD ./Src/main.o
 LOAD ./Src/perirh_init.o
 LOAD ./Src/printf.o
+LOAD ./Src/sd.o
 LOAD ./Src/stm32f4xx_it.o
 LOAD ./Src/tim6.o
 LOAD ./Src/uart.o
@@ -2242,6 +2331,15 @@ LOAD ./FreeRTOS/src/port.o
 LOAD ./FreeRTOS/src/queue.o
 LOAD ./FreeRTOS/src/tasks.o
 LOAD ./FreeRTOS/src/timers.o
+LOAD ./FATFS_SDIO/fatfs/option/ccsbcs.o
+LOAD ./FATFS_SDIO/fatfs/option/syscall.o
+LOAD ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_atadrive.o
+LOAD ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+LOAD ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_usbdisk.o
+LOAD ./FATFS_SDIO/fatfs/diskio.o
+LOAD ./FATFS_SDIO/fatfs/fatfs_syscall.o
+LOAD ./FATFS_SDIO/fatfs/ff.o
+LOAD ./FATFS_SDIO/stm32_ub_fatfs.o
 LOAD ./Drivers/SLP/src/misc.o
 LOAD ./Drivers/SLP/src/stm32f4xx_adc.o
 LOAD ./Drivers/SLP/src/stm32f4xx_can.o
@@ -2304,7 +2402,7 @@ LOAD /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
                 0x08000000                g_pfnVectors
                 0x08000188                . = ALIGN (0x4)
 
-.text           0x08000188     0x23ec
+.text           0x08000188     0x4e88
                 0x08000188                . = ALIGN (0x4)
  *(.text)
  .text          0x08000188       0x5c /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
@@ -2315,502 +2413,796 @@ LOAD /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
                 0x08000318        0x2 ./Src/freertos.o
                 0x08000318                vApplicationStackOverflowHook
  *fill*         0x0800031a        0x2 
- .text.vTaskGreenLed
-                0x0800031c       0x1c ./Src/main.o
-                0x0800031c                vTaskGreenLed
  .text.TIM6_DAC_IRQHandler
-                0x08000338       0x44 ./Src/main.o
-                0x08000338                TIM6_DAC_IRQHandler
+                0x0800031c       0x44 ./Src/main.o
+                0x0800031c                TIM6_DAC_IRQHandler
  .text.startup.main
-                0x0800037c       0xc0 ./Src/main.o
-                0x0800037c                main
+                0x08000360       0xc4 ./Src/main.o
+                0x08000360                main
  .text.vApplicationTickHook
-                0x0800043c       0x2c ./Src/main.o
-                0x0800043c                vApplicationTickHook
+                0x08000424       0x2c ./Src/main.o
+                0x08000424                vApplicationTickHook
+ .text.CONSOLE_printFiles
+                0x08000450       0xa0 ./Src/main.o
+                0x08000450                CONSOLE_printFiles
+ .text.vTaskGreenLed
+                0x080004f0       0x6c ./Src/main.o
+                0x080004f0                vTaskGreenLed
  .text.initGPIO
-                0x08000468       0x48 ./Src/perirh_init.o
-                0x08000468                initGPIO
+                0x0800055c       0x48 ./Src/perirh_init.o
+                0x0800055c                initGPIO
  .text.PutString
-                0x080004b0       0x18 ./Src/printf.o
-                0x080004b0                PutString
+                0x080005a4       0x18 ./Src/printf.o
+                0x080005a4                PutString
  .text.PutUnsignedInt
-                0x080004c8       0x44 ./Src/printf.o
-                0x080004c8                PutUnsignedInt
+                0x080005bc       0x44 ./Src/printf.o
+                0x080005bc                PutUnsignedInt
  .text.PutSignedInt
-                0x0800050c       0x68 ./Src/printf.o
-                0x0800050c                PutSignedInt
- .text.PutHexa  0x08000574       0x50 ./Src/printf.o
-                0x08000574                PutHexa
+                0x08000600       0x68 ./Src/printf.o
+                0x08000600                PutSignedInt
+ .text.PutHexa  0x08000668       0x50 ./Src/printf.o
+                0x08000668                PutHexa
  .text.vsnprintf
-                0x080005c4      0x11a ./Src/printf.o
-                0x080005c4                vsnprintf
+                0x080006b8      0x11a ./Src/printf.o
+                0x080006b8                vsnprintf
  .text.vsprintf
-                0x080006de        0xa ./Src/printf.o
-                0x080006de                vsprintf
- .text.sprintf  0x080006e8       0x1a ./Src/printf.o
-                0x080006e8                sprintf
+                0x080007d2        0xa ./Src/printf.o
+                0x080007d2                vsprintf
+ .text.sprintf  0x080007dc       0x1a ./Src/printf.o
+                0x080007dc                sprintf
+ .text.SDIO_isSDCardAccessible
+                0x080007f6       0x10 ./Src/sd.o
+                0x080007f6                SDIO_isSDCardAccessible
+ .text.SDIO_mountSDCard
+                0x08000806       0x10 ./Src/sd.o
+                0x08000806                SDIO_mountSDCard
+ *fill*         0x08000816        0x2 
+ .text.SDIO_scanFiles
+                0x08000818       0xc4 ./Src/sd.o
+                0x08000818                SDIO_scanFiles
  .text.NMI_Handler
-                0x08000702        0x2 ./Src/stm32f4xx_it.o
-                0x08000702                NMI_Handler
+                0x080008dc        0x2 ./Src/stm32f4xx_it.o
+                0x080008dc                NMI_Handler
  .text.HardFault_Handler
-                0x08000704        0x2 ./Src/stm32f4xx_it.o
-                0x08000704                HardFault_Handler
+                0x080008de        0x2 ./Src/stm32f4xx_it.o
+                0x080008de                HardFault_Handler
  .text.MemManage_Handler
-                0x08000706        0x2 ./Src/stm32f4xx_it.o
-                0x08000706                MemManage_Handler
+                0x080008e0        0x2 ./Src/stm32f4xx_it.o
+                0x080008e0                MemManage_Handler
  .text.BusFault_Handler
-                0x08000708        0x2 ./Src/stm32f4xx_it.o
-                0x08000708                BusFault_Handler
+                0x080008e2        0x2 ./Src/stm32f4xx_it.o
+                0x080008e2                BusFault_Handler
  .text.UsageFault_Handler
-                0x0800070a        0x2 ./Src/stm32f4xx_it.o
-                0x0800070a                UsageFault_Handler
+                0x080008e4        0x2 ./Src/stm32f4xx_it.o
+                0x080008e4                UsageFault_Handler
  .text.DebugMon_Handler
-                0x0800070c        0x2 ./Src/stm32f4xx_it.o
-                0x0800070c                DebugMon_Handler
- *fill*         0x0800070e        0x2 
+                0x080008e6        0x2 ./Src/stm32f4xx_it.o
+                0x080008e6                DebugMon_Handler
  .text.timer6_init
-                0x08000710       0x4c ./Src/tim6.o
-                0x08000710                timer6_init
+                0x080008e8       0x4c ./Src/tim6.o
+                0x080008e8                timer6_init
  .text.uart_interrupt
-                0x0800075c       0x8c ./Src/uart.o
-                0x0800075c                uart_interrupt
+                0x08000934       0xbc ./Src/uart.o
+                0x08000934                uart_interrupt
  .text.USART1_IRQHandler
-                0x080007e8       0x10 ./Src/uart.o
-                0x080007e8                USART1_IRQHandler
+                0x080009f0       0x10 ./Src/uart.o
+                0x080009f0                USART1_IRQHandler
  .text.USART2_IRQHandler
-                0x080007f8       0x10 ./Src/uart.o
-                0x080007f8                USART2_IRQHandler
+                0x08000a00       0x10 ./Src/uart.o
+                0x08000a00                USART2_IRQHandler
  .text.USART3_IRQHandler
-                0x08000808       0x10 ./Src/uart.o
-                0x08000808                USART3_IRQHandler
+                0x08000a10       0x10 ./Src/uart.o
+                0x08000a10                USART3_IRQHandler
  .text.UART4_IRQHandler
-                0x08000818       0x10 ./Src/uart.o
-                0x08000818                UART4_IRQHandler
+                0x08000a20       0x10 ./Src/uart.o
+                0x08000a20                UART4_IRQHandler
  .text.UART5_IRQHandler
-                0x08000828       0x10 ./Src/uart.o
-                0x08000828                UART5_IRQHandler
+                0x08000a30       0x10 ./Src/uart.o
+                0x08000a30                UART5_IRQHandler
  .text.USART6_IRQHandler
-                0x08000838       0x10 ./Src/uart.o
-                0x08000838                USART6_IRQHandler
+                0x08000a40       0x10 ./Src/uart.o
+                0x08000a40                USART6_IRQHandler
  .text.uart_init
-                0x08000848      0x280 ./Src/uart.o
-                0x08000848                uart_init
+                0x08000a50      0x2b0 ./Src/uart.o
+                0x08000a50                uart_init
  .text.GetCharUart
-                0x08000ac8       0x28 ./Src/uart.o
-                0x08000ac8                GetCharUart
+                0x08000d00       0x2c ./Src/uart.o
+                0x08000d00                GetCharUart
  .text.PutCharUart
-                0x08000af0       0x3e ./Src/uart.o
-                0x08000af0                PutCharUart
+                0x08000d2c       0x54 ./Src/uart.o
+                0x08000d2c                PutCharUart
  .text.PutStringUart
-                0x08000b2e       0x16 ./Src/uart.o
-                0x08000b2e                PutStringUart
+                0x08000d80       0x34 ./Src/uart.o
+                0x08000d80                PutStringUart
  .text.Usart1Rx
-                0x08000b44       0x30 ./Src/uart1Task.o
+                0x08000db4       0x2c ./Src/uart1Task.o
  .text.initUartTask
-                0x08000b74       0x2c ./Src/uart1Task.o
-                0x08000b74                initUartTask
+                0x08000de0       0x2c ./Src/uart1Task.o
+                0x08000de0                initUartTask
  .text.unlikely.prvInsertBlockIntoFreeList
-                0x08000ba0       0x48 ./FreeRTOS/src/heap_4.o
+                0x08000e0c       0x48 ./FreeRTOS/src/heap_4.o
  .text.pvPortMalloc
-                0x08000be8      0x124 ./FreeRTOS/src/heap_4.o
-                0x08000be8                pvPortMalloc
+                0x08000e54      0x124 ./FreeRTOS/src/heap_4.o
+                0x08000e54                pvPortMalloc
  .text.vPortFree
-                0x08000d0c       0x70 ./FreeRTOS/src/heap_4.o
-                0x08000d0c                vPortFree
+                0x08000f78       0x70 ./FreeRTOS/src/heap_4.o
+                0x08000f78                vPortFree
  .text.vListInitialise
-                0x08000d7c       0x16 ./FreeRTOS/src/list.o
-                0x08000d7c                vListInitialise
+                0x08000fe8       0x16 ./FreeRTOS/src/list.o
+                0x08000fe8                vListInitialise
  .text.vListInitialiseItem
-                0x08000d92        0x6 ./FreeRTOS/src/list.o
-                0x08000d92                vListInitialiseItem
+                0x08000ffe        0x6 ./FreeRTOS/src/list.o
+                0x08000ffe                vListInitialiseItem
  .text.vListInsertEnd
-                0x08000d98       0x18 ./FreeRTOS/src/list.o
-                0x08000d98                vListInsertEnd
+                0x08001004       0x18 ./FreeRTOS/src/list.o
+                0x08001004                vListInsertEnd
  .text.vListInsert
-                0x08000db0       0x30 ./FreeRTOS/src/list.o
-                0x08000db0                vListInsert
+                0x0800101c       0x30 ./FreeRTOS/src/list.o
+                0x0800101c                vListInsert
  .text.uxListRemove
-                0x08000de0       0x20 ./FreeRTOS/src/list.o
-                0x08000de0                uxListRemove
+                0x0800104c       0x20 ./FreeRTOS/src/list.o
+                0x0800104c                uxListRemove
  .text.prvTaskExitError
-                0x08000e00       0x30 ./FreeRTOS/src/port.o
+                0x0800106c       0x30 ./FreeRTOS/src/port.o
  .text.prvPortStartFirstTask
-                0x08000e30       0x20 ./FreeRTOS/src/port.o
+                0x0800109c       0x20 ./FreeRTOS/src/port.o
  .text.vPortEnableVFP
-                0x08000e50       0x14 ./FreeRTOS/src/port.o
+                0x080010bc       0x14 ./FreeRTOS/src/port.o
  .text.pxPortInitialiseStack
-                0x08000e64       0x24 ./FreeRTOS/src/port.o
-                0x08000e64                pxPortInitialiseStack
+                0x080010d0       0x24 ./FreeRTOS/src/port.o
+                0x080010d0                pxPortInitialiseStack
  .text.SVC_Handler
-                0x08000e88       0x20 ./FreeRTOS/src/port.o
-                0x08000e88                SVC_Handler
+                0x080010f4       0x20 ./FreeRTOS/src/port.o
+                0x080010f4                SVC_Handler
  .text.vPortEnterCritical
-                0x08000ea8       0x44 ./FreeRTOS/src/port.o
-                0x08000ea8                vPortEnterCritical
+                0x08001114       0x44 ./FreeRTOS/src/port.o
+                0x08001114                vPortEnterCritical
  .text.vPortExitCritical
-                0x08000eec       0x28 ./FreeRTOS/src/port.o
-                0x08000eec                vPortExitCritical
+                0x08001158       0x28 ./FreeRTOS/src/port.o
+                0x08001158                vPortExitCritical
  .text.PendSV_Handler
-                0x08000f14       0x60 ./FreeRTOS/src/port.o
-                0x08000f14                PendSV_Handler
+                0x08001180       0x60 ./FreeRTOS/src/port.o
+                0x08001180                PendSV_Handler
  .text.SysTick_Handler
-                0x08000f74       0x30 ./FreeRTOS/src/port.o
-                0x08000f74                SysTick_Handler
+                0x080011e0       0x30 ./FreeRTOS/src/port.o
+                0x080011e0                SysTick_Handler
  .text.vPortSetupTimerInterrupt
-                0x08000fa4       0x18 ./FreeRTOS/src/port.o
-                0x08000fa4                vPortSetupTimerInterrupt
+                0x08001210       0x18 ./FreeRTOS/src/port.o
+                0x08001210                vPortSetupTimerInterrupt
  .text.xPortStartScheduler
-                0x08000fbc       0xec ./FreeRTOS/src/port.o
-                0x08000fbc                xPortStartScheduler
+                0x08001228       0xec ./FreeRTOS/src/port.o
+                0x08001228                xPortStartScheduler
  .text.vPortValidateInterruptPriority
-                0x080010a8       0x5c ./FreeRTOS/src/port.o
-                0x080010a8                vPortValidateInterruptPriority
+                0x08001314       0x5c ./FreeRTOS/src/port.o
+                0x08001314                vPortValidateInterruptPriority
+ .text.unlikely.prvCopyDataToQueue
+                0x08001370       0x6a ./FreeRTOS/src/queue.o
  .text.unlikely.prvCopyDataFromQueue
-                0x08001104       0x2a ./FreeRTOS/src/queue.o
+                0x080013da       0x2a ./FreeRTOS/src/queue.o
  .text.prvUnlockQueue
-                0x0800112e       0x68 ./FreeRTOS/src/queue.o
+                0x08001404       0x68 ./FreeRTOS/src/queue.o
  .text.unlikely.xQueueGenericCreate.part.1
-                0x08001196       0x12 ./FreeRTOS/src/queue.o
+                0x0800146c       0x12 ./FreeRTOS/src/queue.o
+ *fill*         0x0800147e        0x2 
  .text.xQueueGenericReset
-                0x080011a8       0x70 ./FreeRTOS/src/queue.o
-                0x080011a8                xQueueGenericReset
+                0x08001480       0x70 ./FreeRTOS/src/queue.o
+                0x08001480                xQueueGenericReset
  .text.xQueueGenericCreate
-                0x08001218       0x56 ./FreeRTOS/src/queue.o
-                0x08001218                xQueueGenericCreate
- .text.xQueueCreateCountingSemaphore
-                0x0800126e       0x4e ./FreeRTOS/src/queue.o
-                0x0800126e                xQueueCreateCountingSemaphore
+                0x080014f0       0x56 ./FreeRTOS/src/queue.o
+                0x080014f0                xQueueGenericCreate
+ *fill*         0x08001546        0x2 
+ .text.xQueueGenericSend
+                0x08001548      0x148 ./FreeRTOS/src/queue.o
+                0x08001548                xQueueGenericSend
+ .text.xQueueCreateMutex
+                0x08001690       0x4a ./FreeRTOS/src/queue.o
+                0x08001690                xQueueCreateMutex
  .text.xQueueGiveFromISR
-                0x080012bc       0xa0 ./FreeRTOS/src/queue.o
-                0x080012bc                xQueueGiveFromISR
+                0x080016da       0xa0 ./FreeRTOS/src/queue.o
+                0x080016da                xQueueGiveFromISR
+ *fill*         0x0800177a        0x2 
  .text.xQueueGenericReceive
-                0x0800135c      0x158 ./FreeRTOS/src/queue.o
-                0x0800135c                xQueueGenericReceive
+                0x0800177c      0x158 ./FreeRTOS/src/queue.o
+                0x0800177c                xQueueGenericReceive
  .text.prvResetNextTaskUnblockTime
-                0x080014b4       0x24 ./FreeRTOS/src/tasks.o
+                0x080018d4       0x24 ./FreeRTOS/src/tasks.o
  .text.prvAddCurrentTaskToDelayedList
-                0x080014d8       0x50 ./FreeRTOS/src/tasks.o
+                0x080018f8       0x50 ./FreeRTOS/src/tasks.o
  .text.xTaskGenericCreate.part.5
-                0x08001528      0x1c8 ./FreeRTOS/src/tasks.o
+                0x08001948      0x1c8 ./FreeRTOS/src/tasks.o
  .text.vTaskSetTimeOutState.part.7
-                0x080016f0       0x12 ./FreeRTOS/src/tasks.o
+                0x08001b10       0x12 ./FreeRTOS/src/tasks.o
  .text.xTaskGenericCreate
-                0x08001702       0x3c ./FreeRTOS/src/tasks.o
-                0x08001702                xTaskGenericCreate
- *fill*         0x0800173e        0x2 
+                0x08001b22       0x3c ./FreeRTOS/src/tasks.o
+                0x08001b22                xTaskGenericCreate
+ *fill*         0x08001b5e        0x2 
  .text.vTaskStartScheduler
-                0x08001740       0x70 ./FreeRTOS/src/tasks.o
-                0x08001740                vTaskStartScheduler
+                0x08001b60       0x70 ./FreeRTOS/src/tasks.o
+                0x08001b60                vTaskStartScheduler
  .text.vTaskSuspendAll
-                0x080017b0       0x10 ./FreeRTOS/src/tasks.o
-                0x080017b0                vTaskSuspendAll
+                0x08001bd0       0x10 ./FreeRTOS/src/tasks.o
+                0x08001bd0                vTaskSuspendAll
  .text.xTaskIncrementTick
-                0x080017c0      0x140 ./FreeRTOS/src/tasks.o
-                0x080017c0                xTaskIncrementTick
+                0x08001be0      0x140 ./FreeRTOS/src/tasks.o
+                0x08001be0                xTaskIncrementTick
  .text.xTaskResumeAll
-                0x08001900       0xec ./FreeRTOS/src/tasks.o
-                0x08001900                xTaskResumeAll
+                0x08001d20       0xec ./FreeRTOS/src/tasks.o
+                0x08001d20                xTaskResumeAll
  .text.vTaskDelay
-                0x080019ec       0x7c ./FreeRTOS/src/tasks.o
-                0x080019ec                vTaskDelay
+                0x08001e0c       0x7c ./FreeRTOS/src/tasks.o
+                0x08001e0c                vTaskDelay
  .text.prvIdleTask
-                0x08001a68       0x78 ./FreeRTOS/src/tasks.o
+                0x08001e88       0x78 ./FreeRTOS/src/tasks.o
  .text.vTaskSwitchContext
-                0x08001ae0       0x8c ./FreeRTOS/src/tasks.o
-                0x08001ae0                vTaskSwitchContext
+                0x08001f00       0x8c ./FreeRTOS/src/tasks.o
+                0x08001f00                vTaskSwitchContext
  .text.vTaskPlaceOnEventList
-                0x08001b6c       0x70 ./FreeRTOS/src/tasks.o
-                0x08001b6c                vTaskPlaceOnEventList
+                0x08001f8c       0x70 ./FreeRTOS/src/tasks.o
+                0x08001f8c                vTaskPlaceOnEventList
  .text.xTaskRemoveFromEventList
-                0x08001bdc       0x84 ./FreeRTOS/src/tasks.o
-                0x08001bdc                xTaskRemoveFromEventList
+                0x08001ffc       0x84 ./FreeRTOS/src/tasks.o
+                0x08001ffc                xTaskRemoveFromEventList
  .text.vTaskSetTimeOutState
-                0x08001c60       0x20 ./FreeRTOS/src/tasks.o
-                0x08001c60                vTaskSetTimeOutState
+                0x08002080       0x20 ./FreeRTOS/src/tasks.o
+                0x08002080                vTaskSetTimeOutState
  .text.xTaskCheckForTimeOut
-                0x08001c80       0x74 ./FreeRTOS/src/tasks.o
-                0x08001c80                xTaskCheckForTimeOut
+                0x080020a0       0x74 ./FreeRTOS/src/tasks.o
+                0x080020a0                xTaskCheckForTimeOut
  .text.vTaskMissedYield
-                0x08001cf4        0xc ./FreeRTOS/src/tasks.o
-                0x08001cf4                vTaskMissedYield
+                0x08002114        0xc ./FreeRTOS/src/tasks.o
+                0x08002114                vTaskMissedYield
  .text.vTaskPriorityInherit
-                0x08001d00       0x8c ./FreeRTOS/src/tasks.o
-                0x08001d00                vTaskPriorityInherit
+                0x08002120       0x8c ./FreeRTOS/src/tasks.o
+                0x08002120                vTaskPriorityInherit
+ .text.xTaskPriorityDisinherit
+                0x080021ac       0xa0 ./FreeRTOS/src/tasks.o
+                0x080021ac                xTaskPriorityDisinherit
  .text.pvTaskIncrementMutexHeldCount
-                0x08001d8c       0x18 ./FreeRTOS/src/tasks.o
-                0x08001d8c                pvTaskIncrementMutexHeldCount
+                0x0800224c       0x18 ./FreeRTOS/src/tasks.o
+                0x0800224c                pvTaskIncrementMutexHeldCount
+ .text.ff_convert
+                0x08002264       0x3c ./FATFS_SDIO/fatfs/option/ccsbcs.o
+                0x08002264                ff_convert
+ .text.ff_wtoupper
+                0x080022a0       0x24 ./FATFS_SDIO/fatfs/option/ccsbcs.o
+                0x080022a0                ff_wtoupper
+ .text.ATA_disk_initialize
+                0x080022c4        0x6 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_atadrive.o
+                0x080022c4                ATA_disk_initialize
+ .text.ATA_disk_status
+                0x080022ca        0x6 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_atadrive.o
+                0x080022ca                ATA_disk_status
+ .text.ATA_disk_read
+                0x080022d0        0x6 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_atadrive.o
+                0x080022d0                ATA_disk_read
+ .text.ATA_disk_write
+                0x080022d6        0x6 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_atadrive.o
+                0x080022d6                ATA_disk_write
+ .text.CmdResp2Error
+                0x080022dc       0x3c ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .text.CmdResp1Error
+                0x08002318       0xf0 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .text.FindSCR.isra.1
+                0x08002408      0x140 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .text.SDEnWideBus
+                0x08002548       0xac ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .text.SD_SendStatus.part.3
+                0x080025f4       0x40 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .text.UB_SDCard_CheckMedia
+                0x08002634       0x20 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x08002634                UB_SDCard_CheckMedia
+ .text.MMC_disk_status
+                0x08002654       0x18 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x08002654                MMC_disk_status
+ .text.SD_GetState
+                0x0800266c       0x2e ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x0800266c                SD_GetState
+ .text.SD_GetStatus
+                0x0800269a       0x18 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x0800269a                SD_GetStatus
+ *fill*         0x080026b2        0x2 
+ .text.SD_PowerON
+                0x080026b4      0x208 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x080026b4                SD_PowerON
+ .text.SD_InitializeCards
+                0x080028bc      0x154 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x080028bc                SD_InitializeCards
+ .text.SD_GetCardInfo
+                0x08002a10      0x298 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x08002a10                SD_GetCardInfo
+ .text.SD_EnableWideBusOperation
+                0x08002ca8       0x68 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x08002ca8                SD_EnableWideBusOperation
+ .text.SD_SelectDeselect
+                0x08002d10       0x2c ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x08002d10                SD_SelectDeselect
+ .text.SD_Init  0x08002d3c       0x88 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x08002d3c                SD_Init
+ .text.MMC_disk_initialize
+                0x08002dc4       0x10 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x08002dc4                MMC_disk_initialize
+ .text.SD_StopTransfer
+                0x08002dd4       0x2c ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x08002dd4                SD_StopTransfer
+ .text.SD_WaitReadOperation
+                0x08002e00       0x84 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x08002e00                SD_WaitReadOperation
+ .text.SD_WaitWriteOperation
+                0x08002e84       0x84 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x08002e84                SD_WaitWriteOperation
+ .text.SD_ProcessIRQSrc
+                0x08002f08       0x98 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x08002f08                SD_ProcessIRQSrc
+ .text.SD_ProcessDMAIRQ
+                0x08002fa0       0x28 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x08002fa0                SD_ProcessDMAIRQ
+ .text.SD_LowLevel_Init
+                0x08002fc8       0xac ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x08002fc8                SD_LowLevel_Init
+ .text.UB_SDCard_Init
+                0x08003074       0x20 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x08003074                UB_SDCard_Init
+ .text.SD_LowLevel_DMA_TxConfig
+                0x08003094       0x90 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x08003094                SD_LowLevel_DMA_TxConfig
+ .text.SD_WriteMultiBlocks
+                0x08003124      0x12c ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x08003124                SD_WriteMultiBlocks
+ .text.MMC_disk_write
+                0x08003250       0x2c ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x08003250                MMC_disk_write
+ .text.SD_LowLevel_DMA_RxConfig
+                0x0800327c       0x90 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x0800327c                SD_LowLevel_DMA_RxConfig
+ .text.SD_ReadMultiBlocks
+                0x0800330c       0xe4 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x0800330c                SD_ReadMultiBlocks
+ .text.MMC_disk_read
+                0x080033f0       0x2c ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x080033f0                MMC_disk_read
+ .text.SDIO_IRQHandler
+                0x0800341c        0x4 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x0800341c                SDIO_IRQHandler
+ .text.DMA2_Stream3_IRQHandler
+                0x08003420        0x4 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x08003420                DMA2_Stream3_IRQHandler
+ .text.USB_disk_initialize
+                0x08003424        0x6 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_usbdisk.o
+                0x08003424                USB_disk_initialize
+ .text.USB_disk_status
+                0x0800342a        0x6 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_usbdisk.o
+                0x0800342a                USB_disk_status
+ .text.USB_disk_read
+                0x08003430        0x6 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_usbdisk.o
+                0x08003430                USB_disk_read
+ .text.USB_disk_write
+                0x08003436        0x6 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_usbdisk.o
+                0x08003436                USB_disk_write
+ .text.disk_initialize
+                0x0800343c       0x28 ./FATFS_SDIO/fatfs/diskio.o
+                0x0800343c                disk_initialize
+ .text.disk_status
+                0x08003464       0x2a ./FATFS_SDIO/fatfs/diskio.o
+                0x08003464                disk_status
+ .text.disk_read
+                0x0800348e       0x30 ./FATFS_SDIO/fatfs/diskio.o
+                0x0800348e                disk_read
+ .text.disk_write
+                0x080034be       0x30 ./FATFS_SDIO/fatfs/diskio.o
+                0x080034be                disk_write
+ .text.sum_sfn  0x080034ee       0x1e ./FATFS_SDIO/fatfs/ff.o
+ .text.validate
+                0x0800350c       0x2a ./FATFS_SDIO/fatfs/ff.o
+ .text.get_fileinfo
+                0x08003536      0x100 ./FATFS_SDIO/fatfs/ff.o
+ .text.ld_clust.isra.0
+                0x08003636       0x1c ./FATFS_SDIO/fatfs/ff.o
+ *fill*         0x08003652        0x2 
+ .text.check_fs
+                0x08003654       0x54 ./FATFS_SDIO/fatfs/ff.o
+ .text.chk_mounted
+                0x080036a8      0x244 ./FATFS_SDIO/fatfs/ff.o
+ .text.sync_window.part.2
+                0x080038ec       0x4a ./FATFS_SDIO/fatfs/ff.o
+ .text.sync_window
+                0x08003936        0xc ./FATFS_SDIO/fatfs/ff.o
+ .text.move_window
+                0x08003942       0x34 ./FATFS_SDIO/fatfs/ff.o
+ .text.clust2sect
+                0x08003976       0x16 ./FATFS_SDIO/fatfs/ff.o
+                0x08003976                clust2sect
+ .text.get_fat  0x0800398c       0xc8 ./FATFS_SDIO/fatfs/ff.o
+                0x0800398c                get_fat
+ .text.dir_sdi  0x08003a54       0x84 ./FATFS_SDIO/fatfs/ff.o
+ .text.put_fat  0x08003ad8       0xec ./FATFS_SDIO/fatfs/ff.o
+                0x08003ad8                put_fat
+ .text.create_chain
+                0x08003bc4       0x9a ./FATFS_SDIO/fatfs/ff.o
+ .text.dir_next
+                0x08003c5e       0xfe ./FATFS_SDIO/fatfs/ff.o
+ .text.dir_find.part.6
+                0x08003d5c      0x12c ./FATFS_SDIO/fatfs/ff.o
+ .text.follow_path
+                0x08003e88      0x2b8 ./FATFS_SDIO/fatfs/ff.o
+ .text.dir_read.constprop.11
+                0x08004140       0xf4 ./FATFS_SDIO/fatfs/ff.o
+ .text.f_mount  0x08004234       0x20 ./FATFS_SDIO/fatfs/ff.o
+                0x08004234                f_mount
+ .text.f_opendir
+                0x08004254       0x70 ./FATFS_SDIO/fatfs/ff.o
+                0x08004254                f_opendir
+ .text.f_readdir
+                0x080042c4       0x5a ./FATFS_SDIO/fatfs/ff.o
+                0x080042c4                f_readdir
+ .text.f_getfree
+                0x0800431e       0xce ./FATFS_SDIO/fatfs/ff.o
+                0x0800431e                f_getfree
+ .text.UB_Fatfs_Init
+                0x080043ec        0x4 ./FATFS_SDIO/stm32_ub_fatfs.o
+                0x080043ec                UB_Fatfs_Init
+ .text.UB_Fatfs_CheckMedia
+                0x080043f0       0x16 ./FATFS_SDIO/stm32_ub_fatfs.o
+                0x080043f0                UB_Fatfs_CheckMedia
+ *fill*         0x08004406        0x2 
+ .text.UB_Fatfs_Mount
+                0x08004408       0x34 ./FATFS_SDIO/stm32_ub_fatfs.o
+                0x08004408                UB_Fatfs_Mount
+ .text.DMA_DeInit
+                0x0800443c      0x10c ./Drivers/SLP/src/stm32f4xx_dma.o
+                0x0800443c                DMA_DeInit
+ .text.DMA_Init
+                0x08004548       0x54 ./Drivers/SLP/src/stm32f4xx_dma.o
+                0x08004548                DMA_Init
+ .text.DMA_Cmd  0x0800459c       0x12 ./Drivers/SLP/src/stm32f4xx_dma.o
+                0x0800459c                DMA_Cmd
+ .text.DMA_FlowControllerConfig
+                0x080045ae       0x12 ./Drivers/SLP/src/stm32f4xx_dma.o
+                0x080045ae                DMA_FlowControllerConfig
+ .text.DMA_ITConfig
+                0x080045c0       0x3e ./Drivers/SLP/src/stm32f4xx_dma.o
+                0x080045c0                DMA_ITConfig
+ *fill*         0x080045fe        0x2 
+ .text.DMA_ClearITPendingBit
+                0x08004600       0x30 ./Drivers/SLP/src/stm32f4xx_dma.o
+                0x08004600                DMA_ClearITPendingBit
+ .text.DMA_ClearFlag
+                0x08004630        0x4 ./Drivers/SLP/src/stm32f4xx_dma.o
+                0x08004630                DMA_ClearFlag
  .text.GPIO_Init
-                0x08001da4       0x84 ./Drivers/SLP/src/stm32f4xx_gpio.o
-                0x08001da4                GPIO_Init
+                0x08004634       0x84 ./Drivers/SLP/src/stm32f4xx_gpio.o
+                0x08004634                GPIO_Init
  .text.GPIO_SetBits
-                0x08001e28        0x4 ./Drivers/SLP/src/stm32f4xx_gpio.o
-                0x08001e28                GPIO_SetBits
+                0x080046b8        0x4 ./Drivers/SLP/src/stm32f4xx_gpio.o
+                0x080046b8                GPIO_SetBits
  .text.GPIO_ToggleBits
-                0x08001e2c        0x8 ./Drivers/SLP/src/stm32f4xx_gpio.o
-                0x08001e2c                GPIO_ToggleBits
+                0x080046bc        0x8 ./Drivers/SLP/src/stm32f4xx_gpio.o
+                0x080046bc                GPIO_ToggleBits
  .text.GPIO_PinAFConfig
-                0x08001e34       0x24 ./Drivers/SLP/src/stm32f4xx_gpio.o
-                0x08001e34                GPIO_PinAFConfig
+                0x080046c4       0x24 ./Drivers/SLP/src/stm32f4xx_gpio.o
+                0x080046c4                GPIO_PinAFConfig
  .text.RCC_GetClocksFreq
-                0x08001e58       0x88 ./Drivers/SLP/src/stm32f4xx_rcc.o
-                0x08001e58                RCC_GetClocksFreq
+                0x080046e8       0x88 ./Drivers/SLP/src/stm32f4xx_rcc.o
+                0x080046e8                RCC_GetClocksFreq
  .text.RCC_AHB1PeriphClockCmd
-                0x08001ee0       0x18 ./Drivers/SLP/src/stm32f4xx_rcc.o
-                0x08001ee0                RCC_AHB1PeriphClockCmd
+                0x08004770       0x18 ./Drivers/SLP/src/stm32f4xx_rcc.o
+                0x08004770                RCC_AHB1PeriphClockCmd
  .text.RCC_APB1PeriphClockCmd
-                0x08001ef8       0x18 ./Drivers/SLP/src/stm32f4xx_rcc.o
-                0x08001ef8                RCC_APB1PeriphClockCmd
+                0x08004788       0x18 ./Drivers/SLP/src/stm32f4xx_rcc.o
+                0x08004788                RCC_APB1PeriphClockCmd
  .text.RCC_APB2PeriphClockCmd
-                0x08001f10       0x18 ./Drivers/SLP/src/stm32f4xx_rcc.o
-                0x08001f10                RCC_APB2PeriphClockCmd
+                0x080047a0       0x18 ./Drivers/SLP/src/stm32f4xx_rcc.o
+                0x080047a0                RCC_APB2PeriphClockCmd
  .text.RCC_APB1PeriphResetCmd
-                0x08001f28       0x18 ./Drivers/SLP/src/stm32f4xx_rcc.o
-                0x08001f28                RCC_APB1PeriphResetCmd
+                0x080047b8       0x18 ./Drivers/SLP/src/stm32f4xx_rcc.o
+                0x080047b8                RCC_APB1PeriphResetCmd
  .text.RCC_APB2PeriphResetCmd
-                0x08001f40       0x18 ./Drivers/SLP/src/stm32f4xx_rcc.o
-                0x08001f40                RCC_APB2PeriphResetCmd
+                0x080047d0       0x18 ./Drivers/SLP/src/stm32f4xx_rcc.o
+                0x080047d0                RCC_APB2PeriphResetCmd
+ .text.SDIO_DeInit
+                0x080047e8       0x1a ./Drivers/SLP/src/stm32f4xx_sdio.o
+                0x080047e8                SDIO_DeInit
+ *fill*         0x08004802        0x2 
+ .text.SDIO_Init
+                0x08004804       0x30 ./Drivers/SLP/src/stm32f4xx_sdio.o
+                0x08004804                SDIO_Init
+ .text.SDIO_ClockCmd
+                0x08004834        0xc ./Drivers/SLP/src/stm32f4xx_sdio.o
+                0x08004834                SDIO_ClockCmd
+ .text.SDIO_SetPowerState
+                0x08004840        0xc ./Drivers/SLP/src/stm32f4xx_sdio.o
+                0x08004840                SDIO_SetPowerState
+ .text.SDIO_GetPowerState
+                0x0800484c       0x10 ./Drivers/SLP/src/stm32f4xx_sdio.o
+                0x0800484c                SDIO_GetPowerState
+ .text.SDIO_SendCommand
+                0x0800485c       0x2c ./Drivers/SLP/src/stm32f4xx_sdio.o
+                0x0800485c                SDIO_SendCommand
+ .text.SDIO_GetCommandResponse
+                0x08004888        0xc ./Drivers/SLP/src/stm32f4xx_sdio.o
+                0x08004888                SDIO_GetCommandResponse
+ .text.SDIO_GetResponse
+                0x08004894       0x18 ./Drivers/SLP/src/stm32f4xx_sdio.o
+                0x08004894                SDIO_GetResponse
+ .text.SDIO_DataConfig
+                0x080048ac       0x2c ./Drivers/SLP/src/stm32f4xx_sdio.o
+                0x080048ac                SDIO_DataConfig
+ .text.SDIO_ReadData
+                0x080048d8        0xc ./Drivers/SLP/src/stm32f4xx_sdio.o
+                0x080048d8                SDIO_ReadData
+ .text.SDIO_DMACmd
+                0x080048e4        0xc ./Drivers/SLP/src/stm32f4xx_sdio.o
+                0x080048e4                SDIO_DMACmd
+ .text.SDIO_ITConfig
+                0x080048f0       0x18 ./Drivers/SLP/src/stm32f4xx_sdio.o
+                0x080048f0                SDIO_ITConfig
+ .text.SDIO_ClearFlag
+                0x08004908        0xc ./Drivers/SLP/src/stm32f4xx_sdio.o
+                0x08004908                SDIO_ClearFlag
+ .text.SDIO_GetITStatus
+                0x08004914       0x14 ./Drivers/SLP/src/stm32f4xx_sdio.o
+                0x08004914                SDIO_GetITStatus
+ .text.SDIO_GetFlagStatus
+                0x08004928        0x4 ./Drivers/SLP/src/stm32f4xx_sdio.o
+                0x08004928                SDIO_GetFlagStatus
+ .text.SDIO_ClearITPendingBit
+                0x0800492c        0xc ./Drivers/SLP/src/stm32f4xx_sdio.o
+                0x0800492c                SDIO_ClearITPendingBit
  .text.TIM_TimeBaseInit
-                0x08001f58       0x7c ./Drivers/SLP/src/stm32f4xx_tim.o
-                0x08001f58                TIM_TimeBaseInit
+                0x08004938       0x7c ./Drivers/SLP/src/stm32f4xx_tim.o
+                0x08004938                TIM_TimeBaseInit
  .text.TIM_TimeBaseStructInit
-                0x08001fd4       0x12 ./Drivers/SLP/src/stm32f4xx_tim.o
-                0x08001fd4                TIM_TimeBaseStructInit
- .text.TIM_Cmd  0x08001fe6       0x18 ./Drivers/SLP/src/stm32f4xx_tim.o
-                0x08001fe6                TIM_Cmd
+                0x080049b4       0x12 ./Drivers/SLP/src/stm32f4xx_tim.o
+                0x080049b4                TIM_TimeBaseStructInit
+ .text.TIM_Cmd  0x080049c6       0x18 ./Drivers/SLP/src/stm32f4xx_tim.o
+                0x080049c6                TIM_Cmd
  .text.TIM_GetITStatus
-                0x08001ffe       0x16 ./Drivers/SLP/src/stm32f4xx_tim.o
-                0x08001ffe                TIM_GetITStatus
+                0x080049de       0x16 ./Drivers/SLP/src/stm32f4xx_tim.o
+                0x080049de                TIM_GetITStatus
  .text.TIM_ClearITPendingBit
-                0x08002014        0x8 ./Drivers/SLP/src/stm32f4xx_tim.o
-                0x08002014                TIM_ClearITPendingBit
+                0x080049f4        0x8 ./Drivers/SLP/src/stm32f4xx_tim.o
+                0x080049f4                TIM_ClearITPendingBit
  .text.TIM_DMACmd
-                0x0800201c       0x12 ./Drivers/SLP/src/stm32f4xx_tim.o
-                0x0800201c                TIM_DMACmd
+                0x080049fc       0x12 ./Drivers/SLP/src/stm32f4xx_tim.o
+                0x080049fc                TIM_DMACmd
  .text.TIM_ITConfig
-                0x0800202e        0x4 ./Drivers/SLP/src/stm32f4xx_tim.o
-                0x0800202e                TIM_ITConfig
- *fill*         0x08002032        0x2 
+                0x08004a0e        0x4 ./Drivers/SLP/src/stm32f4xx_tim.o
+                0x08004a0e                TIM_ITConfig
+ *fill*         0x08004a12        0x2 
  .text.USART_DeInit
-                0x08002034       0xe8 ./Drivers/SLP/src/stm32f4xx_usart.o
-                0x08002034                USART_DeInit
+                0x08004a14       0xe8 ./Drivers/SLP/src/stm32f4xx_usart.o
+                0x08004a14                USART_DeInit
  .text.USART_Init
-                0x0800211c       0xb0 ./Drivers/SLP/src/stm32f4xx_usart.o
-                0x0800211c                USART_Init
+                0x08004afc       0xb0 ./Drivers/SLP/src/stm32f4xx_usart.o
+                0x08004afc                USART_Init
  .text.USART_ClockInit
-                0x080021cc       0x20 ./Drivers/SLP/src/stm32f4xx_usart.o
-                0x080021cc                USART_ClockInit
+                0x08004bac       0x20 ./Drivers/SLP/src/stm32f4xx_usart.o
+                0x08004bac                USART_ClockInit
  .text.USART_ClockStructInit
-                0x080021ec        0xc ./Drivers/SLP/src/stm32f4xx_usart.o
-                0x080021ec                USART_ClockStructInit
+                0x08004bcc        0xc ./Drivers/SLP/src/stm32f4xx_usart.o
+                0x08004bcc                USART_ClockStructInit
  .text.USART_Cmd
-                0x080021f8       0x18 ./Drivers/SLP/src/stm32f4xx_usart.o
-                0x080021f8                USART_Cmd
+                0x08004bd8       0x18 ./Drivers/SLP/src/stm32f4xx_usart.o
+                0x08004bd8                USART_Cmd
  .text.USART_ITConfig
-                0x08002210       0x30 ./Drivers/SLP/src/stm32f4xx_usart.o
-                0x08002210                USART_ITConfig
+                0x08004bf0       0x30 ./Drivers/SLP/src/stm32f4xx_usart.o
+                0x08004bf0                USART_ITConfig
  .text.Reset_Handler
-                0x08002240       0x48 ./Drivers/CMSIS/src/startup_stm32f40_41xxx.o
-                0x08002240                Reset_Handler
+                0x08004c20       0x48 ./Drivers/CMSIS/src/startup_stm32f40_41xxx.o
+                0x08004c20                Reset_Handler
  .text.Default_Handler
-                0x08002288        0x2 ./Drivers/CMSIS/src/startup_stm32f40_41xxx.o
-                0x08002288                RTC_Alarm_IRQHandler
-                0x08002288                HASH_RNG_IRQHandler
-                0x08002288                EXTI2_IRQHandler
-                0x08002288                TIM8_CC_IRQHandler
-                0x08002288                TIM1_CC_IRQHandler
-                0x08002288                DMA2_Stream5_IRQHandler
-                0x08002288                DMA1_Stream5_IRQHandler
-                0x08002288                PVD_IRQHandler
-                0x08002288                SDIO_IRQHandler
-                0x08002288                TAMP_STAMP_IRQHandler
-                0x08002288                CAN2_RX1_IRQHandler
-                0x08002288                EXTI3_IRQHandler
-                0x08002288                TIM8_TRG_COM_TIM14_IRQHandler
-                0x08002288                TIM1_UP_TIM10_IRQHandler
-                0x08002288                TIM8_UP_TIM13_IRQHandler
-                0x08002288                I2C3_ER_IRQHandler
-                0x08002288                EXTI0_IRQHandler
-                0x08002288                I2C2_EV_IRQHandler
-                0x08002288                DMA1_Stream2_IRQHandler
-                0x08002288                CAN1_RX0_IRQHandler
-                0x08002288                FPU_IRQHandler
-                0x08002288                OTG_HS_WKUP_IRQHandler
-                0x08002288                CAN2_SCE_IRQHandler
-                0x08002288                DMA2_Stream2_IRQHandler
-                0x08002288                SPI1_IRQHandler
-                0x08002288                TIM1_BRK_TIM9_IRQHandler
-                0x08002288                DCMI_IRQHandler
-                0x08002288                CAN2_RX0_IRQHandler
-                0x08002288                DMA2_Stream3_IRQHandler
-                0x08002288                CRYP_IRQHandler
-                0x08002288                CAN1_RX1_IRQHandler
-                0x08002288                DMA2_Stream0_IRQHandler
-                0x08002288                TIM4_IRQHandler
-                0x08002288                I2C1_EV_IRQHandler
-                0x08002288                DMA1_Stream6_IRQHandler
-                0x08002288                DMA1_Stream1_IRQHandler
-                0x08002288                TIM3_IRQHandler
-                0x08002288                RCC_IRQHandler
-                0x08002288                TIM8_BRK_TIM12_IRQHandler
-                0x08002288                Default_Handler
-                0x08002288                EXTI15_10_IRQHandler
-                0x08002288                ADC_IRQHandler
-                0x08002288                DMA1_Stream7_IRQHandler
-                0x08002288                TIM7_IRQHandler
-                0x08002288                CAN2_TX_IRQHandler
-                0x08002288                TIM5_IRQHandler
-                0x08002288                DMA2_Stream7_IRQHandler
-                0x08002288                I2C3_EV_IRQHandler
-                0x08002288                EXTI9_5_IRQHandler
-                0x08002288                RTC_WKUP_IRQHandler
-                0x08002288                ETH_WKUP_IRQHandler
-                0x08002288                SPI2_IRQHandler
-                0x08002288                OTG_HS_EP1_IN_IRQHandler
-                0x08002288                DMA1_Stream0_IRQHandler
-                0x08002288                CAN1_TX_IRQHandler
-                0x08002288                EXTI4_IRQHandler
-                0x08002288                FSMC_IRQHandler
-                0x08002288                ETH_IRQHandler
-                0x08002288                OTG_HS_EP1_OUT_IRQHandler
-                0x08002288                WWDG_IRQHandler
-                0x08002288                TIM2_IRQHandler
-                0x08002288                OTG_FS_WKUP_IRQHandler
-                0x08002288                TIM1_TRG_COM_TIM11_IRQHandler
-                0x08002288                OTG_HS_IRQHandler
-                0x08002288                EXTI1_IRQHandler
-                0x08002288                I2C2_ER_IRQHandler
-                0x08002288                DMA2_Stream1_IRQHandler
-                0x08002288                CAN1_SCE_IRQHandler
-                0x08002288                FLASH_IRQHandler
-                0x08002288                DMA2_Stream4_IRQHandler
-                0x08002288                OTG_FS_IRQHandler
-                0x08002288                SPI3_IRQHandler
-                0x08002288                DMA1_Stream4_IRQHandler
-                0x08002288                I2C1_ER_IRQHandler
-                0x08002288                DMA2_Stream6_IRQHandler
-                0x08002288                DMA1_Stream3_IRQHandler
- *fill*         0x0800228a        0x2 
+                0x08004c68        0x2 ./Drivers/CMSIS/src/startup_stm32f40_41xxx.o
+                0x08004c68                RTC_Alarm_IRQHandler
+                0x08004c68                HASH_RNG_IRQHandler
+                0x08004c68                EXTI2_IRQHandler
+                0x08004c68                TIM8_CC_IRQHandler
+                0x08004c68                TIM1_CC_IRQHandler
+                0x08004c68                DMA2_Stream5_IRQHandler
+                0x08004c68                DMA1_Stream5_IRQHandler
+                0x08004c68                PVD_IRQHandler
+                0x08004c68                TAMP_STAMP_IRQHandler
+                0x08004c68                CAN2_RX1_IRQHandler
+                0x08004c68                EXTI3_IRQHandler
+                0x08004c68                TIM8_TRG_COM_TIM14_IRQHandler
+                0x08004c68                TIM1_UP_TIM10_IRQHandler
+                0x08004c68                TIM8_UP_TIM13_IRQHandler
+                0x08004c68                I2C3_ER_IRQHandler
+                0x08004c68                EXTI0_IRQHandler
+                0x08004c68                I2C2_EV_IRQHandler
+                0x08004c68                DMA1_Stream2_IRQHandler
+                0x08004c68                CAN1_RX0_IRQHandler
+                0x08004c68                FPU_IRQHandler
+                0x08004c68                OTG_HS_WKUP_IRQHandler
+                0x08004c68                CAN2_SCE_IRQHandler
+                0x08004c68                DMA2_Stream2_IRQHandler
+                0x08004c68                SPI1_IRQHandler
+                0x08004c68                TIM1_BRK_TIM9_IRQHandler
+                0x08004c68                DCMI_IRQHandler
+                0x08004c68                CAN2_RX0_IRQHandler
+                0x08004c68                CRYP_IRQHandler
+                0x08004c68                CAN1_RX1_IRQHandler
+                0x08004c68                DMA2_Stream0_IRQHandler
+                0x08004c68                TIM4_IRQHandler
+                0x08004c68                I2C1_EV_IRQHandler
+                0x08004c68                DMA1_Stream6_IRQHandler
+                0x08004c68                DMA1_Stream1_IRQHandler
+                0x08004c68                TIM3_IRQHandler
+                0x08004c68                RCC_IRQHandler
+                0x08004c68                TIM8_BRK_TIM12_IRQHandler
+                0x08004c68                Default_Handler
+                0x08004c68                EXTI15_10_IRQHandler
+                0x08004c68                ADC_IRQHandler
+                0x08004c68                DMA1_Stream7_IRQHandler
+                0x08004c68                TIM7_IRQHandler
+                0x08004c68                CAN2_TX_IRQHandler
+                0x08004c68                TIM5_IRQHandler
+                0x08004c68                DMA2_Stream7_IRQHandler
+                0x08004c68                I2C3_EV_IRQHandler
+                0x08004c68                EXTI9_5_IRQHandler
+                0x08004c68                RTC_WKUP_IRQHandler
+                0x08004c68                ETH_WKUP_IRQHandler
+                0x08004c68                SPI2_IRQHandler
+                0x08004c68                OTG_HS_EP1_IN_IRQHandler
+                0x08004c68                DMA1_Stream0_IRQHandler
+                0x08004c68                CAN1_TX_IRQHandler
+                0x08004c68                EXTI4_IRQHandler
+                0x08004c68                FSMC_IRQHandler
+                0x08004c68                ETH_IRQHandler
+                0x08004c68                OTG_HS_EP1_OUT_IRQHandler
+                0x08004c68                WWDG_IRQHandler
+                0x08004c68                TIM2_IRQHandler
+                0x08004c68                OTG_FS_WKUP_IRQHandler
+                0x08004c68                TIM1_TRG_COM_TIM11_IRQHandler
+                0x08004c68                OTG_HS_IRQHandler
+                0x08004c68                EXTI1_IRQHandler
+                0x08004c68                I2C2_ER_IRQHandler
+                0x08004c68                DMA2_Stream1_IRQHandler
+                0x08004c68                CAN1_SCE_IRQHandler
+                0x08004c68                FLASH_IRQHandler
+                0x08004c68                DMA2_Stream4_IRQHandler
+                0x08004c68                OTG_FS_IRQHandler
+                0x08004c68                SPI3_IRQHandler
+                0x08004c68                DMA1_Stream4_IRQHandler
+                0x08004c68                I2C1_ER_IRQHandler
+                0x08004c68                DMA2_Stream6_IRQHandler
+                0x08004c68                DMA1_Stream3_IRQHandler
+ *fill*         0x08004c6a        0x2 
  .text.SystemInit
-                0x0800228c       0xf8 ./Drivers/CMSIS/src/system_stm32f4xx.o
-                0x0800228c                SystemInit
+                0x08004c6c       0xf8 ./Drivers/CMSIS/src/system_stm32f4xx.o
+                0x08004c6c                SystemInit
  .text.__libc_init_array
-                0x08002384       0x50 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-init.o)
-                0x08002384                __libc_init_array
- .text.memset   0x080023d4       0x9c /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-memset.o)
-                0x080023d4                memset
+                0x08004d64       0x50 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-init.o)
+                0x08004d64                __libc_init_array
+ .text.memset   0x08004db4       0x9c /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-memset.o)
+                0x08004db4                memset
+ .text.strcpy   0x08004e50       0xbc /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-strcpy.o)
+                0x08004e50                strcpy
  .text.startup.register_fini
-                0x08002470       0x14 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-__call_atexit.o)
- .text.atexit   0x08002484        0xc /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-atexit.o)
-                0x08002484                atexit
+                0x08004f0c       0x14 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-__call_atexit.o)
+ .text.atexit   0x08004f20        0xc /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-atexit.o)
+                0x08004f20                atexit
  .text.__libc_fini_array
-                0x08002490       0x28 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-fini.o)
-                0x08002490                __libc_fini_array
+                0x08004f2c       0x28 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-fini.o)
+                0x08004f2c                __libc_fini_array
  .text.__register_exitproc
-                0x080024b8       0xa4 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-__atexit.o)
-                0x080024b8                __register_exitproc
+                0x08004f54       0xa4 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-__atexit.o)
+                0x08004f54                __register_exitproc
  *(.glue_7)
- .glue_7        0x0800255c        0x0 linker stubs
+ .glue_7        0x08004ff8        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x0800255c        0x0 linker stubs
+ .glue_7t       0x08004ff8        0x0 linker stubs
  *(.eh_frame)
- .eh_frame      0x0800255c        0x0 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+ .eh_frame      0x08004ff8        0x0 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
  *(.init)
- .init          0x0800255c        0x4 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crti.o
-                0x0800255c                _init
- .init          0x08002560        0x8 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
+ .init          0x08004ff8        0x4 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crti.o
+                0x08004ff8                _init
+ .init          0x08004ffc        0x8 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
  *(.fini)
- .fini          0x08002568        0x4 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crti.o
-                0x08002568                _fini
- .fini          0x0800256c        0x8 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
-                0x08002574                . = ALIGN (0x4)
-                0x08002574                _etext = .
+ .fini          0x08005004        0x4 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crti.o
+                0x08005004                _fini
+ .fini          0x08005008        0x8 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
+                0x08005010                . = ALIGN (0x4)
+                0x08005010                _etext = .
 
-.vfp11_veneer   0x08002574        0x0
- .vfp11_veneer  0x08002574        0x0 linker stubs
+.vfp11_veneer   0x08005010        0x0
+ .vfp11_veneer  0x08005010        0x0 linker stubs
 
-.v4_bx          0x08002574        0x0
- .v4_bx         0x08002574        0x0 linker stubs
+.v4_bx          0x08005010        0x0
+ .v4_bx         0x08005010        0x0 linker stubs
 
-.iplt           0x08002574        0x0
- .iplt          0x08002574        0x0 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+.iplt           0x08005010        0x0
+ .iplt          0x08005010        0x0 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
 
-.rodata         0x08002574       0x38
-                0x08002574                . = ALIGN (0x4)
+.rodata         0x08005010      0x62c
+                0x08005010                . = ALIGN (0x4)
  *(.rodata)
  *(.rodata*)
  .rodata.str1.1
-                0x08002574        0x9 ./Src/main.o
+                0x08005010       0x89 ./Src/main.o
+                                 0x8b (size before relaxing)
  .rodata.str1.1
-                0x0800257d       0x1f ./Src/uart1Task.o
+                0x08005099       0x35 ./Src/uart1Task.o
  .rodata.str1.1
-                0x0800259c        0x5 ./FreeRTOS/src/tasks.o
- *fill*         0x080025a1        0x3 
+                0x080050ce        0x5 ./FreeRTOS/src/tasks.o
+ *fill*         0x080050d3        0x1 
+ .rodata.tbl_lower.4370
+                0x080050d4      0x1e0 ./FATFS_SDIO/fatfs/option/ccsbcs.o
+ .rodata.Tbl    0x080052b4      0x100 ./FATFS_SDIO/fatfs/option/ccsbcs.o
+ .rodata.tbl_upper.4371
+                0x080053b4      0x1e0 ./FATFS_SDIO/fatfs/option/ccsbcs.o
+ .rodata.str1.1
+                0x08005594       0x10 ./FATFS_SDIO/fatfs/ff.o
+ .rodata.ExCvt  0x080055a4       0x80 ./FATFS_SDIO/fatfs/ff.o
+ .rodata.LfnOfs
+                0x08005624        0xd ./FATFS_SDIO/fatfs/ff.o
+ .rodata.str1.1
+                0x08005631        0x3 ./FATFS_SDIO/stm32_ub_fatfs.o
  .rodata.str1.4
-                0x080025a4        0x4 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-impure.o)
+                0x08005634        0x4 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-impure.o)
                                   0x2 (size before relaxing)
  .rodata._global_impure_ptr
-                0x080025a8        0x4 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-impure.o)
-                0x080025a8                _global_impure_ptr
-                0x080025ac                . = ALIGN (0x4)
+                0x08005638        0x4 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-impure.o)
+                0x08005638                _global_impure_ptr
+                0x0800563c                . = ALIGN (0x4)
 
-.rel.dyn        0x080025ac        0x0
- .rel.iplt      0x080025ac        0x0 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+.rel.dyn        0x0800563c        0x0
+ .rel.iplt      0x0800563c        0x0 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM            0x080025ac        0x0
-                0x080025ac                __exidx_start = .
+.ARM            0x0800563c        0x0
+                0x0800563c                __exidx_start = .
  *(.ARM.exidx*)
-                0x080025ac                __exidx_end = .
+                0x0800563c                __exidx_end = .
 
-.preinit_array  0x080025ac        0x0
-                0x080025ac                PROVIDE (__preinit_array_start, .)
+.preinit_array  0x0800563c        0x0
+                0x0800563c                PROVIDE (__preinit_array_start, .)
  *(.preinit_array*)
-                0x080025ac                PROVIDE (__preinit_array_end, .)
+                0x0800563c                PROVIDE (__preinit_array_end, .)
 
-.init_array     0x080025ac        0x8
-                0x080025ac                PROVIDE (__init_array_start, .)
+.init_array     0x0800563c        0x8
+                0x0800563c                PROVIDE (__init_array_start, .)
  *(SORT(.init_array.*))
  .init_array.00000
-                0x080025ac        0x4 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-__call_atexit.o)
+                0x0800563c        0x4 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-__call_atexit.o)
  *(.init_array*)
- .init_array    0x080025b0        0x4 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
-                0x080025b4                PROVIDE (__init_array_end, .)
+ .init_array    0x08005640        0x4 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+                0x08005644                PROVIDE (__init_array_end, .)
 
-.fini_array     0x080025b4        0x4
-                0x080025b4                PROVIDE (__fini_array_start, .)
+.fini_array     0x08005644        0x4
+                0x08005644                PROVIDE (__fini_array_start, .)
  *(SORT(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x080025b4        0x4 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
-                0x080025b8                PROVIDE (__fini_array_end, .)
-                0x080025b8                _sidata = LOADADDR (.data)
+ .fini_array    0x08005644        0x4 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+                0x08005648                PROVIDE (__fini_array_end, .)
+                0x08005648                _sidata = LOADADDR (.data)
 
-.data           0x20000000      0x440 load address 0x080025b8
+.data           0x20000000      0x4c0 load address 0x08005648
                 0x20000000                . = ALIGN (0x4)
                 0x20000000                _sdata = .
  *(.data)
  *(.data*)
- .data.helloStr
-                0x20000000        0x4 ./Src/uart1Task.o
-                0x20000000                helloStr
+ .data.SDIO_currentPath
+                0x20000000       0x80 ./Src/sd.o
+                0x20000000                SDIO_currentPath
  .data.uxCriticalNesting
-                0x20000004        0x4 ./FreeRTOS/src/port.o
+                0x20000080        0x4 ./FreeRTOS/src/port.o
  .data.APBAHBPrescTable
-                0x20000008       0x10 ./Drivers/SLP/src/stm32f4xx_rcc.o
+                0x20000084       0x10 ./Drivers/SLP/src/stm32f4xx_rcc.o
+ *fill*         0x20000094        0x4 
  .data.impure_data
-                0x20000018      0x428 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-impure.o)
-                0x20000440                . = ALIGN (0x4)
-                0x20000440                _edata = .
-                0x080029f8                _siccmram = LOADADDR (.ccmram)
+                0x20000098      0x428 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-impure.o)
+                0x200004c0                . = ALIGN (0x4)
+                0x200004c0                _edata = .
+                0x08005b08                _siccmram = LOADADDR (.ccmram)
 
-.jcr            0x20000440        0x0 load address 0x080029f8
- .jcr           0x20000440        0x0 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+.jcr            0x200004c0        0x0 load address 0x08005b08
+ .jcr           0x200004c0        0x0 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
 
-.igot.plt       0x20000440        0x0 load address 0x080029f8
- .igot.plt      0x20000440        0x0 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+.igot.plt       0x200004c0        0x0 load address 0x08005b08
+ .igot.plt      0x200004c0        0x0 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
 
-.ccmram         0x10000000        0x0 load address 0x080029f8
+.ccmram         0x10000000        0x0 load address 0x08005b08
                 0x10000000                . = ALIGN (0x4)
                 0x10000000                _sccmram = .
  *(.ccmram)
@@ -2819,92 +3211,137 @@ LOAD /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
                 0x10000000                _eccmram = .
                 0x10000000                . = ALIGN (0x4)
 
-.bss            0x20000440    0x12e30
-                0x20000440                _sbss = .
-                0x20000440                __bss_start__ = _sbss
+.bss            0x200004c0    0x14368
+                0x200004c0                _sbss = .
+                0x200004c0                __bss_start__ = _sbss
  *(.bss)
- .bss           0x20000440       0x1c /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+ .bss           0x200004c0       0x1c /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
  *(.bss*)
- .bss.sysCount  0x2000045c        0x4 ./Src/main.o
- .bss.uarts     0x20000460       0x28 ./Src/uart.o
- .bss.xPrio.8280
-                0x20000488        0x4 ./Src/uart.o
+ .bss.sysCount  0x200004dc        0x4 ./Src/main.o
+ .bss.i.10307   0x200004e0        0x1 ./Src/main.o
+ *fill*         0x200004e1        0x3 
+ .bss._fileInfo
+                0x200004e4       0x20 ./Src/sd.o
+ .bss.SDIO_filesNum
+                0x20000504        0x2 ./Src/sd.o
+                0x20000504                SDIO_filesNum
+ .bss.i.8658    0x20000506        0x2 ./Src/sd.o
+ .bss._directory
+                0x20000508       0x24 ./Src/sd.o
+ .bss._lfName   0x2000052c      0x100 ./Src/sd.o
+ .bss._fresult  0x2000062c        0x1 ./Src/sd.o
+ *fill*         0x2000062d        0x3 
+ .bss.uarts     0x20000630       0x28 ./Src/uart.o
+ .bss.xPrio.8282
+                0x20000658        0x4 ./Src/uart.o
  .bss.xFreeBytesRemaining
-                0x2000048c        0x4 ./FreeRTOS/src/heap_4.o
- .bss.pxEnd     0x20000490        0x4 ./FreeRTOS/src/heap_4.o
- .bss.xStart    0x20000494        0x8 ./FreeRTOS/src/heap_4.o
- .bss.ucHeap    0x2000049c    0x12c00 ./FreeRTOS/src/heap_4.o
+                0x2000065c        0x4 ./FreeRTOS/src/heap_4.o
+ .bss.pxEnd     0x20000660        0x4 ./FreeRTOS/src/heap_4.o
+ .bss.xStart    0x20000664        0x8 ./FreeRTOS/src/heap_4.o
+ .bss.ucHeap    0x2000066c    0x12c00 ./FreeRTOS/src/heap_4.o
  .bss.xBlockAllocatedBit
-                0x2001309c        0x4 ./FreeRTOS/src/heap_4.o
+                0x2001326c        0x4 ./FreeRTOS/src/heap_4.o
  .bss.xMinimumEverFreeBytesRemaining
-                0x200130a0        0x4 ./FreeRTOS/src/heap_4.o
+                0x20013270        0x4 ./FreeRTOS/src/heap_4.o
  .bss.ucMaxSysCallPriority
-                0x200130a4        0x1 ./FreeRTOS/src/port.o
- *fill*         0x200130a5        0x3 
+                0x20013274        0x1 ./FreeRTOS/src/port.o
+ *fill*         0x20013275        0x3 
  .bss.ulMaxPRIGROUPValue
-                0x200130a8        0x4 ./FreeRTOS/src/port.o
+                0x20013278        0x4 ./FreeRTOS/src/port.o
  .bss.xNumOfOverflows
-                0x200130ac        0x4 ./FreeRTOS/src/tasks.o
+                0x2001327c        0x4 ./FreeRTOS/src/tasks.o
  .bss.pxDelayedTaskList
-                0x200130b0        0x4 ./FreeRTOS/src/tasks.o
+                0x20013280        0x4 ./FreeRTOS/src/tasks.o
  .bss.xSchedulerRunning
-                0x200130b4        0x4 ./FreeRTOS/src/tasks.o
+                0x20013284        0x4 ./FreeRTOS/src/tasks.o
  .bss.uxTasksDeleted
-                0x200130b8        0x4 ./FreeRTOS/src/tasks.o
+                0x20013288        0x4 ./FreeRTOS/src/tasks.o
  .bss.xTasksWaitingTermination
-                0x200130bc       0x14 ./FreeRTOS/src/tasks.o
+                0x2001328c       0x14 ./FreeRTOS/src/tasks.o
  .bss.xSuspendedTaskList
-                0x200130d0       0x14 ./FreeRTOS/src/tasks.o
+                0x200132a0       0x14 ./FreeRTOS/src/tasks.o
  .bss.uxPendedTicks
-                0x200130e4        0x4 ./FreeRTOS/src/tasks.o
+                0x200132b4        0x4 ./FreeRTOS/src/tasks.o
  .bss.pxReadyTasksLists
-                0x200130e8       0x8c ./FreeRTOS/src/tasks.o
+                0x200132b8       0x8c ./FreeRTOS/src/tasks.o
  .bss.uxSchedulerSuspended
-                0x20013174        0x4 ./FreeRTOS/src/tasks.o
+                0x20013344        0x4 ./FreeRTOS/src/tasks.o
  .bss.pxCurrentTCB
-                0x20013178        0x4 ./FreeRTOS/src/tasks.o
-                0x20013178                pxCurrentTCB
+                0x20013348        0x4 ./FreeRTOS/src/tasks.o
+                0x20013348                pxCurrentTCB
  .bss.xNextTaskUnblockTime
-                0x2001317c        0x4 ./FreeRTOS/src/tasks.o
+                0x2001334c        0x4 ./FreeRTOS/src/tasks.o
  .bss.xTickCount
-                0x20013180        0x4 ./FreeRTOS/src/tasks.o
+                0x20013350        0x4 ./FreeRTOS/src/tasks.o
  .bss.pxOverflowDelayedTaskList
-                0x20013184        0x4 ./FreeRTOS/src/tasks.o
+                0x20013354        0x4 ./FreeRTOS/src/tasks.o
  .bss.xPendingReadyList
-                0x20013188       0x14 ./FreeRTOS/src/tasks.o
+                0x20013358       0x14 ./FreeRTOS/src/tasks.o
  .bss.uxTaskNumber
-                0x2001319c        0x4 ./FreeRTOS/src/tasks.o
+                0x2001336c        0x4 ./FreeRTOS/src/tasks.o
  .bss.xDelayedTaskList1
-                0x200131a0       0x14 ./FreeRTOS/src/tasks.o
+                0x20013370       0x14 ./FreeRTOS/src/tasks.o
  .bss.xDelayedTaskList2
-                0x200131b4       0x14 ./FreeRTOS/src/tasks.o
+                0x20013384       0x14 ./FreeRTOS/src/tasks.o
  .bss.uxCurrentNumberOfTasks
-                0x200131c8        0x4 ./FreeRTOS/src/tasks.o
+                0x20013398        0x4 ./FreeRTOS/src/tasks.o
  .bss.uxTopReadyPriority
-                0x200131cc        0x4 ./FreeRTOS/src/tasks.o
+                0x2001339c        0x4 ./FreeRTOS/src/tasks.o
  .bss.xYieldPending
-                0x200131d0        0x4 ./FreeRTOS/src/tasks.o
+                0x200133a0        0x4 ./FreeRTOS/src/tasks.o
+ .bss.TransferError
+                0x200133a4        0x1 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x200133a4                TransferError
+ *fill*         0x200133a5        0x3 
+ .bss.CSD_Tab   0x200133a8       0x10 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .bss.CardType  0x200133b8        0x4 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .bss.CID_Tab   0x200133bc       0x10 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .bss.DMAEndOfTransfer
+                0x200133cc        0x4 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x200133cc                DMAEndOfTransfer
+ .bss.RCA       0x200133d0        0x4 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .bss.TransferEnd
+                0x200133d4        0x4 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x200133d4                TransferEnd
+ .bss.StopCondition
+                0x200133d8        0x4 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x200133d8                StopCondition
+ .bss.CurrVol   0x200133dc        0x1 ./FATFS_SDIO/fatfs/ff.o
+ *fill*         0x200133dd        0x1 
+ .bss.Fsid      0x200133de        0x2 ./FATFS_SDIO/fatfs/ff.o
+ .bss.FatFs     0x200133e0        0x4 ./FATFS_SDIO/fatfs/ff.o
+ .bss.FileSystemObject
+                0x200133e4      0x238 ./FATFS_SDIO/stm32_ub_fatfs.o
  *(COMMON)
- COMMON         0x200131d4       0x7c ./Src/main.o
-                0x200131d4                uart1
-                0x2001323c                timetLed
-                0x20013240                RCC_Clocks
- COMMON         0x20013250       0x20 ./Src/uart1Task.o
-                0x20013250                TxData
-                0x20013270                . = ALIGN (0x4)
-                0x20013270                _ebss = .
-                0x20013270                __bss_end__ = _ebss
+ COMMON         0x2001361c      0x108 ./Src/main.o
+                0x2001361c                uart1
+                0x200136d0                textBuf
+                0x20013710                timetLed
+                0x20013714                RCC_Clocks
+ COMMON         0x20013724     0x1040 ./Src/sd.o
+                0x20013724                SDIO_files
+ COMMON         0x20014764       0x20 ./Src/uart1Task.o
+                0x20014764                TxData
+ *fill*         0x20014784        0x4 
+ COMMON         0x20014788       0xa0 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                0x20014788                SDIO_CmdInitStructure
+                0x200147a0                SDCardInfo
+                0x200147f8                SDIO_InitStructure
+                0x20014810                SDIO_DataInitStructure
+                0x20014828                . = ALIGN (0x4)
+                0x20014828                _ebss = .
+                0x20014828                __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x20013270      0x600
-                0x20013270                . = ALIGN (0x4)
+                0x20014828      0x600
+                0x20014828                . = ALIGN (0x4)
                 [!provide]                PROVIDE (end, .)
                 [!provide]                PROVIDE (_end, .)
-                0x20013470                . = (. + _Min_Heap_Size)
- *fill*         0x20013270      0x200 
-                0x20013870                . = (. + _Min_Stack_Size)
- *fill*         0x20013470      0x400 
-                0x20013870                . = ALIGN (0x4)
+                0x20014a28                . = (. + _Min_Heap_Size)
+ *fill*         0x20014828      0x200 
+                0x20014e28                . = (. + _Min_Stack_Size)
+ *fill*         0x20014a28      0x400 
+                0x20014e28                . = ALIGN (0x4)
 
 /DISCARD/
  libc.a(*)
@@ -2927,216 +3364,318 @@ LOAD /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
  .ARM.attributes
                 0x00000101       0x39 ./Src/printf.o
  .ARM.attributes
-                0x0000013a       0x39 ./Src/stm32f4xx_it.o
+                0x0000013a       0x39 ./Src/sd.o
  .ARM.attributes
-                0x00000173       0x39 ./Src/tim6.o
+                0x00000173       0x39 ./Src/stm32f4xx_it.o
  .ARM.attributes
-                0x000001ac       0x39 ./Src/uart.o
+                0x000001ac       0x39 ./Src/tim6.o
  .ARM.attributes
-                0x000001e5       0x39 ./Src/uart1Task.o
+                0x000001e5       0x39 ./Src/uart.o
  .ARM.attributes
-                0x0000021e       0x39 ./FreeRTOS/src/heap_4.o
+                0x0000021e       0x39 ./Src/uart1Task.o
  .ARM.attributes
-                0x00000257       0x39 ./FreeRTOS/src/list.o
+                0x00000257       0x39 ./FreeRTOS/src/heap_4.o
  .ARM.attributes
-                0x00000290       0x39 ./FreeRTOS/src/port.o
+                0x00000290       0x39 ./FreeRTOS/src/list.o
  .ARM.attributes
-                0x000002c9       0x39 ./FreeRTOS/src/queue.o
+                0x000002c9       0x39 ./FreeRTOS/src/port.o
  .ARM.attributes
-                0x00000302       0x39 ./FreeRTOS/src/tasks.o
+                0x00000302       0x39 ./FreeRTOS/src/queue.o
  .ARM.attributes
-                0x0000033b       0x39 ./Drivers/SLP/src/stm32f4xx_gpio.o
+                0x0000033b       0x39 ./FreeRTOS/src/tasks.o
  .ARM.attributes
-                0x00000374       0x39 ./Drivers/SLP/src/stm32f4xx_rcc.o
+                0x00000374       0x39 ./FATFS_SDIO/fatfs/option/ccsbcs.o
  .ARM.attributes
-                0x000003ad       0x39 ./Drivers/SLP/src/stm32f4xx_tim.o
+                0x000003ad       0x39 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_atadrive.o
  .ARM.attributes
-                0x000003e6       0x39 ./Drivers/SLP/src/stm32f4xx_usart.o
+                0x000003e6       0x39 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
  .ARM.attributes
-                0x0000041f       0x21 ./Drivers/CMSIS/src/startup_stm32f40_41xxx.o
+                0x0000041f       0x39 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_usbdisk.o
  .ARM.attributes
-                0x00000440       0x39 ./Drivers/CMSIS/src/system_stm32f4xx.o
+                0x00000458       0x39 ./FATFS_SDIO/fatfs/diskio.o
  .ARM.attributes
-                0x00000479       0x34 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-impure.o)
+                0x00000491       0x39 ./FATFS_SDIO/fatfs/ff.o
  .ARM.attributes
-                0x000004ad       0x34 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-init.o)
+                0x000004ca       0x39 ./FATFS_SDIO/stm32_ub_fatfs.o
  .ARM.attributes
-                0x000004e1       0x20 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-memcpy.o)
+                0x00000503       0x39 ./Drivers/SLP/src/stm32f4xx_dma.o
  .ARM.attributes
-                0x00000501       0x34 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-memset.o)
+                0x0000053c       0x39 ./Drivers/SLP/src/stm32f4xx_gpio.o
  .ARM.attributes
-                0x00000535       0x34 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-__call_atexit.o)
+                0x00000575       0x39 ./Drivers/SLP/src/stm32f4xx_rcc.o
  .ARM.attributes
-                0x00000569       0x34 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-atexit.o)
+                0x000005ae       0x39 ./Drivers/SLP/src/stm32f4xx_sdio.o
  .ARM.attributes
-                0x0000059d       0x34 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-fini.o)
+                0x000005e7       0x39 ./Drivers/SLP/src/stm32f4xx_tim.o
  .ARM.attributes
-                0x000005d1       0x34 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-__atexit.o)
+                0x00000620       0x39 ./Drivers/SLP/src/stm32f4xx_usart.o
  .ARM.attributes
-                0x00000605       0x22 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
+                0x00000659       0x21 ./Drivers/CMSIS/src/startup_stm32f40_41xxx.o
+ .ARM.attributes
+                0x0000067a       0x39 ./Drivers/CMSIS/src/system_stm32f4xx.o
+ .ARM.attributes
+                0x000006b3       0x34 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-impure.o)
+ .ARM.attributes
+                0x000006e7       0x34 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-init.o)
+ .ARM.attributes
+                0x0000071b       0x20 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-memcpy.o)
+ .ARM.attributes
+                0x0000073b       0x34 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-memset.o)
+ .ARM.attributes
+                0x0000076f       0x34 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-strcpy.o)
+ .ARM.attributes
+                0x000007a3       0x34 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-__call_atexit.o)
+ .ARM.attributes
+                0x000007d7       0x34 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-atexit.o)
+ .ARM.attributes
+                0x0000080b       0x34 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-fini.o)
+ .ARM.attributes
+                0x0000083f       0x34 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-__atexit.o)
+ .ARM.attributes
+                0x00000873       0x22 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
 OUTPUT(freeRtos_SPL.elf elf32-littlearm)
 
-.debug_info     0x00000000     0xd774
+.debug_info     0x00000000    0x17144
  .debug_info    0x00000000       0xc4 ./Src/freertos.o
- .debug_info    0x000000c4      0xf13 ./Src/main.o
- .debug_info    0x00000fd7      0x340 ./Src/perirh_init.o
- .debug_info    0x00001317     0x1198 ./Src/printf.o
- .debug_info    0x000024af      0x103 ./Src/stm32f4xx_it.o
- .debug_info    0x000025b2      0x7bd ./Src/tim6.o
- .debug_info    0x00002d6f     0x126f ./Src/uart.o
- .debug_info    0x00003fde      0x469 ./Src/uart1Task.o
- .debug_info    0x00004447      0x488 ./FreeRTOS/src/heap_4.o
- .debug_info    0x000048cf      0x2a1 ./FreeRTOS/src/list.o
- .debug_info    0x00004b70      0x54c ./FreeRTOS/src/port.o
- .debug_info    0x000050bc     0x1733 ./FreeRTOS/src/queue.o
- .debug_info    0x000067ef     0x2840 ./FreeRTOS/src/tasks.o
- .debug_info    0x0000902f      0x746 ./Drivers/SLP/src/stm32f4xx_gpio.o
- .debug_info    0x00009775      0xea5 ./Drivers/SLP/src/stm32f4xx_rcc.o
- .debug_info    0x0000a61a     0x1fc6 ./Drivers/SLP/src/stm32f4xx_tim.o
- .debug_info    0x0000c5e0      0xae1 ./Drivers/SLP/src/stm32f4xx_usart.o
- .debug_info    0x0000d0c1       0x84 ./Drivers/CMSIS/src/startup_stm32f40_41xxx.o
- .debug_info    0x0000d145      0x62f ./Drivers/CMSIS/src/system_stm32f4xx.o
+ .debug_info    0x000000c4     0x1209 ./Src/main.o
+ .debug_info    0x000012cd      0x340 ./Src/perirh_init.o
+ .debug_info    0x0000160d     0x1198 ./Src/printf.o
+ .debug_info    0x000027a5      0x63f ./Src/sd.o
+ .debug_info    0x00002de4      0x103 ./Src/stm32f4xx_it.o
+ .debug_info    0x00002ee7      0x7bd ./Src/tim6.o
+ .debug_info    0x000036a4     0x1330 ./Src/uart.o
+ .debug_info    0x000049d4      0x495 ./Src/uart1Task.o
+ .debug_info    0x00004e69      0x488 ./FreeRTOS/src/heap_4.o
+ .debug_info    0x000052f1      0x2a1 ./FreeRTOS/src/list.o
+ .debug_info    0x00005592      0x54c ./FreeRTOS/src/port.o
+ .debug_info    0x00005ade     0x1733 ./FreeRTOS/src/queue.o
+ .debug_info    0x00007211     0x2840 ./FreeRTOS/src/tasks.o
+ .debug_info    0x00009a51      0x167 ./FATFS_SDIO/fatfs/option/ccsbcs.o
+ .debug_info    0x00009bb8      0x1f7 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_atadrive.o
+ .debug_info    0x00009daf     0x3694 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .debug_info    0x0000d443      0x1f7 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_usbdisk.o
+ .debug_info    0x0000d63a      0x455 ./FATFS_SDIO/fatfs/diskio.o
+ .debug_info    0x0000da8f     0x3671 ./FATFS_SDIO/fatfs/ff.o
+ .debug_info    0x00011100      0xa1d ./FATFS_SDIO/stm32_ub_fatfs.o
+ .debug_info    0x00011b1d      0x700 ./Drivers/SLP/src/stm32f4xx_dma.o
+ .debug_info    0x0001221d      0x746 ./Drivers/SLP/src/stm32f4xx_gpio.o
+ .debug_info    0x00012963      0xea5 ./Drivers/SLP/src/stm32f4xx_rcc.o
+ .debug_info    0x00013808      0x7de ./Drivers/SLP/src/stm32f4xx_sdio.o
+ .debug_info    0x00013fe6     0x1fc6 ./Drivers/SLP/src/stm32f4xx_tim.o
+ .debug_info    0x00015fac      0xae1 ./Drivers/SLP/src/stm32f4xx_usart.o
+ .debug_info    0x00016a8d       0x88 ./Drivers/CMSIS/src/startup_stm32f40_41xxx.o
+ .debug_info    0x00016b15      0x62f ./Drivers/CMSIS/src/system_stm32f4xx.o
 
-.debug_abbrev   0x00000000     0x2399
+.debug_abbrev   0x00000000     0x374a
  .debug_abbrev  0x00000000       0x70 ./Src/freertos.o
- .debug_abbrev  0x00000070      0x2a0 ./Src/main.o
- .debug_abbrev  0x00000310      0x13a ./Src/perirh_init.o
- .debug_abbrev  0x0000044a      0x32f ./Src/printf.o
- .debug_abbrev  0x00000779       0x8b ./Src/stm32f4xx_it.o
- .debug_abbrev  0x00000804      0x1b1 ./Src/tim6.o
- .debug_abbrev  0x000009b5      0x322 ./Src/uart.o
- .debug_abbrev  0x00000cd7      0x1a5 ./Src/uart1Task.o
- .debug_abbrev  0x00000e7c      0x230 ./FreeRTOS/src/heap_4.o
- .debug_abbrev  0x000010ac       0xdc ./FreeRTOS/src/list.o
- .debug_abbrev  0x00001188      0x20a ./FreeRTOS/src/port.o
- .debug_abbrev  0x00001392      0x2e5 ./FreeRTOS/src/queue.o
- .debug_abbrev  0x00001677      0x383 ./FreeRTOS/src/tasks.o
- .debug_abbrev  0x000019fa      0x1e5 ./Drivers/SLP/src/stm32f4xx_gpio.o
- .debug_abbrev  0x00001bdf      0x1e4 ./Drivers/SLP/src/stm32f4xx_rcc.o
- .debug_abbrev  0x00001dc3      0x2b4 ./Drivers/SLP/src/stm32f4xx_tim.o
- .debug_abbrev  0x00002077      0x1c9 ./Drivers/SLP/src/stm32f4xx_usart.o
- .debug_abbrev  0x00002240       0x12 ./Drivers/CMSIS/src/startup_stm32f40_41xxx.o
- .debug_abbrev  0x00002252      0x147 ./Drivers/CMSIS/src/system_stm32f4xx.o
+ .debug_abbrev  0x00000070      0x31c ./Src/main.o
+ .debug_abbrev  0x0000038c      0x13a ./Src/perirh_init.o
+ .debug_abbrev  0x000004c6      0x32f ./Src/printf.o
+ .debug_abbrev  0x000007f5      0x186 ./Src/sd.o
+ .debug_abbrev  0x0000097b       0x8b ./Src/stm32f4xx_it.o
+ .debug_abbrev  0x00000a06      0x1b1 ./Src/tim6.o
+ .debug_abbrev  0x00000bb7      0x30c ./Src/uart.o
+ .debug_abbrev  0x00000ec3      0x1b8 ./Src/uart1Task.o
+ .debug_abbrev  0x0000107b      0x230 ./FreeRTOS/src/heap_4.o
+ .debug_abbrev  0x000012ab       0xdc ./FreeRTOS/src/list.o
+ .debug_abbrev  0x00001387      0x20a ./FreeRTOS/src/port.o
+ .debug_abbrev  0x00001591      0x2e5 ./FreeRTOS/src/queue.o
+ .debug_abbrev  0x00001876      0x383 ./FreeRTOS/src/tasks.o
+ .debug_abbrev  0x00001bf9       0xa8 ./FATFS_SDIO/fatfs/option/ccsbcs.o
+ .debug_abbrev  0x00001ca1      0x132 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_atadrive.o
+ .debug_abbrev  0x00001dd3      0x475 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .debug_abbrev  0x00002248      0x132 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_usbdisk.o
+ .debug_abbrev  0x0000237a      0x188 ./FATFS_SDIO/fatfs/diskio.o
+ .debug_abbrev  0x00002502      0x345 ./FATFS_SDIO/fatfs/ff.o
+ .debug_abbrev  0x00002847      0x208 ./FATFS_SDIO/stm32_ub_fatfs.o
+ .debug_abbrev  0x00002a4f      0x177 ./Drivers/SLP/src/stm32f4xx_dma.o
+ .debug_abbrev  0x00002bc6      0x1e5 ./Drivers/SLP/src/stm32f4xx_gpio.o
+ .debug_abbrev  0x00002dab      0x1e4 ./Drivers/SLP/src/stm32f4xx_rcc.o
+ .debug_abbrev  0x00002f8f      0x1e5 ./Drivers/SLP/src/stm32f4xx_sdio.o
+ .debug_abbrev  0x00003174      0x2b4 ./Drivers/SLP/src/stm32f4xx_tim.o
+ .debug_abbrev  0x00003428      0x1c9 ./Drivers/SLP/src/stm32f4xx_usart.o
+ .debug_abbrev  0x000035f1       0x12 ./Drivers/CMSIS/src/startup_stm32f40_41xxx.o
+ .debug_abbrev  0x00003603      0x147 ./Drivers/CMSIS/src/system_stm32f4xx.o
 
-.debug_aranges  0x00000000      0xbf8
+.debug_aranges  0x00000000     0x1250
  .debug_aranges
                 0x00000000       0x20 ./Src/freertos.o
  .debug_aranges
-                0x00000020       0x38 ./Src/main.o
+                0x00000020       0x40 ./Src/main.o
  .debug_aranges
-                0x00000058       0x20 ./Src/perirh_init.o
+                0x00000060       0x20 ./Src/perirh_init.o
  .debug_aranges
-                0x00000078       0xa0 ./Src/printf.o
+                0x00000080       0xa0 ./Src/printf.o
  .debug_aranges
-                0x00000118       0x40 ./Src/stm32f4xx_it.o
+                0x00000120       0x30 ./Src/sd.o
  .debug_aranges
-                0x00000158       0x20 ./Src/tim6.o
+                0x00000150       0x40 ./Src/stm32f4xx_it.o
  .debug_aranges
-                0x00000178       0x70 ./Src/uart.o
+                0x00000190       0x20 ./Src/tim6.o
  .debug_aranges
-                0x000001e8       0x28 ./Src/uart1Task.o
+                0x000001b0       0x70 ./Src/uart.o
  .debug_aranges
-                0x00000210       0x48 ./FreeRTOS/src/heap_4.o
+                0x00000220       0x28 ./Src/uart1Task.o
  .debug_aranges
-                0x00000258       0x40 ./FreeRTOS/src/list.o
+                0x00000248       0x48 ./FreeRTOS/src/heap_4.o
  .debug_aranges
-                0x00000298       0x80 ./FreeRTOS/src/port.o
+                0x00000290       0x40 ./FreeRTOS/src/list.o
  .debug_aranges
-                0x00000318       0xe0 ./FreeRTOS/src/queue.o
+                0x000002d0       0x80 ./FreeRTOS/src/port.o
  .debug_aranges
-                0x000003f8      0x190 ./FreeRTOS/src/tasks.o
+                0x00000350       0xe0 ./FreeRTOS/src/queue.o
  .debug_aranges
-                0x00000588       0x88 ./Drivers/SLP/src/stm32f4xx_gpio.o
+                0x00000430      0x190 ./FreeRTOS/src/tasks.o
  .debug_aranges
-                0x00000610      0x1c0 ./Drivers/SLP/src/stm32f4xx_rcc.o
+                0x000005c0       0x28 ./FATFS_SDIO/fatfs/option/ccsbcs.o
  .debug_aranges
-                0x000007d0      0x2d8 ./Drivers/SLP/src/stm32f4xx_tim.o
+                0x000005e8       0x40 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_atadrive.o
  .debug_aranges
-                0x00000aa8      0x100 ./Drivers/SLP/src/stm32f4xx_usart.o
+                0x00000628      0x188 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
  .debug_aranges
-                0x00000ba8       0x28 ./Drivers/CMSIS/src/startup_stm32f40_41xxx.o
+                0x000007b0       0x40 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_usbdisk.o
  .debug_aranges
-                0x00000bd0       0x28 ./Drivers/CMSIS/src/system_stm32f4xx.o
+                0x000007f0       0x48 ./FATFS_SDIO/fatfs/diskio.o
+ .debug_aranges
+                0x00000838      0x190 ./FATFS_SDIO/fatfs/ff.o
+ .debug_aranges
+                0x000009c8       0x78 ./FATFS_SDIO/stm32_ub_fatfs.o
+ .debug_aranges
+                0x00000a40       0xa8 ./Drivers/SLP/src/stm32f4xx_dma.o
+ .debug_aranges
+                0x00000ae8       0x88 ./Drivers/SLP/src/stm32f4xx_gpio.o
+ .debug_aranges
+                0x00000b70      0x1c0 ./Drivers/SLP/src/stm32f4xx_rcc.o
+ .debug_aranges
+                0x00000d30       0xf8 ./Drivers/SLP/src/stm32f4xx_sdio.o
+ .debug_aranges
+                0x00000e28      0x2d8 ./Drivers/SLP/src/stm32f4xx_tim.o
+ .debug_aranges
+                0x00001100      0x100 ./Drivers/SLP/src/stm32f4xx_usart.o
+ .debug_aranges
+                0x00001200       0x28 ./Drivers/CMSIS/src/startup_stm32f40_41xxx.o
+ .debug_aranges
+                0x00001228       0x28 ./Drivers/CMSIS/src/system_stm32f4xx.o
 
-.debug_ranges   0x00000000      0xbf0
+.debug_ranges   0x00000000     0x13a8
  .debug_ranges  0x00000000       0x10 ./Src/freertos.o
- .debug_ranges  0x00000010       0x28 ./Src/main.o
- .debug_ranges  0x00000038       0x10 ./Src/perirh_init.o
- .debug_ranges  0x00000048       0xa8 ./Src/printf.o
- .debug_ranges  0x000000f0       0x30 ./Src/stm32f4xx_it.o
- .debug_ranges  0x00000120       0x10 ./Src/tim6.o
- .debug_ranges  0x00000130       0x78 ./Src/uart.o
- .debug_ranges  0x000001a8       0x18 ./Src/uart1Task.o
- .debug_ranges  0x000001c0       0x38 ./FreeRTOS/src/heap_4.o
- .debug_ranges  0x000001f8       0x30 ./FreeRTOS/src/list.o
- .debug_ranges  0x00000228       0x70 ./FreeRTOS/src/port.o
- .debug_ranges  0x00000298       0xd0 ./FreeRTOS/src/queue.o
- .debug_ranges  0x00000368      0x220 ./FreeRTOS/src/tasks.o
- .debug_ranges  0x00000588       0x78 ./Drivers/SLP/src/stm32f4xx_gpio.o
- .debug_ranges  0x00000600      0x1b0 ./Drivers/SLP/src/stm32f4xx_rcc.o
- .debug_ranges  0x000007b0      0x300 ./Drivers/SLP/src/stm32f4xx_tim.o
- .debug_ranges  0x00000ab0       0xf0 ./Drivers/SLP/src/stm32f4xx_usart.o
- .debug_ranges  0x00000ba0       0x20 ./Drivers/CMSIS/src/startup_stm32f40_41xxx.o
- .debug_ranges  0x00000bc0       0x30 ./Drivers/CMSIS/src/system_stm32f4xx.o
+ .debug_ranges  0x00000010       0x30 ./Src/main.o
+ .debug_ranges  0x00000040       0x10 ./Src/perirh_init.o
+ .debug_ranges  0x00000050       0xa8 ./Src/printf.o
+ .debug_ranges  0x000000f8       0x20 ./Src/sd.o
+ .debug_ranges  0x00000118       0x30 ./Src/stm32f4xx_it.o
+ .debug_ranges  0x00000148       0x10 ./Src/tim6.o
+ .debug_ranges  0x00000158       0x90 ./Src/uart.o
+ .debug_ranges  0x000001e8       0x18 ./Src/uart1Task.o
+ .debug_ranges  0x00000200       0x38 ./FreeRTOS/src/heap_4.o
+ .debug_ranges  0x00000238       0x30 ./FreeRTOS/src/list.o
+ .debug_ranges  0x00000268       0x70 ./FreeRTOS/src/port.o
+ .debug_ranges  0x000002d8       0xd0 ./FreeRTOS/src/queue.o
+ .debug_ranges  0x000003a8      0x220 ./FreeRTOS/src/tasks.o
+ .debug_ranges  0x000005c8       0x18 ./FATFS_SDIO/fatfs/option/ccsbcs.o
+ .debug_ranges  0x000005e0       0x30 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_atadrive.o
+ .debug_ranges  0x00000610      0x1f0 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .debug_ranges  0x00000800       0x30 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_usbdisk.o
+ .debug_ranges  0x00000830       0x38 ./FATFS_SDIO/fatfs/diskio.o
+ .debug_ranges  0x00000868      0x2f0 ./FATFS_SDIO/fatfs/ff.o
+ .debug_ranges  0x00000b58       0x68 ./FATFS_SDIO/stm32_ub_fatfs.o
+ .debug_ranges  0x00000bc0       0x98 ./Drivers/SLP/src/stm32f4xx_dma.o
+ .debug_ranges  0x00000c58       0x78 ./Drivers/SLP/src/stm32f4xx_gpio.o
+ .debug_ranges  0x00000cd0      0x1b0 ./Drivers/SLP/src/stm32f4xx_rcc.o
+ .debug_ranges  0x00000e80       0xe8 ./Drivers/SLP/src/stm32f4xx_sdio.o
+ .debug_ranges  0x00000f68      0x300 ./Drivers/SLP/src/stm32f4xx_tim.o
+ .debug_ranges  0x00001268       0xf0 ./Drivers/SLP/src/stm32f4xx_usart.o
+ .debug_ranges  0x00001358       0x20 ./Drivers/CMSIS/src/startup_stm32f40_41xxx.o
+ .debug_ranges  0x00001378       0x30 ./Drivers/CMSIS/src/system_stm32f4xx.o
 
-.debug_line     0x00000000     0x413b
- .debug_line    0x00000000       0x88 ./Src/freertos.o
- .debug_line    0x00000088      0x2db ./Src/main.o
- .debug_line    0x00000363      0x180 ./Src/perirh_init.o
- .debug_line    0x000004e3      0x2eb ./Src/printf.o
- .debug_line    0x000007ce      0x144 ./Src/stm32f4xx_it.o
- .debug_line    0x00000912      0x184 ./Src/tim6.o
- .debug_line    0x00000a96      0x3a2 ./Src/uart.o
- .debug_line    0x00000e38      0x263 ./Src/uart1Task.o
- .debug_line    0x0000109b      0x26a ./FreeRTOS/src/heap_4.o
- .debug_line    0x00001305      0x189 ./FreeRTOS/src/list.o
- .debug_line    0x0000148e      0x28f ./FreeRTOS/src/port.o
- .debug_line    0x0000171d      0x65d ./FreeRTOS/src/queue.o
- .debug_line    0x00001d7a      0xade ./FreeRTOS/src/tasks.o
- .debug_line    0x00002858      0x2c3 ./Drivers/SLP/src/stm32f4xx_gpio.o
- .debug_line    0x00002b1b      0x5ad ./Drivers/SLP/src/stm32f4xx_rcc.o
- .debug_line    0x000030c8      0xa1a ./Drivers/SLP/src/stm32f4xx_tim.o
- .debug_line    0x00003ae2      0x443 ./Drivers/SLP/src/stm32f4xx_usart.o
- .debug_line    0x00003f25       0x8a ./Drivers/CMSIS/src/startup_stm32f40_41xxx.o
- .debug_line    0x00003faf      0x18c ./Drivers/CMSIS/src/system_stm32f4xx.o
+.debug_line     0x00000000     0x6f52
+ .debug_line    0x00000000       0x8c ./Src/freertos.o
+ .debug_line    0x0000008c      0x3fa ./Src/main.o
+ .debug_line    0x00000486      0x188 ./Src/perirh_init.o
+ .debug_line    0x0000060e      0x2eb ./Src/printf.o
+ .debug_line    0x000008f9      0x2b3 ./Src/sd.o
+ .debug_line    0x00000bac      0x148 ./Src/stm32f4xx_it.o
+ .debug_line    0x00000cf4      0x18c ./Src/tim6.o
+ .debug_line    0x00000e80      0x3db ./Src/uart.o
+ .debug_line    0x0000125b      0x24d ./Src/uart1Task.o
+ .debug_line    0x000014a8      0x26e ./FreeRTOS/src/heap_4.o
+ .debug_line    0x00001716      0x18d ./FreeRTOS/src/list.o
+ .debug_line    0x000018a3      0x293 ./FreeRTOS/src/port.o
+ .debug_line    0x00001b36      0x661 ./FreeRTOS/src/queue.o
+ .debug_line    0x00002197      0xae2 ./FreeRTOS/src/tasks.o
+ .debug_line    0x00002c79       0xbc ./FATFS_SDIO/fatfs/option/ccsbcs.o
+ .debug_line    0x00002d35      0x1b7 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_atadrive.o
+ .debug_line    0x00002eec      0xbc4 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .debug_line    0x00003ab0      0x1b6 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_usbdisk.o
+ .debug_line    0x00003c66      0x25e ./FATFS_SDIO/fatfs/diskio.o
+ .debug_line    0x00003ec4      0xd76 ./FATFS_SDIO/fatfs/ff.o
+ .debug_line    0x00004c3a      0x338 ./FATFS_SDIO/stm32_ub_fatfs.o
+ .debug_line    0x00004f72      0x33c ./Drivers/SLP/src/stm32f4xx_dma.o
+ .debug_line    0x000052ae      0x2cb ./Drivers/SLP/src/stm32f4xx_gpio.o
+ .debug_line    0x00005579      0x5b5 ./Drivers/SLP/src/stm32f4xx_rcc.o
+ .debug_line    0x00005b2e      0x39d ./Drivers/SLP/src/stm32f4xx_sdio.o
+ .debug_line    0x00005ecb      0xa22 ./Drivers/SLP/src/stm32f4xx_tim.o
+ .debug_line    0x000068ed      0x44b ./Drivers/SLP/src/stm32f4xx_usart.o
+ .debug_line    0x00006d38       0x8a ./Drivers/CMSIS/src/startup_stm32f40_41xxx.o
+ .debug_line    0x00006dc2      0x190 ./Drivers/CMSIS/src/system_stm32f4xx.o
 
-.debug_str      0x00000000     0x3f29
- .debug_str     0x00000000      0x1ba ./Src/freertos.o
-                                0x1f9 (size before relaxing)
- .debug_str     0x000001ba      0x9cc ./Src/main.o
-                                0xbb6 (size before relaxing)
- .debug_str     0x00000b86      0x18f ./Src/perirh_init.o
-                                0x3d2 (size before relaxing)
- .debug_str     0x00000d15      0x4a1 ./Src/printf.o
-                                0x69d (size before relaxing)
- .debug_str     0x000011b6       0x6f ./Src/stm32f4xx_it.o
-                                0x239 (size before relaxing)
- .debug_str     0x00001225       0xbf ./Src/tim6.o
-                                0x910 (size before relaxing)
- .debug_str     0x000012e4      0x1fd ./Src/uart.o
-                                0xcdb (size before relaxing)
- .debug_str     0x000014e1       0x35 ./Src/uart1Task.o
-                                0x3db (size before relaxing)
- .debug_str     0x00001516      0x215 ./FreeRTOS/src/heap_4.o
-                                0x3ed (size before relaxing)
- .debug_str     0x0000172b      0x135 ./FreeRTOS/src/list.o
-                                0x315 (size before relaxing)
- .debug_str     0x00001860      0x256 ./FreeRTOS/src/port.o
-                                0x475 (size before relaxing)
- .debug_str     0x00001ab6      0x505 ./FreeRTOS/src/queue.o
-                                0x911 (size before relaxing)
- .debug_str     0x00001fbb      0x9b9 ./FreeRTOS/src/tasks.o
-                               0x100d (size before relaxing)
- .debug_str     0x00002974      0x156 ./Drivers/SLP/src/stm32f4xx_gpio.o
-                                0x522 (size before relaxing)
- .debug_str     0x00002aca      0x6d6 ./Drivers/SLP/src/stm32f4xx_rcc.o
-                                0xa2d (size before relaxing)
- .debug_str     0x000031a0      0x9ef ./Drivers/SLP/src/stm32f4xx_tim.o
-                                0xe4e (size before relaxing)
- .debug_str     0x00003b8f      0x2ed ./Drivers/SLP/src/stm32f4xx_usart.o
-                                0x73a (size before relaxing)
- .debug_str     0x00003e7c       0xad ./Drivers/CMSIS/src/system_stm32f4xx.o
-                                0x449 (size before relaxing)
+.debug_str      0x00000000     0x5dc6
+ .debug_str     0x00000000      0x1be ./Src/freertos.o
+                                0x1fd (size before relaxing)
+ .debug_str     0x000001be      0xad9 ./Src/main.o
+                                0xce0 (size before relaxing)
+ .debug_str     0x00000c97      0x18f ./Src/perirh_init.o
+                                0x3d6 (size before relaxing)
+ .debug_str     0x00000e26      0x488 ./Src/printf.o
+                                0x6a1 (size before relaxing)
+ .debug_str     0x000012ae      0x366 ./Src/sd.o
+                                0x617 (size before relaxing)
+ .debug_str     0x00001614       0x6f ./Src/stm32f4xx_it.o
+                                0x23d (size before relaxing)
+ .debug_str     0x00001683       0xbf ./Src/tim6.o
+                                0x914 (size before relaxing)
+ .debug_str     0x00001742      0x224 ./Src/uart.o
+                                0xd36 (size before relaxing)
+ .debug_str     0x00001966       0x35 ./Src/uart1Task.o
+                                0x411 (size before relaxing)
+ .debug_str     0x0000199b      0x215 ./FreeRTOS/src/heap_4.o
+                                0x3f1 (size before relaxing)
+ .debug_str     0x00001bb0      0x129 ./FreeRTOS/src/list.o
+                                0x319 (size before relaxing)
+ .debug_str     0x00001cd9      0x256 ./FreeRTOS/src/port.o
+                                0x479 (size before relaxing)
+ .debug_str     0x00001f2f      0x4eb ./FreeRTOS/src/queue.o
+                                0x915 (size before relaxing)
+ .debug_str     0x0000241a      0x9b9 ./FreeRTOS/src/tasks.o
+                               0x1011 (size before relaxing)
+ .debug_str     0x00002dd3       0x4f ./FATFS_SDIO/fatfs/option/ccsbcs.o
+                                0x1cc (size before relaxing)
+ .debug_str     0x00002e22       0x93 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_atadrive.o
+                                0x284 (size before relaxing)
+ .debug_str     0x00002eb5     0x10bc ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+                               0x1b0c (size before relaxing)
+ .debug_str     0x00003f71       0x88 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_usbdisk.o
+                                0x282 (size before relaxing)
+ .debug_str     0x00003ff9       0xb3 ./FATFS_SDIO/fatfs/diskio.o
+                                0x386 (size before relaxing)
+ .debug_str     0x000040ac      0x2d1 ./FATFS_SDIO/fatfs/ff.o
+                                0x781 (size before relaxing)
+ .debug_str     0x0000437d      0x132 ./FATFS_SDIO/stm32_ub_fatfs.o
+                                0x6d7 (size before relaxing)
+ .debug_str     0x000044af      0x1e7 ./Drivers/SLP/src/stm32f4xx_dma.o
+                                0x5a3 (size before relaxing)
+ .debug_str     0x00004696      0x14c ./Drivers/SLP/src/stm32f4xx_gpio.o
+                                0x526 (size before relaxing)
+ .debug_str     0x000047e2      0x6b0 ./Drivers/SLP/src/stm32f4xx_rcc.o
+                                0xa31 (size before relaxing)
+ .debug_str     0x00004e92      0x1ab ./Drivers/SLP/src/stm32f4xx_sdio.o
+                                0x68f (size before relaxing)
+ .debug_str     0x0000503d      0x9ef ./Drivers/SLP/src/stm32f4xx_tim.o
+                                0xe52 (size before relaxing)
+ .debug_str     0x00005a2c      0x2ed ./Drivers/SLP/src/stm32f4xx_usart.o
+                                0x73e (size before relaxing)
+ .debug_str     0x00005d19       0xad ./Drivers/CMSIS/src/system_stm32f4xx.o
+                                0x44d (size before relaxing)
 
 .comment        0x00000000       0x6e
  .comment       0x00000000       0x6e ./Src/freertos.o
@@ -3144,6 +3683,7 @@ OUTPUT(freeRtos_SPL.elf elf32-littlearm)
  .comment       0x0000006e       0x6f ./Src/main.o
  .comment       0x0000006e       0x6f ./Src/perirh_init.o
  .comment       0x0000006e       0x6f ./Src/printf.o
+ .comment       0x0000006e       0x6f ./Src/sd.o
  .comment       0x0000006e       0x6f ./Src/stm32f4xx_it.o
  .comment       0x0000006e       0x6f ./Src/tim6.o
  .comment       0x0000006e       0x6f ./Src/uart.o
@@ -3153,51 +3693,80 @@ OUTPUT(freeRtos_SPL.elf elf32-littlearm)
  .comment       0x0000006e       0x6f ./FreeRTOS/src/port.o
  .comment       0x0000006e       0x6f ./FreeRTOS/src/queue.o
  .comment       0x0000006e       0x6f ./FreeRTOS/src/tasks.o
+ .comment       0x0000006e       0x6f ./FATFS_SDIO/fatfs/option/ccsbcs.o
+ .comment       0x0000006e       0x6f ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_atadrive.o
+ .comment       0x0000006e       0x6f ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .comment       0x0000006e       0x6f ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_usbdisk.o
+ .comment       0x0000006e       0x6f ./FATFS_SDIO/fatfs/diskio.o
+ .comment       0x0000006e       0x6f ./FATFS_SDIO/fatfs/ff.o
+ .comment       0x0000006e       0x6f ./FATFS_SDIO/stm32_ub_fatfs.o
+ .comment       0x0000006e       0x6f ./Drivers/SLP/src/stm32f4xx_dma.o
  .comment       0x0000006e       0x6f ./Drivers/SLP/src/stm32f4xx_gpio.o
  .comment       0x0000006e       0x6f ./Drivers/SLP/src/stm32f4xx_rcc.o
+ .comment       0x0000006e       0x6f ./Drivers/SLP/src/stm32f4xx_sdio.o
  .comment       0x0000006e       0x6f ./Drivers/SLP/src/stm32f4xx_tim.o
  .comment       0x0000006e       0x6f ./Drivers/SLP/src/stm32f4xx_usart.o
  .comment       0x0000006e       0x6f ./Drivers/CMSIS/src/system_stm32f4xx.o
 
-.debug_frame    0x00000000     0x1d74
+.debug_frame    0x00000000     0x2fb4
  .debug_frame   0x00000000       0x20 ./Src/freertos.o
- .debug_frame   0x00000020       0x70 ./Src/main.o
- .debug_frame   0x00000090       0x28 ./Src/perirh_init.o
- .debug_frame   0x000000b8      0x1f4 ./Src/printf.o
- .debug_frame   0x000002ac       0x70 ./Src/stm32f4xx_it.o
- .debug_frame   0x0000031c       0x2c ./Src/tim6.o
- .debug_frame   0x00000348      0x100 ./Src/uart.o
- .debug_frame   0x00000448       0x40 ./Src/uart1Task.o
- .debug_frame   0x00000488       0x98 ./FreeRTOS/src/heap_4.o
- .debug_frame   0x00000520       0x6c ./FreeRTOS/src/list.o
- .debug_frame   0x0000058c       0xf0 ./FreeRTOS/src/port.o
- .debug_frame   0x0000067c      0x298 ./FreeRTOS/src/queue.o
- .debug_frame   0x00000914      0x568 ./FreeRTOS/src/tasks.o
- .debug_frame   0x00000e7c      0x124 ./Drivers/SLP/src/stm32f4xx_gpio.o
- .debug_frame   0x00000fa0      0x378 ./Drivers/SLP/src/stm32f4xx_rcc.o
- .debug_frame   0x00001318      0x6c8 ./Drivers/SLP/src/stm32f4xx_tim.o
- .debug_frame   0x000019e0      0x220 ./Drivers/SLP/src/stm32f4xx_usart.o
- .debug_frame   0x00001c00       0x3c ./Drivers/CMSIS/src/system_stm32f4xx.o
- .debug_frame   0x00001c3c       0x2c /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-init.o)
- .debug_frame   0x00001c68       0x34 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-memset.o)
- .debug_frame   0x00001c9c       0x50 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-__call_atexit.o)
- .debug_frame   0x00001cec       0x20 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-atexit.o)
- .debug_frame   0x00001d0c       0x34 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-fini.o)
- .debug_frame   0x00001d40       0x34 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-__atexit.o)
+ .debug_frame   0x00000020       0x8c ./Src/main.o
+ .debug_frame   0x000000ac       0x28 ./Src/perirh_init.o
+ .debug_frame   0x000000d4      0x1f4 ./Src/printf.o
+ .debug_frame   0x000002c8       0x64 ./Src/sd.o
+ .debug_frame   0x0000032c       0x70 ./Src/stm32f4xx_it.o
+ .debug_frame   0x0000039c       0x2c ./Src/tim6.o
+ .debug_frame   0x000003c8      0x108 ./Src/uart.o
+ .debug_frame   0x000004d0       0x40 ./Src/uart1Task.o
+ .debug_frame   0x00000510       0x98 ./FreeRTOS/src/heap_4.o
+ .debug_frame   0x000005a8       0x6c ./FreeRTOS/src/list.o
+ .debug_frame   0x00000614       0xf0 ./FreeRTOS/src/port.o
+ .debug_frame   0x00000704      0x298 ./FreeRTOS/src/queue.o
+ .debug_frame   0x0000099c      0x568 ./FreeRTOS/src/tasks.o
+ .debug_frame   0x00000f04       0x38 ./FATFS_SDIO/fatfs/option/ccsbcs.o
+ .debug_frame   0x00000f3c       0x80 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_atadrive.o
+ .debug_frame   0x00000fbc      0x534 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .debug_frame   0x000014f0       0x80 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_usbdisk.o
+ .debug_frame   0x00001570       0x98 ./FATFS_SDIO/fatfs/diskio.o
+ .debug_frame   0x00001608      0x5f0 ./FATFS_SDIO/fatfs/ff.o
+ .debug_frame   0x00001bf8      0x128 ./FATFS_SDIO/stm32_ub_fatfs.o
+ .debug_frame   0x00001d20      0x160 ./Drivers/SLP/src/stm32f4xx_dma.o
+ .debug_frame   0x00001e80      0x124 ./Drivers/SLP/src/stm32f4xx_gpio.o
+ .debug_frame   0x00001fa4      0x378 ./Drivers/SLP/src/stm32f4xx_rcc.o
+ .debug_frame   0x0000231c      0x21c ./Drivers/SLP/src/stm32f4xx_sdio.o
+ .debug_frame   0x00002538      0x6c8 ./Drivers/SLP/src/stm32f4xx_tim.o
+ .debug_frame   0x00002c00      0x220 ./Drivers/SLP/src/stm32f4xx_usart.o
+ .debug_frame   0x00002e20       0x3c ./Drivers/CMSIS/src/system_stm32f4xx.o
+ .debug_frame   0x00002e5c       0x2c /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-init.o)
+ .debug_frame   0x00002e88       0x34 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-memset.o)
+ .debug_frame   0x00002ebc       0x20 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-strcpy.o)
+ .debug_frame   0x00002edc       0x50 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-__call_atexit.o)
+ .debug_frame   0x00002f2c       0x20 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-atexit.o)
+ .debug_frame   0x00002f4c       0x34 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-fini.o)
+ .debug_frame   0x00002f80       0x34 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-__atexit.o)
 
-.debug_loc      0x00000000     0x69ae
+.debug_loc      0x00000000     0xdcea
  .debug_loc     0x00000000       0xee ./Src/main.o
  .debug_loc     0x000000ee      0xab1 ./Src/printf.o
  .debug_loc     0x00000b9f       0x15 ./Src/tim6.o
- .debug_loc     0x00000bb4      0x356 ./Src/uart.o
- .debug_loc     0x00000f0a       0x9a ./Src/uart1Task.o
- .debug_loc     0x00000fa4      0x3a8 ./FreeRTOS/src/heap_4.o
- .debug_loc     0x0000134c       0x94 ./FreeRTOS/src/list.o
- .debug_loc     0x000013e0       0xae ./FreeRTOS/src/port.o
- .debug_loc     0x0000148e      0xb68 ./FreeRTOS/src/queue.o
- .debug_loc     0x00001ff6     0x1857 ./FreeRTOS/src/tasks.o
- .debug_loc     0x0000384d      0x33e ./Drivers/SLP/src/stm32f4xx_gpio.o
- .debug_loc     0x00003b8b      0xbab ./Drivers/SLP/src/stm32f4xx_rcc.o
- .debug_loc     0x00004736     0x1a64 ./Drivers/SLP/src/stm32f4xx_tim.o
- .debug_loc     0x0000619a      0x74e ./Drivers/SLP/src/stm32f4xx_usart.o
- .debug_loc     0x000068e8       0xc6 ./Drivers/CMSIS/src/system_stm32f4xx.o
+ .debug_loc     0x00000bb4      0x32c ./Src/uart.o
+ .debug_loc     0x00000ee0       0x9a ./Src/uart1Task.o
+ .debug_loc     0x00000f7a      0x3a8 ./FreeRTOS/src/heap_4.o
+ .debug_loc     0x00001322       0x94 ./FreeRTOS/src/list.o
+ .debug_loc     0x000013b6       0xae ./FreeRTOS/src/port.o
+ .debug_loc     0x00001464      0xb68 ./FreeRTOS/src/queue.o
+ .debug_loc     0x00001fcc     0x1857 ./FreeRTOS/src/tasks.o
+ .debug_loc     0x00003823      0x102 ./FATFS_SDIO/fatfs/option/ccsbcs.o
+ .debug_loc     0x00003925       0x42 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_atadrive.o
+ .debug_loc     0x00003967     0x174b ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_sdcard.o
+ .debug_loc     0x000050b2       0x42 ./FATFS_SDIO/fatfs/lo_level_ub/stm32_ub_usbdisk.o
+ .debug_loc     0x000050f4      0x4b4 ./FATFS_SDIO/fatfs/diskio.o
+ .debug_loc     0x000055a8     0x4866 ./FATFS_SDIO/fatfs/ff.o
+ .debug_loc     0x00009e0e      0x7ba ./FATFS_SDIO/stm32_ub_fatfs.o
+ .debug_loc     0x0000a5c8      0x43b ./Drivers/SLP/src/stm32f4xx_dma.o
+ .debug_loc     0x0000aa03      0x33e ./Drivers/SLP/src/stm32f4xx_gpio.o
+ .debug_loc     0x0000ad41      0xbab ./Drivers/SLP/src/stm32f4xx_rcc.o
+ .debug_loc     0x0000b8ec      0x186 ./Drivers/SLP/src/stm32f4xx_sdio.o
+ .debug_loc     0x0000ba72     0x1a64 ./Drivers/SLP/src/stm32f4xx_tim.o
+ .debug_loc     0x0000d4d6      0x74e ./Drivers/SLP/src/stm32f4xx_usart.o
+ .debug_loc     0x0000dc24       0xc6 ./Drivers/CMSIS/src/system_stm32f4xx.o

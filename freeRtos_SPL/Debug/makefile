@@ -10,6 +10,10 @@ RM := rm -rf
 -include sources.mk
 -include Src/subdir.mk
 -include FreeRTOS/src/subdir.mk
+-include FATFS_SDIO/fatfs/option/subdir.mk
+-include FATFS_SDIO/fatfs/lo_level_ub/subdir.mk
+-include FATFS_SDIO/fatfs/subdir.mk
+-include FATFS_SDIO/subdir.mk
 -include Drivers/SLP/src/subdir.mk
 -include Drivers/CMSIS/src/subdir.mk
 -include subdir.mk
@@ -44,7 +48,7 @@ all: freeRtos_SPL.elf secondary-outputs
 freeRtos_SPL.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross ARM C Linker'
-	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g -T "/home/yurock/workspace/stm32f4/freeRtos_SPL/STM32F407ZG_FLASH.ld" -Xlinker --gc-sections -Wl,-Map,"freeRtos_SPL.map" -o "freeRtos_SPL.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g -T "/home/yurock/workspace/DemoProject/freeRtos_SPL/STM32F407ZG_FLASH.ld" -Xlinker --gc-sections -Wl,-Map,"freeRtos_SPL.map" -o "freeRtos_SPL.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

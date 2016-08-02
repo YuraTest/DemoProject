@@ -15,20 +15,23 @@
 #include "stm32f4xx_usart.h"
 
 
-#define UART_INBUFSZ	32
-#define UART_OUTBUFSZ	32
+#define UART_INBUFSZ	64
+#define UART_OUTBUFSZ	64
 
 /* \~russian
  * Структура данных для драйвера UART.
  */
 typedef struct _uart_t {
-	xSemaphoreHandle xSemaHandl;
+	xSemaphoreHandle xTransniter;
+	xSemaphoreHandle xReciever;
+	xSemaphoreHandle xTrensmM;
 	USART_InitTypeDef config;
 	USART_TypeDef *port;        /*!< UART registers base address  */
 	unsigned char outBuf [UART_OUTBUFSZ];
 	unsigned char *outHead, *outTail;
 	unsigned char inBuf [UART_INBUFSZ];
 	unsigned char *inHead, *inTail;
+	BaseType_t whaitTransmit;
 } uart_t;
 
 

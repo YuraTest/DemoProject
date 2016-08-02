@@ -8,6 +8,7 @@ C_SRCS += \
 ../Src/main.c \
 ../Src/perirh_init.c \
 ../Src/printf.c \
+../Src/sd.c \
 ../Src/stm32f4xx_it.c \
 ../Src/tim6.c \
 ../Src/uart.c \
@@ -18,6 +19,7 @@ OBJS += \
 ./Src/main.o \
 ./Src/perirh_init.o \
 ./Src/printf.o \
+./Src/sd.o \
 ./Src/stm32f4xx_it.o \
 ./Src/tim6.o \
 ./Src/uart.o \
@@ -28,6 +30,7 @@ C_DEPS += \
 ./Src/main.d \
 ./Src/perirh_init.d \
 ./Src/printf.d \
+./Src/sd.d \
 ./Src/stm32f4xx_it.d \
 ./Src/tim6.d \
 ./Src/uart.d \
@@ -38,7 +41,7 @@ C_DEPS += \
 Src/%.o: ../Src/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross ARM C Compiler'
-	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -I"/home/yurock/workspace/stm32f4/freeRtos_SPL" -I"/home/yurock/workspace/stm32f4/freeRtos_SPL/Drivers/CMSIS/inc" -I"/home/yurock/workspace/stm32f4/freeRtos_SPL/Drivers/SLP/inc" -I"/home/yurock/workspace/stm32f4/freeRtos_SPL/Inc" -I"/home/yurock/workspace/stm32f4/freeRtos_SPL/FreeRTOS" -I"/home/yurock/workspace/stm32f4/freeRtos_SPL/FreeRTOS/include" -std=gnu11 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -c -o "$@" "$<"
+	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -I"/home/yurock/workspace/DemoProject/freeRtos_SPL" -I"/home/yurock/workspace/DemoProject/freeRtos_SPL/Drivers/CMSIS/inc" -I"/home/yurock/workspace/DemoProject/freeRtos_SPL/Drivers/SLP/inc" -I"/home/yurock/workspace/DemoProject/freeRtos_SPL/Inc" -I"/home/yurock/workspace/DemoProject/freeRtos_SPL/FreeRTOS" -I"/home/yurock/workspace/DemoProject/freeRtos_SPL/FreeRTOS/include" -I"/home/yurock/workspace/DemoProject/freeRtos_SPL/FATFS_SDIO" -I"/home/yurock/workspace/DemoProject/freeRtos_SPL/FATFS_SDIO/fatfs" -I"/home/yurock/workspace/DemoProject/freeRtos_SPL/FATFS_SDIO/fatfs/lo_level_ub" -std=gnu11 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -c -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
