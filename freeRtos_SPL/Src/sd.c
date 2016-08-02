@@ -7,7 +7,7 @@
 //uint32_t SDIO_totalBytesRead = 0;
 //uint32_t SDIO_bytesRead = 0;
 //bool SDIO_isFileReadStreamInProgress = false;
-char SDIO_currentPath[SDIO_CURRENT_PATH_MAX_LENGTH] = "/";
+char SDIO_currentPath[SDIO_CURRENT_PATH_MAX_LENGTH] = "\\";
 
 struct SDIO_fileStruct SDIO_files[SDIO_FILES_TO_VIEW_MAX];
 uint16_t SDIO_filesNum = 0;  

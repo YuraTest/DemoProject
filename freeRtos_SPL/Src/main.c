@@ -115,10 +115,7 @@ void CONSOLE_printFiles(void) {
 	static char _consoleChar;
 	static char _selectedFileIndex = 0;
 
-	sprintf(textBuf, "1 - up, 2 - down, 3 - select, 4 - back, 5 - stop\n");
-	PutStringUart(&uart1, textBuf);
-
-	sprintf(textBuf, "%s\n", SDIO_currentPath);
+	sprintf(textBuf, "SD:%s\n", SDIO_currentPath);
 	PutStringUart(&uart1, textBuf);
 
 	for (i = 0; i < SDIO_filesNum; i++) {
