@@ -46,7 +46,7 @@ Discarded input sections
  .data          0x00000000        0x0 ./Src/new.o
  .bss           0x00000000        0x0 ./Src/new.o
  .debug_line    0x00000000        0x0 ./Src/new.o
- .debug_str     0x00000000      0x123 ./Src/new.o
+ .debug_str     0x00000000      0x127 ./Src/new.o
  .comment       0x00000000       0x6f ./Src/new.o
  .ARM.attributes
                 0x00000000       0x39 ./Src/new.o
@@ -155,8 +155,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x80 ./HAL/Src/stm32f4xx_hal_dma.o
  .debug_ranges  0x00000000       0x90 ./HAL/Src/stm32f4xx_hal_dma.o
- .debug_line    0x00000000      0x5fa ./HAL/Src/stm32f4xx_hal_dma.o
- .debug_str     0x00000000      0x7c6 ./HAL/Src/stm32f4xx_hal_dma.o
+ .debug_line    0x00000000      0x60a ./HAL/Src/stm32f4xx_hal_dma.o
+ .debug_str     0x00000000      0x7ca ./HAL/Src/stm32f4xx_hal_dma.o
  .comment       0x00000000       0x6f ./HAL/Src/stm32f4xx_hal_dma.o
  .debug_frame   0x00000000      0x158 ./HAL/Src/stm32f4xx_hal_dma.o
  .ARM.attributes
@@ -178,8 +178,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x30 ./HAL/Src/stm32f4xx_hal_dma_ex.o
  .debug_ranges  0x00000000       0x50 ./HAL/Src/stm32f4xx_hal_dma_ex.o
- .debug_line    0x00000000      0x55e ./HAL/Src/stm32f4xx_hal_dma_ex.o
- .debug_str     0x00000000      0x5ab ./HAL/Src/stm32f4xx_hal_dma_ex.o
+ .debug_line    0x00000000      0x56e ./HAL/Src/stm32f4xx_hal_dma_ex.o
+ .debug_str     0x00000000      0x5af ./HAL/Src/stm32f4xx_hal_dma_ex.o
  .comment       0x00000000       0x6f ./HAL/Src/stm32f4xx_hal_dma_ex.o
  .debug_frame   0x00000000       0x60 ./HAL/Src/stm32f4xx_hal_dma_ex.o
  .ARM.attributes
@@ -229,8 +229,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x98 ./HAL/Src/stm32f4xx_hal_flash.o
  .debug_ranges  0x00000000       0x88 ./HAL/Src/stm32f4xx_hal_flash.o
- .debug_line    0x00000000      0x423 ./HAL/Src/stm32f4xx_hal_flash.o
- .debug_str     0x00000000      0x573 ./HAL/Src/stm32f4xx_hal_flash.o
+ .debug_line    0x00000000      0x433 ./HAL/Src/stm32f4xx_hal_flash.o
+ .debug_str     0x00000000      0x577 ./HAL/Src/stm32f4xx_hal_flash.o
  .comment       0x00000000       0x6f ./HAL/Src/stm32f4xx_hal_flash.o
  .debug_frame   0x00000000      0x188 ./HAL/Src/stm32f4xx_hal_flash.o
  .ARM.attributes
@@ -261,8 +261,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x50 ./HAL/Src/stm32f4xx_hal_flash_ex.o
  .debug_ranges  0x00000000       0xa0 ./HAL/Src/stm32f4xx_hal_flash_ex.o
- .debug_line    0x00000000      0x3ea ./HAL/Src/stm32f4xx_hal_flash_ex.o
- .debug_str     0x00000000      0x5fe ./HAL/Src/stm32f4xx_hal_flash_ex.o
+ .debug_line    0x00000000      0x3fa ./HAL/Src/stm32f4xx_hal_flash_ex.o
+ .debug_str     0x00000000      0x602 ./HAL/Src/stm32f4xx_hal_flash_ex.o
  .comment       0x00000000       0x6f ./HAL/Src/stm32f4xx_hal_flash_ex.o
  .debug_frame   0x00000000       0xc8 ./HAL/Src/stm32f4xx_hal_flash_ex.o
  .ARM.attributes
@@ -274,8 +274,8 @@ Discarded input sections
  .debug_abbrev  0x00000000       0x4b ./HAL/Src/stm32f4xx_hal_flash_ramfunc.o
  .debug_aranges
                 0x00000000       0x18 ./HAL/Src/stm32f4xx_hal_flash_ramfunc.o
- .debug_line    0x00000000       0xcc ./HAL/Src/stm32f4xx_hal_flash_ramfunc.o
- .debug_str     0x00000000      0x1fc ./HAL/Src/stm32f4xx_hal_flash_ramfunc.o
+ .debug_line    0x00000000       0xd0 ./HAL/Src/stm32f4xx_hal_flash_ramfunc.o
+ .debug_str     0x00000000      0x200 ./HAL/Src/stm32f4xx_hal_flash_ramfunc.o
  .comment       0x00000000       0x6f ./HAL/Src/stm32f4xx_hal_flash_ramfunc.o
  .ARM.attributes
                 0x00000000       0x39 ./HAL/Src/stm32f4xx_hal_flash_ramfunc.o
@@ -337,8 +337,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0xa0 ./HAL/Src/stm32f4xx_hal_pwr.o
  .debug_ranges  0x00000000       0x90 ./HAL/Src/stm32f4xx_hal_pwr.o
- .debug_line    0x00000000      0x3c0 ./HAL/Src/stm32f4xx_hal_pwr.o
- .debug_str     0x00000000      0x5ad ./HAL/Src/stm32f4xx_hal_pwr.o
+ .debug_line    0x00000000      0x3d0 ./HAL/Src/stm32f4xx_hal_pwr.o
+ .debug_str     0x00000000      0x5b1 ./HAL/Src/stm32f4xx_hal_pwr.o
  .comment       0x00000000       0x6f ./HAL/Src/stm32f4xx_hal_pwr.o
  .debug_frame   0x00000000      0x154 ./HAL/Src/stm32f4xx_hal_pwr.o
  .ARM.attributes
@@ -366,8 +366,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x48 ./HAL/Src/stm32f4xx_hal_pwr_ex.o
  .debug_ranges  0x00000000       0x68 ./HAL/Src/stm32f4xx_hal_pwr_ex.o
- .debug_line    0x00000000      0x2ab ./HAL/Src/stm32f4xx_hal_pwr_ex.o
- .debug_str     0x00000000      0x468 ./HAL/Src/stm32f4xx_hal_pwr_ex.o
+ .debug_line    0x00000000      0x2bb ./HAL/Src/stm32f4xx_hal_pwr_ex.o
+ .debug_str     0x00000000      0x46c ./HAL/Src/stm32f4xx_hal_pwr_ex.o
  .comment       0x00000000       0x6f ./HAL/Src/stm32f4xx_hal_pwr_ex.o
  .debug_frame   0x00000000       0x94 ./HAL/Src/stm32f4xx_hal_pwr_ex.o
  .ARM.attributes
@@ -412,8 +412,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x30 ./HAL/Src/stm32f4xx_hal_rcc_ex.o
  .debug_ranges  0x00000000       0x68 ./HAL/Src/stm32f4xx_hal_rcc_ex.o
- .debug_line    0x00000000      0x335 ./HAL/Src/stm32f4xx_hal_rcc_ex.o
- .debug_str     0x00000000      0x490 ./HAL/Src/stm32f4xx_hal_rcc_ex.o
+ .debug_line    0x00000000      0x345 ./HAL/Src/stm32f4xx_hal_rcc_ex.o
+ .debug_str     0x00000000      0x494 ./HAL/Src/stm32f4xx_hal_rcc_ex.o
  .comment       0x00000000       0x6f ./HAL/Src/stm32f4xx_hal_rcc_ex.o
  .debug_frame   0x00000000       0x5c ./HAL/Src/stm32f4xx_hal_rcc_ex.o
  .ARM.attributes
@@ -425,8 +425,8 @@ Discarded input sections
  .debug_abbrev  0x00000000       0x4b ./HAL/Src/stm32f4xx_hal_tim.o
  .debug_aranges
                 0x00000000       0x18 ./HAL/Src/stm32f4xx_hal_tim.o
- .debug_line    0x00000000       0xcc ./HAL/Src/stm32f4xx_hal_tim.o
- .debug_str     0x00000000      0x1f2 ./HAL/Src/stm32f4xx_hal_tim.o
+ .debug_line    0x00000000       0xd0 ./HAL/Src/stm32f4xx_hal_tim.o
+ .debug_str     0x00000000      0x1f6 ./HAL/Src/stm32f4xx_hal_tim.o
  .comment       0x00000000       0x6f ./HAL/Src/stm32f4xx_hal_tim.o
  .ARM.attributes
                 0x00000000       0x39 ./HAL/Src/stm32f4xx_hal_tim.o
@@ -437,8 +437,8 @@ Discarded input sections
  .debug_abbrev  0x00000000       0x4b ./HAL/Src/stm32f4xx_hal_tim_ex.o
  .debug_aranges
                 0x00000000       0x18 ./HAL/Src/stm32f4xx_hal_tim_ex.o
- .debug_line    0x00000000       0xcc ./HAL/Src/stm32f4xx_hal_tim_ex.o
- .debug_str     0x00000000      0x1f5 ./HAL/Src/stm32f4xx_hal_tim_ex.o
+ .debug_line    0x00000000       0xd0 ./HAL/Src/stm32f4xx_hal_tim_ex.o
+ .debug_str     0x00000000      0x1f9 ./HAL/Src/stm32f4xx_hal_tim_ex.o
  .comment       0x00000000       0x6f ./HAL/Src/stm32f4xx_hal_tim_ex.o
  .ARM.attributes
                 0x00000000       0x39 ./HAL/Src/stm32f4xx_hal_tim_ex.o
@@ -927,7 +927,7 @@ LOAD /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
                 0x00000278       0x22 /opt/gcc-arm/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
 OUTPUT(test_hal.elf elf32-littlearm)
 
-.debug_info     0x00000000     0x4a59
+.debug_info     0x00000000     0x4a5d
  .debug_info    0x00000000      0x55d ./Src/gpio.o
  .debug_info    0x0000055d      0x93a ./Src/main.o
  .debug_info    0x00000e97      0x3f0 ./Src/stm32f4xx_hal_msp.o
@@ -936,8 +936,8 @@ OUTPUT(test_hal.elf elf32-littlearm)
  .debug_info    0x00001c4a     0x1110 ./HAL/Src/stm32f4xx_hal_cortex.o
  .debug_info    0x00002d5a      0x890 ./HAL/Src/stm32f4xx_hal_gpio.o
  .debug_info    0x000035ea      0xf31 ./HAL/Src/stm32f4xx_hal_rcc.o
- .debug_info    0x0000451b       0x76 ./CMSIS_BOOT/startup_stm32f407xx.o
- .debug_info    0x00004591      0x4c8 ./CMSIS_BOOT/system_stm32f4xx.o
+ .debug_info    0x0000451b       0x7a ./CMSIS_BOOT/startup_stm32f407xx.o
+ .debug_info    0x00004595      0x4c8 ./CMSIS_BOOT/system_stm32f4xx.o
 
 .debug_abbrev   0x00000000     0x105e
  .debug_abbrev  0x00000000      0x14e ./Src/gpio.o
@@ -985,37 +985,37 @@ OUTPUT(test_hal.elf elf32-littlearm)
  .debug_ranges  0x00000420       0x20 ./CMSIS_BOOT/startup_stm32f407xx.o
  .debug_ranges  0x00000440       0x18 ./CMSIS_BOOT/system_stm32f4xx.o
 
-.debug_line     0x00000000     0x1bac
- .debug_line    0x00000000      0x1d2 ./Src/gpio.o
- .debug_line    0x000001d2      0x29f ./Src/main.o
- .debug_line    0x00000471      0x191 ./Src/stm32f4xx_hal_msp.o
- .debug_line    0x00000602      0x154 ./Src/stm32f4xx_it.o
- .debug_line    0x00000756      0x34b ./HAL/Src/stm32f4xx_hal.o
- .debug_line    0x00000aa1      0x477 ./HAL/Src/stm32f4xx_hal_cortex.o
- .debug_line    0x00000f18      0x497 ./HAL/Src/stm32f4xx_hal_gpio.o
- .debug_line    0x000013af      0x637 ./HAL/Src/stm32f4xx_hal_rcc.o
- .debug_line    0x000019e6       0x82 ./CMSIS_BOOT/startup_stm32f407xx.o
- .debug_line    0x00001a68      0x144 ./CMSIS_BOOT/system_stm32f4xx.o
+.debug_line     0x00000000     0x1c1c
+ .debug_line    0x00000000      0x1de ./Src/gpio.o
+ .debug_line    0x000001de      0x2af ./Src/main.o
+ .debug_line    0x0000048d      0x19d ./Src/stm32f4xx_hal_msp.o
+ .debug_line    0x0000062a      0x15c ./Src/stm32f4xx_it.o
+ .debug_line    0x00000786      0x357 ./HAL/Src/stm32f4xx_hal.o
+ .debug_line    0x00000add      0x487 ./HAL/Src/stm32f4xx_hal_cortex.o
+ .debug_line    0x00000f64      0x4a7 ./HAL/Src/stm32f4xx_hal_gpio.o
+ .debug_line    0x0000140b      0x647 ./HAL/Src/stm32f4xx_hal_rcc.o
+ .debug_line    0x00001a52       0x82 ./CMSIS_BOOT/startup_stm32f407xx.o
+ .debug_line    0x00001ad4      0x148 ./CMSIS_BOOT/system_stm32f4xx.o
 
-.debug_str      0x00000000     0x1369
- .debug_str     0x00000000      0x365 ./Src/gpio.o
-                                0x3c2 (size before relaxing)
- .debug_str     0x00000365      0x74e ./Src/main.o
-                                0xa93 (size before relaxing)
- .debug_str     0x00000ab3       0x44 ./Src/stm32f4xx_hal_msp.o
-                                0x733 (size before relaxing)
- .debug_str     0x00000af7       0x49 ./Src/stm32f4xx_it.o
-                                0x21c (size before relaxing)
- .debug_str     0x00000b40      0x23d ./HAL/Src/stm32f4xx_hal.o
-                                0xaba (size before relaxing)
- .debug_str     0x00000d7d      0x34a ./HAL/Src/stm32f4xx_hal_cortex.o
-                                0xc3c (size before relaxing)
- .debug_str     0x000010c7      0x10c ./HAL/Src/stm32f4xx_hal_gpio.o
-                                0x530 (size before relaxing)
- .debug_str     0x000011d3      0x14a ./HAL/Src/stm32f4xx_hal_rcc.o
-                                0x6fc (size before relaxing)
- .debug_str     0x0000131d       0x4c ./CMSIS_BOOT/system_stm32f4xx.o
-                                0x3b3 (size before relaxing)
+.debug_str      0x00000000     0x136d
+ .debug_str     0x00000000      0x369 ./Src/gpio.o
+                                0x3c6 (size before relaxing)
+ .debug_str     0x00000369      0x74e ./Src/main.o
+                                0xa97 (size before relaxing)
+ .debug_str     0x00000ab7       0x44 ./Src/stm32f4xx_hal_msp.o
+                                0x737 (size before relaxing)
+ .debug_str     0x00000afb       0x49 ./Src/stm32f4xx_it.o
+                                0x220 (size before relaxing)
+ .debug_str     0x00000b44      0x23d ./HAL/Src/stm32f4xx_hal.o
+                                0xabe (size before relaxing)
+ .debug_str     0x00000d81      0x34a ./HAL/Src/stm32f4xx_hal_cortex.o
+                                0xc40 (size before relaxing)
+ .debug_str     0x000010cb      0x10c ./HAL/Src/stm32f4xx_hal_gpio.o
+                                0x534 (size before relaxing)
+ .debug_str     0x000011d7      0x14a ./HAL/Src/stm32f4xx_hal_rcc.o
+                                0x700 (size before relaxing)
+ .debug_str     0x00001321       0x4c ./CMSIS_BOOT/system_stm32f4xx.o
+                                0x3b7 (size before relaxing)
 
 .comment        0x00000000       0x6e
  .comment       0x00000000       0x6e ./Src/gpio.o
