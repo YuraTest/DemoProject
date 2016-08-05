@@ -47,6 +47,9 @@
 #define DISPAY_CMD_DRAW_TEXT			0x30
 #define DISPAY_CMD_DRAW_PICTURES		0x70
 
+#define STORAGE_NAND					0x00
+#define STORAGE_SD						0x01
+
 
 typedef struct {
 	char displayBuf[1035];
