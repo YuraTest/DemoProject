@@ -17,6 +17,9 @@
 #include "queue.h"
 #include "semphr.h"
 #include "event_groups.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>		// для memcpy
 
 
 #define GreenLed_Pin GPIO_Pin_12
@@ -30,10 +33,8 @@
 
 /*  UART1 */
 #define UART1_TxPin			GPIO_PinSource6
-//#define UART1_TX_Pin_Source GPIO_PinSource6
 #define UART1_TxPort		GPIOB
 #define UART1_RxPin			GPIO_PinSource7
-//#define UART1_RX_Pin_Source GPIO_PinSource7
 #define UART1_RxPort		GPIOB
 
 /*  UART2 */
@@ -66,6 +67,25 @@
 #define UART6_TxPort		GPIOB
 #define UART6_RxPin			GPIO_PinSource7
 #define UART6_RxPort		GPIOB
+
+
+/* Display Reset Pin */
+#define DisplRstPin			GPIO_PinSource6
+#define DisplRstPort		GPIOB
+
+/* Display WakeUp Pin */
+#define DisplWakeUpPin		GPIO_PinSource6
+#define DisplWakeUpPort		GPIOB
+
+
+#define DISPAY_CMD				0x30
+#define SIZE_DATA_BUF			50
+
+typedef struct{
+	portSHORT taskId;
+	portSHORT size;
+	portCHAR data[SIZE_DATA_BUF];
+} tasksMessage_t;
 
 void SysTickHandler(void);
 

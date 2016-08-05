@@ -1547,7 +1547,7 @@ SD_Error SD_Erase(uint64_t startaddr, uint64_t endaddr) {
 SD_Error SD_SendStatus(uint32_t *pcardstatus) {
 	SD_Error errorstatus = SD_OK;
 
-	if (pcardstatus == NULL) {
+	if (pcardstatus == NULL_) {
 		errorstatus = SD_INVALID_PARAMETER;
 		return (errorstatus);
 	}

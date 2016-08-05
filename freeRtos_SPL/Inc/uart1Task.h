@@ -10,8 +10,14 @@
 
 #include "main.h"
 #include "uart.h"
-#include <stdlib.h>
-#include <stdio.h>
+
+
+
+/* Структура для приёма / передачи сообщения по RS232 */
+typedef struct {
+	uint8_t data[SIZE_DATA_BUF];
+	uint32_t size;
+} uart_msg_t;
 
 BaseType_t initUartTask(uart_t *u);
 

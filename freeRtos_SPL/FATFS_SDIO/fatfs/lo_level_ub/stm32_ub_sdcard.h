@@ -138,7 +138,7 @@
 // stm324xg_eval_sdio_sd.c
 //--------------------------------------------------------------
 
-#define NULL 0
+#define NULL_ 0
 #define SDIO_STATIC_FLAGS               ((uint32_t)0x000005FF)
 #define SDIO_CMD0TIMEOUT                ((uint32_t)0x00010000)
 

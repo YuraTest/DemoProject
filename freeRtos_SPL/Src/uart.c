@@ -8,6 +8,7 @@
 #include "uart.h"
 
 static void UsartTx(uart_t *u);
+void UasrtTaskRxIdle(void *arg);
 static uart_t *uarts[10];
 
 /* ---------------------------------------------------------- */
@@ -233,12 +234,15 @@ BaseType_t uart_init(uart_t *u, USART_TypeDef *port, uint32_t baud) {
 	USART_DeInit(u->port);
 	USART_ClockStructInit(&USART_ClockInitStructure);
 	USART_ClockInit(u->port, &USART_ClockInitStructure);
-	USART_Cmd(u->port, ENABLE);
+
 	USART_Init(u->port, &u->config);
 	USART_ITConfig(u->port, USART_IT_TC, ENABLE);
 	USART_ITConfig(u->port, USART_IT_RXNE, ENABLE);
 	NVIC_SetPriority(irq, 5);
 	NVIC_EnableIRQ(irq);
+	USART_ITConfig(u->port, USART_IT_TC, ENABLE);
+	USART_ITConfig(u->port, USART_IT_RXNE, ENABLE);
+	USART_Cmd(u->port, ENABLE);
 	//osSemaphoreDef(myCountSem);
 	u->xTransniter = xSemaphoreCreateBinary();
 	//osSemaphoreCreate(osSemaphore(myCountSem), 32);
@@ -247,17 +251,20 @@ BaseType_t uart_init(uart_t *u, USART_TypeDef *port, uint32_t baud) {
 		result = pdFAIL;
 	}
 
-	u->xReciever = xSemaphoreCreateBinary();
+	u->xReciever = xSemaphoreCreateCounting(UART_INBUFSZ, 0);	//xSemaphoreCreateBinary();
 	if (u->xReciever == NULL) {
 		result = pdFAIL;
 	}
-	u->xTrensmM = xSemaphoreCreateMutex();
-	if (u->xTrensmM == NULL) {
+	u->xMutTx = xSemaphoreCreateMutex();
+	if (u->xMutTx == NULL) {
 		result = pdFAIL;
 	}
 	u->whaitTransmit = pdFALSE;
 	//xSemaphoreTake(u->xReciever, portMAX_DELAY);
 	//xSemaphoreGive(u->xReciever);
+	if (xTaskCreate(UasrtTaskRxIdle, "Uart1_Rx", 500, (void * )u, 1,
+			NULL) != pdPASS)
+		result = pdFAIL;
 	return result;
 }
 
@@ -280,9 +287,11 @@ char GetCharUart(uart_t *u) {
  * Возвращаемое значение: - */
 void PutCharUart(uart_t *u, char c) {
 	//xSemaphoreTake(u->xTrensmM, portMAX_DELAY);
+	portENTER_CRITICAL();
 	unsigned char *newPos = u->outHead + 1;
 	if (newPos >= u->outBuf + UART_INBUFSZ)	// Если временный указатель больше или равен очереди,
 		newPos = u->outBuf;			// то приравниваем его началу буфера
+	portEXIT_CRITICAL();
 	/* Если нет места в буфере - теряем данные. */
 	if (u->outTail == newPos) {
 		u->whaitTransmit = pdTRUE;
@@ -290,12 +299,14 @@ void PutCharUart(uart_t *u, char c) {
 	}
 	//vTaskDelay(1);
 	//if (u->outTail != newPos) {// Если новый указатель не равен хвосту, от куда читаются данные
+	portENTER_CRITICAL();
 	*u->outHead = c;			// Добавляем символ
 	u->outHead = newPos;	// Устанавливаем новый указатель головы
 	/* Если передатчик свободный, то посылаем байт */
 	if (u->port->SR & USART_SR_TXE) {
 		UsartTx(u);
 	}
+	portEXIT_CRITICAL();
 	//}
 	//xSemaphoreGive(u->xTrensmM);
 }
@@ -305,9 +316,17 @@ void PutCharUart(uart_t *u, char c) {
  * Возвращаемое значение: - */
 void PutStringUart(uart_t *u, const char *str) {
 	char *buf = (char *) str;
-	xSemaphoreTake(u->xTrensmM, portMAX_DELAY);
+	xSemaphoreTake(u->xMutTx, portMAX_DELAY);
 	while (*buf != 0x00)
 		PutCharUart(u, *buf++);
-	xSemaphoreGive(u->xTrensmM);
+	xSemaphoreGive(u->xMutTx);
 }
 
+/* Задача приёма для очистки буфера приёмника если нет задач ожидающих приёма */
+void UasrtTaskRxIdle(void *arg) {
+	uart_t *u = (uart_t *) arg;
+	for (;;) {
+		GetCharUart(u);
+		//GPIO_ToggleBits(BlueLed_GPIO_Port, BlueLed_Pin);
+	}
+}

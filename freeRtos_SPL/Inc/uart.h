@@ -24,7 +24,7 @@
 typedef struct _uart_t {
 	xSemaphoreHandle xTransniter;
 	xSemaphoreHandle xReciever;
-	xSemaphoreHandle xTrensmM;
+	xSemaphoreHandle xMutTx;
 	USART_InitTypeDef config;
 	USART_TypeDef *port;        /*!< UART registers base address  */
 	unsigned char outBuf [UART_OUTBUFSZ];

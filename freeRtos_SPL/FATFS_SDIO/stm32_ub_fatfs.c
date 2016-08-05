@@ -14,7 +14,7 @@
 //
 // Hinweis  : Anzahl der Devices : 1
 //            Typ vom Device     : MMC
-//            (für USB oder MMC+USB gibt es andere LIBs) 
+//            (fï¿½r USB oder MMC+USB gibt es andere LIBs) 
 //
 //            Doku aller FATFS-Funktionen "doc/00index_e.html"
 //
@@ -71,11 +71,11 @@ static FATFS FileSystemObject;
 //--------------------------------------------------------------
 void UB_Fatfs_Init(void)
 {
-  // init der Hardware für die SDCard-Funktionen
+  // init der Hardware fï¿½r die SDCard-Funktionen
   UB_SDCard_Init();
-  // init der Hardware für die USB-Funktionen
+  // init der Hardware fï¿½r die USB-Funktionen
   //UB_USBDisk_Init();
-  // init der Hardware für die ATA-Funktionen
+  // init der Hardware fï¿½r die ATA-Funktionen
   //UB_ATADrive_Init();
 }
 
@@ -148,7 +148,7 @@ FATFS_t UB_Fatfs_UnMount(MEDIA_t dev)
   FATFS_t ret_wert=FATFS_MOUNT_ERR;
   FRESULT check=FR_INVALID_PARAMETER;
 
-  if(dev==MMC_0) check=f_mount(0, NULL);
+  if(dev==MMC_0) check=f_mount(0, NULL_);
   if(check == FR_OK) {
     ret_wert=FATFS_OK;
   }
@@ -187,7 +187,7 @@ FATFS_t UB_Fatfs_DelFile(const char* name)
 
 //--------------------------------------------------------------
 // File oeffnen (zum lesen oder schreiben)
-// File per &-Operator übergeben
+// File per &-Operator ï¿½bergeben
 // Name ist der komplette Pfad z.B. "0:/Test.txt"
 // mode : [F_RD, F_WR, F_WR_NEW, F_WR_CLEAR]
 // Return Wert :
@@ -224,7 +224,7 @@ FATFS_t UB_Fatfs_OpenFile(FIL* fp, const TCHAR * name, FMODE_t mode)
 
 //--------------------------------------------------------------
 // File schliessen
-// File per &-Operator übergeben
+// File per &-Operator ï¿½bergeben
 // Return Wert :
 //     FATFS_OK     => kein Fehler
 //  FATFS_CLOSE_ERR => Fehler
@@ -250,8 +250,8 @@ FATFS_t UB_Fatfs_CloseFile(FIL* fp)
 //--------------------------------------------------------------
 // String in File schreiben
 // File muss offen sein
-// File per &-Operator übergeben
-// Zeilenendekennung ('\n') wird automatisch angehängt
+// File per &-Operator ï¿½bergeben
+// Zeilenendekennung ('\n') wird automatisch angehï¿½ngt
 // Return Wert :
 //     FATFS_OK    => kein Fehler
 //  FATFS_PUTS_ERR => Fehler
@@ -265,7 +265,7 @@ FATFS_t UB_Fatfs_WriteString(FIL* fp, const char* text)
 
   if(check>=0) {
     ret_wert=FATFS_OK;
-    // Zeilenendekennung hinzufügen
+    // Zeilenendekennung hinzufï¿½gen
     f_putc('\n', fp);
   }
   else {
@@ -279,9 +279,9 @@ FATFS_t UB_Fatfs_WriteString(FIL* fp, const char* text)
 //--------------------------------------------------------------
 // String aus einem File lesen
 // File muss offen sein
-// File per &-Operator übergeben
+// File per &-Operator ï¿½bergeben
 // text : String
-// len  : Grösse des String-Puffers
+// len  : Grï¿½sse des String-Puffers
 //        es werden (len) Zeichen ausgelesen
 //        oder bis Fileende bzw. Stringende erreicht ist
 // Return Wert :
@@ -306,11 +306,11 @@ FATFS_t UB_Fatfs_ReadString(FIL* fp, char* text, uint32_t len)
 
 
 //--------------------------------------------------------------
-// Filegröße auslesen
+// Filegrï¿½ï¿½e auslesen
 // File muss offen sein
-// File per &-Operator übergeben
+// File per &-Operator ï¿½bergeben
 // Return Wert :
-//   >0 => Filegröße in Bytes
+//   >0 => Filegrï¿½ï¿½e in Bytes
 //   0  => Fehler
 //--------------------------------------------------------------
 uint32_t UB_Fatfs_FileSize(FIL* fp)
@@ -328,9 +328,9 @@ uint32_t UB_Fatfs_FileSize(FIL* fp)
 //--------------------------------------------------------------
 // Datenblock aus einem File lesen
 // File muss offen sein
-// File per &-Operator übergeben
-// buf  : Puffer für die Daten
-// len  : Grösse des Daten-Puffers (max 512 Bytes)
+// File per &-Operator ï¿½bergeben
+// buf  : Puffer fï¿½r die Daten
+// len  : Grï¿½sse des Daten-Puffers (max 512 Bytes)
 //        es werden (len) Zeichen ausgelesen
 //        oder bis Fileende erreicht ist
 // read : Anzahl der Zeichen die ausgelesen wurden (bei err=>0)
@@ -374,9 +374,9 @@ FATFS_t UB_Fatfs_ReadBlock(FIL* fp, unsigned char* buf, uint32_t len, uint32_t* 
 //--------------------------------------------------------------
 // Datenblock in ein File schreiben
 // File muss offen sein
-// File per &-Operator übergeben
+// File per &-Operator ï¿½bergeben
 // buf  : Daten (in einem Puffer)
-// len  : Grösse des Daten-Puffers (max 512 Bytes)
+// len  : Grï¿½sse des Daten-Puffers (max 512 Bytes)
 //        es werden (len) Zeichen geschrieben
 // write : Anzahl der Zeichen die geschrieben wurden (bei err=>0)
 // Return Wert :

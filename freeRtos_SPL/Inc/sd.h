@@ -6,6 +6,7 @@
 #include "FreeRTOS.h"
 #include "stm32_ub_fatfs.h"
 #include "ff.h"
+#include "uart.h"
 
 //#include "TaskHandlers.h"
 #include <stdbool.h>
@@ -47,5 +48,6 @@ BaseType_t SDIO_isSDCardAccessible(void);	/*  */
 BaseType_t SDIO_scanFiles (void);
 //void SDIO_gotoFolder(char * folderName);
 //void SDIO_gotoParentFolder(void);
+void getFreeSize(uart_t *u);
 
 #endif
